@@ -1,7 +1,7 @@
-# HDL_CUARTO_SEMESTRE_Poryecto_Final
-# Practica_Profesional
+<div id="title1" align="center"> # HDL_CUARTO_SEMESTRE_Poryecto_Final </div>
+<div id="title2" align="center"> # Practica_Profesional </div>
 
-Año 2023, Repositorio del grupo HDL
+<div id="title3" align="center"> Año 2023, Repositorio del grupo HDL </div>
 
 <div id="header" align="center">
 	<img src= "https://media.giphy.com/media/3og0ILLVvPp8d64Jd6/giphy.gif" width="500"/>
