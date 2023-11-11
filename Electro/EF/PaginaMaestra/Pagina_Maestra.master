@@ -1,0 +1,223 @@
+﻿<%@ Master Language="C#" AutoEventWireup="True" CodeFile="Pagina_Maestra.master.cs" Inherits="Pagina_Maestra" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
+<!DOCTYPE html>
+<html lang="es-ar"  xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+
+    <script src="../Scripts/jquery.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script lang="javascript" type="text/javascript">
+        function Bloquear() {
+            var _combo = document.getElementById("ctl00_pnl_cargando");
+            _combo.style.display = "none";
+
+            var _img_cargando = document.getElementById("div1");
+            _img_cargando.style.display = "block";
+        }
+    </script>
+
+    <script type="text/javascript">
+        timeOutModal = true
+        timeOutMinutes = 5;
+
+        (function ($) {
+            var xhrPool = [];
+            $(document).ajaxSend(function (e, jqXHR, options) {
+                xhrPool.push(jqXHR);
+            });
+            $(document).ajaxComplete(function (e, jqXHR, options) {
+                xhrPool = $.grep(xhrPool, function (x) { return x != jqXHR });
+                $.HBAnalytics.addHotjarAttribute();
+                RenewTimeOutClientSide();
+            });
+            var abort = function () {
+                $.each(xhrPool, function (idx, jqXHR) {
+                    jqXHR.abort();
+                });
+            };
+
+            var oldbeforeunload = window.onbeforeunload;
+            window.onbeforeunload = function () {
+                var r = oldbeforeunload ? oldbeforeunload() : undefined;
+                if (r == undefined) {
+                    // only cancel requests if there is no prompt to stay on the page
+                    // if there is a prompt, it will likely give the requests enough time to finish
+                    abort();
+                }
+                return r;
+            }
+        })(jQuery);
+
+        var in_uid = '12583755';
+        var in_utype = 'Default';
+
+        $(document).ready(function () {
+            /********Analytics gtm********/
+            $.HBAnalytics.executeGtmTags($.HBAnalytics.afterReadyEvents);
+            $.HBAnalytics.triggerHotjarReady();
+            /*********Fin gtm***********/
+
+
+
+            evalRefererDomainBackNavigation();
+
+            //Evalua y muestra si debe algun modal de error
+
+
+
+            //Renuevo el time out de cliente
+            RenewTimeOutClientSide(5);
+            //xhrPool
+            ////Por cada llamado a ajax renuevo el time out del lado del cliente
+            //$.ajaxSetup({
+            //    beforeSend: function (jqXHR) { $.xhrPool.push(jqXHR); }, //  annd connection to list
+            //    complete: function (jqXHR) {
+            //        var i = $.xhrPool.indexOf(jqXHR);   //  get index for current connection completed
+            //        if (i > -1) $.xhrPool.splice(i, 1); //  removes from list by index
+            //        RenewTimeOutClientSide();
+            //    }
+            //});
+
+            
+
+    var help = $('#HelpIconContainer').HBHelp({
+    targetContent: $("#HelpContentContainer")
+    , closeHandlers: $("#HelpContentContainer.cd-panel.from-right")
+    //, onVisibilityChangeCallBack: onHelpVisibilityChange
+    });
+
+
+    $(document).keyup(function(e) {
+    if(e.which == 27){
+    if($('.cd-panel.is-visible').length > 0){
+    closePanel();
+    }
+    }
+    });
+
+    $('#closeWarnOOS').click(function(){
+    $.ajax({
+    url: '/EventsHandler/CloseWarnOOS',
+    dataType: 'html',
+    type: "POST",
+    //data: { },
+    success: function (data) {
+    },
+    timeout: svcDefaultTimeoutMs
+    });
+    });
+    /*Check if it's ie9 to change the async parameter of ajaxs (Otherwise, it doesnt work)*/
+    if (isIE9() && waitForAjaxsCompleted()) {
+    $.ajaxSetup({
+    async: false,
+    timeout: svcDefaultTimeoutMs
+    });
+    }
+
+</script>
+
+    <title>Sistema HVJ</title>
+    <!-- Definimos aca el HTML5 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Hacemos la llamada al BootStrap-->
+
+    <link rel="Stylesheet" href="../Content/bootstrap.css" type="text/css" />
+    <!-- <link rel="Stylesheet" href="../Content/bootstrap.min.css" type="text/css" />
+    <link rel="Stylesheet" href="../Content/bootstrap-grid.css" type="text/css" />
+    <link rel="Stylesheet" href="../Content/bootstrap-reboot.css" type="text/css" /> -->
+    <link rel="stylesheet" href="../content/menu.css" type="text/css" />
+
+    <meta http-equiv="Page-Enter" content="blendTrans(Duration=0)"/>
+    <meta http-equiv="Page-Exit" content="blendTrans(Duration=0)"/>
+    
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body> 
+    <form id="form1" runat="server" method="post">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="True">
+        </asp:ScriptManager>
+        <asp:UpdatePanel runat="server" ID="updt1">
+            <ContentTemplate>
+            <!-- Nuevo menu responsive horizontal -->
+            <div class="icon-bar">
+                <a class="active" href="../Administracion/frm_administrar_consolidacion.aspx"><i class="fa ">INICIO</i></a>
+                <a href="../Administracion/frm_administrar_cdp.aspx"><i class="fa">Casa de paz</i></a>
+                <a href="../Administracion/frm_administrar_gdv.aspx"><i class="fa">Grupo de vida</i></a>
+                <a href="../Usuario/crear_usuario.aspx"><i class="fa fa-user">Usuarios</i></a>
+            </div>
+            <!-- Contenido Master -->
+            <div class="modal">
+                <div class="container-form">
+                    <asp:ContentPlaceHolder ID="Contenido" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">INFORMACIÓN:</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <strong>Excelente!</strong> Los datos ingresaron correctamente.
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <asp:Panel ID="pnl_informacion" runat="server" HorizontalAlign="Center" Style="display: none;">
+                    <div id="Div_Informacion">
+                        <asp:Label ForeColor="White" runat="server" Text="" ID="lbl_Informacion"></asp:Label>
+                        <br />
+                        <br />
+                        <asp:Button ID="btn_ok" runat="server" Text="Aceptar" />
+                    </div>
+                </asp:Panel>
+                <cc1:ModalPopupExtender ID="MPE" runat="server" TargetControlID="lbl_Informacion"
+                    PopupControlID="pnl_informacion" BackgroundCssClass="alert-info" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+                <asp:Panel ID="pnl_informacion_advertencia" runat="server" HorizontalAlign="Center" Style="display: none;">
+                    <div id="Div_Informacion_Advertencia">
+                        <asp:Label ForeColor="White" runat="server" Text="" ID="lbl_Informacion_advertencia"></asp:Label>
+                        <br />
+                        <br />
+                        <asp:Button ID="btn_ok1" runat="server" Text="Aceptar" />
+                    </div>
+                </asp:Panel>
+                <cc1:ModalPopupExtender ID="MPE_Advertencia" runat="server" TargetControlID="lbl_Informacion_advertencia"
+                    PopupControlID="pnl_informacion_advertencia" BackgroundCssClass="alert-danger" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+                <asp:Panel ID="pnl_informacion_error" runat="server" HorizontalAlign="Center" Style="display: none;">
+                    <div id="Div_Informacion_Error">
+                        <asp:Label ForeColor="White" runat="server" Text="" ID="lbl_informacion_error"></asp:Label>
+                        <br />
+                        <br />
+                        <asp:Button ID="btn_ok2" runat="server" Text="Aceptar" />
+                    </div>
+                </asp:Panel>
+                <cc1:ModalPopupExtender ID="MPE_Error" runat="server" TargetControlID="lbl_informacion_error"
+                    PopupControlID="pnl_informacion_error" BackgroundCssClass="alert-warning" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+            </div>
+        </ContentTemplate>
+        </asp:UpdatePanel>
+    </form>
+</body>
+</html>

@@ -1,0 +1,101 @@
+﻿<%@ Master Language="C#" AutoEventWireup="True" CodeFile="Pagina_Maestra_Sin_Menu.master.cs" Inherits="Pagina_Maestra_Sin_Menu" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Sistema GAMat</title>
+    <link  rel="icon"   href="../Images/favicon.ico" type="image/png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../Content/Images/icono/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="../Content/Images/icono/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="../Content/Images/icono/favicon-16x16.png"/>
+    <link rel="manifest" href="/site.webmanifest"/>
+
+    <!-- Definimos aca el HTML5 -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    
+    <!-- Hacemos la llamada al BootStrap -->
+    <link rel="Stylesheet"  href="../Content/css/bootstrap.css" type="text/css" />
+    <link rel="Stylesheet" href="../Content/css/bootstrap.min.css" type="text/css" />
+    
+    <script src="../Scripts/jquery.min.js"></script>
+    <asp:ContentPlaceHolder ID="Content1" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body class="align-content-center">
+    <form id="form1" class="form-singin" runat="server" method="post">
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="True">
+    </asp:ScriptManager>
+        <asp:UpdatePanel ID="updt1" runat="server">
+            <ContentTemplate>
+
+                <asp:ContentPlaceHolder ID="Contenido" runat="Server">
+                </asp:ContentPlaceHolder>
+
+                <asp:Panel ID="pnl_informacion" runat="server" HorizontalAlign="Center">
+                       <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">INFORMACIÓN:</h4>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <asp:Label ID="lbl_Informacion" runat="server"></asp:Label>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <asp:Button ID="btn_ok" class="btn btn-danger" runat="server" Text="Cerrar" />
+                            </div>
+                        </div>
+                </asp:Panel>
+                <cc1:ModalPopupExtender ID="MPE" runat="server" TargetControlID="lbl_Informacion" PopupControlID="pnl_informacion" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+                <asp:Panel ID="pnl_informacion_advertencia" runat="server" HorizontalAlign="Center" Style="display: none;">
+                    <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">INFORMACIÓN:</h4>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <asp:Label ID="lbl_Informacion_advertencia" runat="server"></asp:Label>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <asp:Button ID="btn_ok1" class="btn btn-danger" runat="server" Text="Cerrar" />
+                            </div>
+                        </div>
+                </asp:Panel>
+                <cc1:ModalPopupExtender ID="MPE_Advertencia" runat="server" TargetControlID="lbl_Informacion_advertencia"
+                    PopupControlID="pnl_informacion_advertencia" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+                <asp:Panel ID="pnl_informacion_error" runat="server" HorizontalAlign="Center">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">INFORMACIÓN:</h4>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <asp:Label ID="lbl_informacion_error" runat="server"></asp:Label>
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <asp:Button ID="btn_ok2" class="btn btn-danger" runat="server" Text="Cerrar" />
+                            </div>
+                        </div>
+                </asp:Panel>
+                <cc1:ModalPopupExtender ID="MPE_Error" runat="server" TargetControlID="lbl_informacion_error"
+                    PopupControlID="pnl_informacion_error" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </form>
+</body>
+</html>
