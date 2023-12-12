@@ -8,7 +8,6 @@ using System.Reflection;
 
 namespace Electro.BusinessLayer.ValueObjects
 {
-
     [Serializable]
     public class RS_Materiales : Respuesta
     {
@@ -20,5 +19,4 @@ namespace Electro.BusinessLayer.ValueObjects
         public OSector[] Lista_Sector;
         public OTipo_Material[] Lista_Tipo_Material;
 	}
-
 }

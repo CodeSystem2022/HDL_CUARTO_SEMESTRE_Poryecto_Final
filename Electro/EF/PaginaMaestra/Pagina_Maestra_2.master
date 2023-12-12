@@ -4,22 +4,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>Hay vida en Jesús</title>
+    <title>Sistema GAMat</title>
     <link rel="icon" href="../Images/favicon.ico" type="image/png" />
     <!-- Definimos aca el HTML5 -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <script src="../Scripts/jquery.min.js"></script>
-    <script src="../Scripts/popper.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <script src="../Scripts/jquery-ui.min.js"></script>
+    <script src="../Content/js/bootstrap.js"></script>
+    <script src="../Content/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" href="../Content/bootstrap.css" />
-    <link rel="stylesheet" href="../Content/bootstrap.min.css" />
-    <link rel="stylesheet" href="../Content/menu.css" /> 
-    <link rel="stylesheet" href="../Content/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="../Content/css/bootstrap.css" />
+    <link rel="stylesheet" href="../Content/css/bootstrap.min.css" />
 
     <script type="text/javascript">
         function SessionExpireAlert(timeout) {
@@ -64,12 +60,12 @@
 
 <body>
     <header>
-        <div class="icon-bar">
+        <div class="navbar">
             <!--Navbar-->
             <nav class="navbar navbar-expand-md scrolling-navbar" runat="server" visible="true">
                 <div class="container">
                     <!-- Navbar brand -->
-                    <img class="nav-flex-icons navbar-left" src="../Images/Logo_hvj_nuevo.png" title="Hay Vida en Jesús" style="width: 5%" />
+                    <img class="nav-flex-icons navbar-left" src="../Content/Images/icono/favicon-32x32.png" title="Sistema GAMat" style="width: 5%" />
                     <!-- Collapse button -->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
@@ -78,15 +74,11 @@
                         <!-- Links -->
                         <ul class="navbar-nav mr-auto smooth-scroll">
                             <li class="nav-item"><a class="nav-icon-asistencia active" href="../frm_inicio.aspx">INICIO</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Alta/frm_crear_consolidacion.aspx">Nueva consolidación</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Administracion/frm_administrar_consolidacion.aspx">Consolidación</a></li>
-                            <li class="nav-item" title="Casa de paz"><a class="nav-link" href="../Administracion/frm_administrar_cdp.aspx">CDP</a></li>
-                            <li class="nav-item" title="Grupo de vida"><a class="nav-link" href="../Administracion/frm_administrar_gdv.aspx">GDV</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Administracion/frm_administrar_asistencia.aspx">Asistencia</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Administracion/frm_administrar_miembros.aspx">Miembros</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Administracion/frm_administrar_bautismos.aspx">Bautismo</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Administracion/frm_administrar_sobres.aspx">Sobres</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../Administracion/frm_administrar_Troqueles.aspx">Invasión</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../Alta/Pedido_Materiales.aspx">Solicitud</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../Alta/frm_crear_consolidacion.aspx">Articulos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../Alta/frm_crear_consolidacion.aspx">Area</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../Alta/frm_crear_consolidacion.aspx">Sector</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../Alta/frm_crear_consolidacion.aspx">Usuarios</a></li>
                         </ul>
                         <!-- Links -->
                         <!-- Social Icon  -->

@@ -12,8 +12,8 @@ using Electro.BusinessLayer.ValueObjects;
 
 public partial class Pagina_Maestra_2 : System.Web.UI.MasterPage
 {
-    private BO_General _servicio = new BO_General();
-    private RS_Miembros _respuesta = new RS_Miembros();
+    private BO_Materiales _servicio = new BO_Materiales();
+    private RS_Materiales _respuesta = new RS_Materiales();
     private RS_Usuario _Usuario_Logueado = new RS_Usuario();
 
     
@@ -35,11 +35,11 @@ public partial class Pagina_Maestra_2 : System.Web.UI.MasterPage
             if (Session["ADV_Usuario"] != null)
             {
                 RS_Usuario _usuario = (RS_Usuario)Session["ADV_Usuario"];
-                Session["ID_ADV_Miembro"] = _usuario.Usuario.Id_Login;
-                Session["ID_Miembro"] = _usuario.Usuario.Id_Usuario;
+                //Session["ID_ADV_Miembro"] = _usuario.Usuario.Id_Login;
+                //Session["ID_Miembro"] = _usuario.Usuario.Id_Usuario;
 
-                _respuesta = _servicio.Obtener_Miembro(Int32.Parse(Session["ID_Miembro"].ToString()));
-                lbl_usuario.InnerText = "Usuario: " + _respuesta.Lista_Miembro[0].Nombre_Completo_Miembro;
+                //_respuesta = _servicio.Obtener_Miembro(Int32.Parse(Session["ID_Miembro"].ToString()));
+                //lbl_usuario.InnerText = "Usuario: " + _respuesta.Lista_Miembro[0].Nombre_Completo_Miembro;
             }
         }
         catch (Exception ex)

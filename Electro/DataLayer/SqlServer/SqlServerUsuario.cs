@@ -192,6 +192,26 @@ namespace Electro.DataLayer.SqlServer
                 throw ex;
             }
         }
+
+        private String Obtener_CMB_Perfil_Usuario()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Perfil_Usuario].[ID_Perfil_Usuario],[Perfil_Usuario].[Descripcion],[Estado].ID_Estado],[Perfil_Usuario].[Fecha_Creacion]");
+                _sql.AppendLine("FROM [dbo].[Perfil_Usuario]");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = [Perfil_Usuario].[FK_ID_Estado]");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Consultas de Usuario

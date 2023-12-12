@@ -37,7 +37,7 @@ public partial class Pagina_Maestra_Menu : System.Web.UI.MasterPage
                 RS_Usuario _usuario = (RS_Usuario)Session["ADV_Usuario"];
                 Session["ID_Usuario"] = _usuario.Usuario.ID_Usuario;
 
-                _respuesta = _servicio.Obten(Int32.Parse(Session["ID_Miembro"].ToString()));
+                //_respuesta = _servicio.Obten(Int32.Parse(Session["ID_Miembro"].ToString()));
                 //lbl_usuario.InnerText = "Usuario: " + _respuesta.Lista_Miembro[0].Nombre_Completo_Miembro;
                 
             }

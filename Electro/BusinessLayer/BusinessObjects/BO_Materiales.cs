@@ -33,6 +33,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
         #endregion
 
+        String _fecha_hora_actual = DateTime.Now.ToString();
 
         #region Alta
 
@@ -49,22 +50,23 @@ namespace Electro.BusinessLayer.BusinessObjects
                     _transaction.Complete();
                 }
 
-                //Se genera un LOG para el alta
-                DataAccess.Log.Informar_Evento(1, "Se realizó correctamente el alta del área " + pNombre_Area, pFK_ID_Usuario);
+                // Se genera un LOG para el alta
+                DataAccess.Log.Informar_Evento(7, "Se realizó correctamente el alta del área " + pNombre_Area + " en la planta: " + pFK_ID_Planta + "con el usuario: " + pFK_ID_Usuario);
                 _respuesta.Mensaje = "El área se ingreso correctamente";
                 _respuesta.Resultado = Resultado_Operacion.Ok;
 
             }
             catch (Exception ex)
             {
-                //Se genera un LOG para el error
-                DataAccess.Log.Informar_Evento(1, "Alta_Area - " + ex.Message, pFK_ID_Usuario);
+                // Se genera un LOG para el error
+                DataAccess.Log.Informar_Evento(7, "Alta_Area - " + ex.Message + " en la planta: " + pFK_ID_Planta + " con el usuario: " + pFK_ID_Usuario);
                 _respuesta.Mensaje = ex.Message;
                 _respuesta.Resultado = Resultado_Operacion.Error;
             }
 
             return _respuesta;
         }
+
         public Respuesta Alta_Materiales(Int16 pFK_ID_Tipo_Material, String pMaterial_Descripcion, String pCodigo_Origen, String pCodigo_Interno, Int16 pCantidad, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, Int16 pFK_ID_Area, String pUbicacion_Gaveta, Int16 pFK_ID_Planta, Int16 pFK_ID_Sector, Int32 pFK_ID_Usuario)
         {
             Respuesta _respuesta = new Respuesta();
@@ -73,13 +75,13 @@ namespace Electro.BusinessLayer.BusinessObjects
             {
                 using (TransactionScope _transaction = new TransactionScope())
                 {
-                    DataAccess.Materiales.Alta_Materiales(pFK_ID_Tipo_Material, pMaterial_Descripcion, pCodigo_Origen, pCodigo_Interno, pCantidad, pUbicacion_Estanteria, pUbicacion_Columna, pUbicacion_Fila, pFK_ID_Area, pUbicacion_Gaveta, pFK_ID_Planta, pFK_ID_Sector, pFK_ID_Usuario);
+                    DataAccess.Materiales.Alta_Materiales(pFK_ID_Tipo_Material, pCodigo_Origen, pCodigo_Interno, pCantidad, pUbicacion_Estanteria, pUbicacion_Columna, pUbicacion_Fila, pFK_ID_Area, pUbicacion_Gaveta, pFK_ID_Planta, pFK_ID_Sector);
 
                     _transaction.Complete();
                 }
 
                 // Se genera un LOG para el alta
-                DataAccess.Log.Informar_Evento(1, "Se realizó correctamente el alta del material " + pMaterial_Descripcion, pFK_ID_Usuario);
+                DataAccess.Log.Informar_Evento(1, "Se realizó correctamente el alta del material " + pMaterial_Descripcion + ", Tipo de material: " + pFK_ID_Tipo_Material + ", Código de interno: "+pCodigo_Interno+ ", Area: " + pFK_ID_Area + ", Planta: " + pFK_ID_Planta + ", Sector: " + pFK_ID_Sector + ", con el usuario: "+ pFK_ID_Usuario);
                 _respuesta.Mensaje = "El material se ingreso correctamente";
                 _respuesta.Resultado = Resultado_Operacion.Ok;
 
@@ -87,14 +89,15 @@ namespace Electro.BusinessLayer.BusinessObjects
             catch (Exception ex)
             {
                 // Se genera un LOG para el error
-                DataAccess.Log.Informar_Evento(1, "Alta_Materiales - " + ex.Message, pFK_ID_Usuario);
+                DataAccess.Log.Informar_Evento(1, "Alta_Materiales - " + ex.Message + " en el sector: " + pFK_ID_Sector + " tipo de material: " + pFK_ID_Tipo_Material + " en el área: "+ pFK_ID_Area + " planta: " + pFK_ID_Planta + ", usuario: " + pFK_ID_Usuario);
                 _respuesta.Mensaje = ex.Message;
                 _respuesta.Resultado = Resultado_Operacion.Error;
             }
 
             return _respuesta;
         }
-        public Respuesta Alta_Tipo_Materiales(String pTipo_Material, String pDescripcion, Int16 pFK_ID_Estado, Int32 pFK_ID_Usuario)
+
+        public Respuesta Alta_Tipo_Materiales(String pNombre_Tipo_Material, String pDescripcion, Int16 pFK_ID_Estado, Int32 pFK_ID_Usuario)
         {
             Respuesta _respuesta = new Respuesta();
 
@@ -102,13 +105,13 @@ namespace Electro.BusinessLayer.BusinessObjects
             {
                 using (TransactionScope _transaction = new TransactionScope())
                 {
-                    DataAccess.Materiales.Alta_Tipo_Materiales(pTipo_Material, pDescripcion,  pFK_ID_Estado,  pFK_ID_Usuario);
+                    DataAccess.Materiales.Alta_Tipo_Material(pNombre_Tipo_Material, pDescripcion,  pFK_ID_Estado);
 
                     _transaction.Complete();
                 }
 
                 // Se genera un LOG para el alta
-                DataAccess.Log.Informar_Evento(1, "Se realizó correctamente el alta del tipo de material " + pTipo_Material, pFK_ID_Usuario);
+                DataAccess.Log.Informar_Evento(1, "Alta del tipo de material " + pNombre_Tipo_Material + " con la descripción: " + pDescripcion + "con el usuario: " + pFK_ID_Usuario);
                 _respuesta.Mensaje = "El tipo de material se ingreso correctamente";
                 _respuesta.Resultado = Resultado_Operacion.Ok;
 
@@ -116,13 +119,43 @@ namespace Electro.BusinessLayer.BusinessObjects
             catch (Exception ex)
             {
                 // Se genera un LOG para el error
-                DataAccess.Log.Informar_Evento(1, "Alta_Tipo_Material - " + ex.Message, pFK_ID_Usuario);
+                DataAccess.Log.Informar_Evento(1, "Alta_Tipo_Material - " + ex.Message + "con el usuario: " + pFK_ID_Usuario);
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+            }
+            return _respuesta;
+        }
+
+        public Respuesta Alta_Sector(String pNombre_Sector, Int16 pFK_ID_Planta, Int16 pFK_ID_Area, Int32 pFK_ID_Usuario)
+        {
+            Respuesta _respuesta = new Respuesta();
+
+            try
+            {
+                using (TransactionScope _transaction = new TransactionScope())
+                {
+                    DataAccess.Materiales.Alta_Sector(pNombre_Sector, pFK_ID_Planta, pFK_ID_Area, pFK_ID_Usuario);
+
+                    _transaction.Complete();
+                }
+
+                // Se genera un LOG para el alta
+                DataAccess.Log.Informar_Evento(7, "Se realizó correctamente el alta del sector " + pNombre_Sector + " en el área " + pFK_ID_Area + " en la planta: " + pFK_ID_Planta + "con el usuario: " + pFK_ID_Usuario);
+                _respuesta.Mensaje = "El sector se ingreso correctamente";
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+
+            }
+            catch (Exception ex)
+            {
+                // Se genera un LOG para el error
+                DataAccess.Log.Informar_Evento(7, "Alta_Sector - " + ex.Message + " en la planta: " + pFK_ID_Planta + " con el usuario: " + pFK_ID_Usuario);
                 _respuesta.Mensaje = ex.Message;
                 _respuesta.Resultado = Resultado_Operacion.Error;
             }
 
             return _respuesta;
         }
+
 
         #region Modificaciones
 
@@ -132,17 +165,18 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                OMaterial _miembro = DataAccess.Materiales.Obtener_Area_Por_Nombre(pNombre_Area);
+                OMaterial _material = DataAccess.Materiales.Obtener_Area(pID_Area);
 
-                if (_miembro != null)
-                {                    
+                if (_material != null)
+                {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
-                        DataAccess.Miembros.Actualizar_Miembro_Con_Lider_Red(pId_Miembro, pApellido, pNombre, pDNI, pEdad, pTelefono, pDireccion, pBarrio, pFecha_Nacimiento, pFK_ID_Estado_Civil, pFK_ID_Escalera_Crecimiento, pFK_ID_Lider_Red, pFK_ID_Consolidador, pFK_ID_LiderGDV, pEmail, pFK_ID_Estado, pFK_ID_Condicion);
+                        DataAccess.Materiales.Actualizar_Area(pID_Area, pDescripcion, pFK_ID_Estado);
                         _transaction.Complete();
                     }
 
-                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del miembro: " + pApellido + ", " + pNombre;
+                    DataAccess.Log.Informar_Evento(10, "Se actualizo el área: " + pID_Area + ", con la descripción: " + pDescripcion + " con el estado: " + pFK_ID_Estado);
+                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del área: " + pID_Area + " , con la descrpción: " + pDescripcion;
                     _respuesta.Resultado = Resultado_Operacion.Ok;
                 }
             }
@@ -155,26 +189,24 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-
-
-
-        public Respuesta Actualizar_Miembro(Int32 pId_Miembro, String pApellido, String pNombre, Int32 pDNI, Int16 pEdad, String pTelefono, String pDireccion, String pBarrio, String pFecha_Nacimiento, Int16 pFK_ID_Estado_Civil, Int16 pFK_ID_Escalera_Crecimiento, Int16 pFK_ID_Consolidador, Int16 pFK_ID_LiderGDV, String pEmail, Int16 pFK_ID_Estado, Int16 pFK_ID_Condicion)
+        public Respuesta Actualizar_Material(Int32 pID_Material,Int32 pFK_ID_Tipo_Material, String pCodigo_Origen, String pCodigo_Interno, Int16 pCantidad, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, Int16 pFK_ID_Area, String pUbicacion_Gaveta, Int16 pFK_ID_Estado, Int16 pFK_ID_Planta, Int16 pFK_ID_Sector)
         {
             Respuesta _respuesta = new Respuesta();
 
             try
             {
-                OMiembros _miembro = DataAccess.Miembros.Obtener_Miembro_Editar(pId_Miembro);
+                OMaterial _material = DataAccess.Materiales.Obtener_Material(pID_Material);
 
-                if (_miembro != null)
-                {                    
+                if (_material != null)
+                {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
-                        DataAccess.Miembros.Actualizar_Miembro(pId_Miembro, pApellido, pNombre, pDNI, pEdad, pTelefono, pDireccion, pBarrio, pFecha_Nacimiento, pFK_ID_Estado_Civil, pFK_ID_Escalera_Crecimiento, pFK_ID_Consolidador, pFK_ID_LiderGDV, pEmail, pFK_ID_Estado, pFK_ID_Condicion);
+                        DataAccess.Materiales.Actualizar_Material(pID_Material, pFK_ID_Tipo_Material, pCodigo_Origen, pCodigo_Interno, pCantidad, pUbicacion_Estanteria, pUbicacion_Columna, pUbicacion_Fila, pFK_ID_Area, pUbicacion_Gaveta, pFK_ID_Estado, pFK_ID_Planta, pFK_ID_Sector);
                         _transaction.Complete();
                     }
 
-                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del miembro: " + pApellido + ", " + pNombre;
+                    DataAccess.Log.Informar_Evento(10, "Se actualizo el material: " + pID_Material + ", con Tipo de material: " + pFK_ID_Tipo_Material + " código origen: " + pCodigo_Origen + " código interno: " + pCodigo_Interno + " Cantidad: " + pCantidad + " Ubicación estanteria: " + pUbicacion_Estanteria + " Columna: " + pUbicacion_Columna + " Fila: " + pUbicacion_Fila + " Area: " + pFK_ID_Area + " Gaveta: " + pUbicacion_Gaveta + " Planta: " + pFK_ID_Planta + " Sector: " + pFK_ID_Sector);
+                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del área: " + pID_Material;
                     _respuesta.Resultado = Resultado_Operacion.Ok;
                 }
             }
@@ -187,28 +219,58 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
+        // se actualiza el sector o la uap
+        public Respuesta Actualizar_Sector(Int32 pID_Sector,String pDescripcion, Int16 pFK_ID_Planta, Int16 pFK_ID_Area, Int16 pFK_ID_Estado, String pMotivo_Baja)
+        {
+            Respuesta _respuesta = new Respuesta();
+
+            try
+            {
+                OMaterial _miembro = DataAccess.Materiales.Obtener_Sector_Por_ID(pID_Sector);
+
+                if (_miembro != null)
+                {
+                    using (TransactionScope _transaction = new TransactionScope())
+                    {
+                        DataAccess.Materiales.Actualizar_Sector(pID_Sector, pDescripcion, pFK_ID_Planta, pFK_ID_Area, pFK_ID_Estado, pMotivo_Baja);
+                        _transaction.Complete();
+                    }
+
+                    DataAccess.Log.Informar_Evento(10, "Se actualizo el sector: " + pID_Sector + ", con la descripción: " + pDescripcion + " planta: " + pFK_ID_Planta + " área: " + pFK_ID_Area + " motivo de baja: " + pMotivo_Baja);
+                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del área: " + pFK_ID_Area;
+                    _respuesta.Resultado = Resultado_Operacion.Ok;
+                }
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+            }
+
+            return _respuesta;
+        }
         
         #endregion
 
         #region Baja
 
-        public Respuesta Baja_Miembro(Int32 pId_Miembro, String pMotivo_baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Material(Int32 pId_Material, String pMotivo_Baja, Int32 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         
             try
             {
-                OMiembros _miembro = DataAccess.Miembros.Obtener_Miembro(pId_Miembro);
+                OMaterial _material = DataAccess.Materiales.Obtener_Material_Por_ID(pId_Material);
 
-                if (_miembro != null)
+                if (_material != null)
                 {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
-                        DataAccess.Miembros.Baja_Miembro(pId_Miembro, pMotivo_baja, pFK_ID_Estado);
+                        DataAccess.Materiales.Baja_Material(pId_Material, pMotivo_Baja, pFK_ID_Estado);
                         _transaction.Complete();
                     }
 
-                    _respuesta.Mensaje = "El miembro se dió de baja correctamente.";
+                    _respuesta.Mensaje = "El material se dió de baja correctamente.";
                     _respuesta.Resultado = Resultado_Operacion.Ok;
                 }
             }
@@ -221,723 +283,23 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        #endregion
-
-
-
-        #region Consultas Miembros
-        public RS_Miembros Obtener_Miembro(Int32 pId_Miembro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro(pId_Miembro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembro_Seleccionado(Int32 pId_Miembro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro_Seleccionado(pId_Miembro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Consolidaciones_Por_Filtro(Int16 pID_Miembro, String pFiltro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Consolidaciones_Por_Filtro(pID_Miembro, pFiltro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembro_Editar(Int32 pId_Miembro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro_Editar(pId_Miembro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembro_Seleccionado_Por_ID(Int32 pID_Hospedador)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro_Seleccionado_Por_ID(pID_Hospedador);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembro_Seleccionado_CDP(Int32 pId_Miembro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro_Seleccionado_CDP(pId_Miembro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembro_Seleccionado_GDV(Int32 pId_Miembro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro_Seleccionado_GDV(pId_Miembro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_Seleccionado_Por_ID(Int32 pId_GDV)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = new OGrupo_de_Vida[1];
-                _respuesta.Lista_Grupo_de_Vida[0] = DataAccess.Miembros.Obtener_GDV_Seleccionado_Por_ID(pId_GDV);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembros_Con_Datos()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembros_Con_Datos();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Liderazgo()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Liderazgo = DataAccess.Miembros.Obtener_Liderazgo();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Mes()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Mes = DataAccess.Miembros.Obtener_Mes();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Tipo_Entrega()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Tipo_Entrega = DataAccess.Miembros.Obtener_Tipo_Entrega();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Dia_Semana()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Dia_Semana = DataAccess.Miembros.Obtener_Dia_Semana();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Civil()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Estado_Civil = DataAccess.Miembros.Obtener_Estado_Civil();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-
-        public RS_Miembros Obtener_Miembros_Por_Filtro(string pFiltro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Miembros_Por_Filtro(pFiltro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembros_Por_Filtro_Red(String pFiltro, Int16 pFK_ID_Lider_Red)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Miembros_Por_Filtro_Red(pFiltro, pFK_ID_Lider_Red);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Baja()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Estado = DataAccess.Miembros.Obtener_Estado_Baja();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Condicion()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Condicion = DataAccess.Miembros.Obtener_Condicion();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Numero_Leccion()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Numero_Leccion = DataAccess.Miembros.Obtener_Numero_Leccion();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Enviar_A()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Estado = DataAccess.Miembros.Obtener_Estado_Enviar_A();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Consolidacion()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Consolidacion();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Consolidacion_por_Red(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Consolidacion_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Consolidacion_Completo()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Consolidacion_Completo();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Consolidacion_por_Red_Con_Fecha(Int16 pID_Session, String pFecha_Inicio, String pFecha_Fin)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Consolidacion_por_Red_Con_Fecha(pID_Session, pFecha_Inicio, pFecha_Fin);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembros_por_Lider_GDV(Int16 pID_Lider)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Miembros_por_Lider_GDV(pID_Lider);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-
-        #endregion
-
-        #region Consultas Miembros bajas
-
-        public RS_Miembros Obtener_Estados_Baja_Por_Condicion_Por_Red(Int16 pID_Estado, Int16 pID_Condicion, Int16 pID_Lider_Red, Int16 pID_Lider_GDV)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estados_Baja_Por_Condicion_Por_Red(pID_Estado, pID_Condicion, pID_Lider_Red, pID_Lider_GDV);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembro_Baja_Por_Condicion_Por_Red_Editar(Int16 pId_Miembro, Int16 pID_LiderGDV, Int16 pID_Condicion)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Miembro_Baja_Por_Condicion_Por_Red_Editar(pId_Miembro, pID_LiderGDV, pID_Condicion);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-
-        #endregion
-
-        #region Consultas CDP
-        public RS_Miembros Obtener_Consolidacion_A_CDP()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Consolidacion_A_CDP();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_CDP()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_CDP();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_CDP_Sin_Lider()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_CDP_Sin_Lider();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_CDP_por_Red(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_CDP_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_CDP_Completo()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_CDP_Completo();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_CDP_por_Red_Con_Fecha(Int16 pID_Session, String pFecha_Inicio, String pFecha_Fin)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_CDP_por_Red_Con_Fecha(pID_Session, pFecha_Inicio, pFecha_Fin);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembros_por_Red(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Miembros_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembros_Completo()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Miembros_Completo();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Miembros_por_Red_Con_Fecha(Int16 pID_Session, String pFecha_Inicio, String pFecha_Fin)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Miembros_por_Red_Con_Fecha(pID_Session, pFecha_Inicio, pFecha_Fin);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_CDP_Por_Filtro(String pFiltro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_CDP_Por_Filtro(pFiltro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public Respuesta Actualizar_Numero_Leccion(int pId_Miembro, Int16 pFK_ID_Numero_Leccion)
+        public Respuesta Baja_Sector(Int32 pID_Sector, String pMotivo_Baja, Int32 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
-
+        
             try
             {
-                OMiembros _miembro = DataAccess.Miembros.Obtener_Miembro(pId_Miembro);
+                OSector _sector = DataAccess.Materiales.Obtener_Sector_Por_ID(pID_Sector);
 
-                if (_miembro != null)
+                if (_sector != null)
                 {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
-                        DataAccess.Miembros.Actualizar_Numero_Leccion(pId_Miembro, pFK_ID_Numero_Leccion);
+                        DataAccess.Materiales.Baja_Sector(pID_Sector, pMotivo_Baja, pFK_ID_Estado);
                         _transaction.Complete();
                     }
 
-                    _respuesta.Mensaje = "La asignación se realizó correctamente";
+                    _respuesta.Mensaje = "El sector se dió de baja correctamente.";
                     _respuesta.Resultado = Resultado_Operacion.Ok;
                 }
             }
@@ -950,266 +312,23 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        #endregion
-
-        #region Consultas GDV
-        public RS_Miembros Obtener_Consolidacion_A_GDV()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro[0] = DataAccess.Miembros.Obtener_Consolidacion_A_GDV();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_GDV()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_GDV();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Sobres_GDV()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Sobres_Grupo = DataAccess.Miembros.Obtener_Sobres_GDV();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Sobre_Seleccionado_Por_ID(Int32 pID_Sobre)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Sobres_Grupo = new OSobre_Grupo[1];
-                _respuesta.Lista_Sobres_Grupo[0] = DataAccess.Miembros.Obtener_Sobre_Seleccionado_Por_ID(pID_Sobre);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Sobres_GDV_por_Filtro(Int16 pID_Lider_Red, Int16 pID_Lider_GDV, Int16 pID_Mes, Int16 pAnio)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Sobres_Grupo = DataAccess.Miembros.Obtener_Sobres_GDV_por_Filtro(pID_Lider_Red, pID_Lider_GDV, pID_Mes, pAnio);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_GDV_por_Red(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_GDV_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_por_Red(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = new OMiembros[1];
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_GDV_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_por_Red_Nuevo(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = new OGrupo_de_Vida[1];
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_GDV_por_Red_Nuevo(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_Completo()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = new OGrupo_de_Vida[1];
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_GDV_Completo();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_por_Red_Con_Fecha(Int16 pID_Session, String pFecha_Inicio, String pFecha_Fin)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = new OGrupo_de_Vida[1];
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_GDV_por_Red_Con_Fecha(pID_Session, pFecha_Inicio, pFecha_Fin);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_por_Red_Nuevo2(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Sobres_Grupo = new OSobre_Grupo[1];
-                _respuesta.Lista_Sobres_Grupo = DataAccess.Miembros.Obtener_GDV_por_Red_Nuevo2(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_Por_Filtro(String pFiltro)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = new OGrupo_de_Vida[1];
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_GDV_Por_Filtro(pFiltro);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_GDV_Por_Filtro_Red(String pFiltro, Int16 pFK_ID_Lider_Red)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = new OGrupo_de_Vida[1];
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_GDV_Por_Filtro_Red(pFiltro, pFK_ID_Lider_Red);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        #endregion
-
-        #region Consultas Asistencia
-        public Respuesta Actualizar_Asistencia(Int32 ID_Asistencia, Int16 pId_Miembro, Int16 pAnio, Int16 pFK_ID_Mes, String pQuincena_uno_grupo, String pQuincena_uno_culto, String pQuincena_dos_grupo, String pQuincena_dos_culto)
+        public Respuesta Baja_Area(Int32 pID_Area, String pMotivo_Baja, Int32 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
-
+        
             try
             {
-                OMiembros _asistencia = DataAccess.Miembros.Obtener_Miembro_Seleccionado_Por_ID(pId_Miembro);
+                OArea _area = DataAccess.Materiales.Obtener_Area_Por_ID(pID_Area);
 
-                if (_asistencia != null)
+                if (_area != null)
                 {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
-                        DataAccess.Miembros.Actualizar_Asistencia(ID_Asistencia, pId_Miembro, pAnio, pFK_ID_Mes, pQuincena_uno_grupo, pQuincena_uno_culto, pQuincena_dos_grupo, pQuincena_dos_culto);
+                        DataAccess.Materiales.Baja_Area(pID_Area, pMotivo_Baja, pFK_ID_Estado);
                         _transaction.Complete();
                     }
 
-                    _respuesta.Mensaje = "La asistencia de actualizó correctamente";
+                    _respuesta.Mensaje = "El área se dió de baja correctamente.";
                     _respuesta.Resultado = Resultado_Operacion.Ok;
                 }
             }
@@ -1221,15 +340,26 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             return _respuesta;
         }
-        public RS_Miembros Obtener_Asistencia_por_Red(Int16 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
 
+        public Respuesta Baja_Pedido_Materiales(Int32 pID_Pedido_Materiales, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        {
+            Respuesta _respuesta = new Respuesta();
+        
             try
             {
-                _respuesta.Lista_Asistencia = new OAsistencia[1];
-                _respuesta.Lista_Asistencia = DataAccess.Miembros.Obtener_Asistencia_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
+                OMaterial _pedido_material = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Materiales);
+
+                if (_pedido_material != null)
+                {
+                    using (TransactionScope _transaction = new TransactionScope())
+                    {
+                        DataAccess.Materiales.Baja_Pedido_Materiales(pID_Pedido_Materiales, pMotivo_Baja, pFK_ID_Estado);
+                        _transaction.Complete();
+                    }
+
+                    _respuesta.Mensaje = "El pedido de material se dió de baja correctamente.";
+                    _respuesta.Resultado = Resultado_Operacion.Ok;
+                }
             }
             catch (Exception ex)
             {
@@ -1239,15 +369,55 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             return _respuesta;
         }
-        public RS_Miembros Obtener_Asistencia_por_Filtro(Int16 pID_Lider_Red, Int16 pID_Responsable, Int16 pID_Mes, Int16 pAnio)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
 
+        public Respuesta Baja_Tipo_Material(Int32 pID_Tipo_Material, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        {
+            Respuesta _respuesta = new Respuesta();
+        
             try
             {
-                _respuesta.Lista_Asistencia = new OAsistencia[1];
-                _respuesta.Lista_Asistencia = DataAccess.Miembros.Obtener_Asistencia_por_Filtro(pID_Lider_Red, pID_Responsable, pID_Mes, pAnio);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
+                OTipo_Material _tipo_material = DataAccess.Materiales.Obtener_Tipo_Material_Por_ID(pID_Tipo_Material);
+
+                if (_tipo_material != null)
+                {
+                    using (TransactionScope _transaction = new TransactionScope())
+                    {
+                        DataAccess.Materiales.Baja_Tipo_Material(pID_Tipo_Material, pMotivo_Baja, pFK_ID_Estado);
+                        _transaction.Complete();
+                    }
+
+                    _respuesta.Mensaje = "El tipo de material se dió de baja correctamente.";
+                    _respuesta.Resultado = Resultado_Operacion.Ok;
+                }
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+            }
+
+            return _respuesta;
+        }
+
+        public Respuesta Baja_Ubicacion(Int32 pID_Ubicacion, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        {
+            Respuesta _respuesta = new Respuesta();
+        
+            try
+            {
+                OUbicacion _ubicacion = DataAccess.Materiales.Obtener_Ubicacion_Por_ID(pID_Ubicacion);
+
+                if (_ubicacion != null)
+                {
+                    using (TransactionScope _transaction = new TransactionScope())
+                    {
+                        DataAccess.Materiales.Baja_Ubicacion(pID_Ubicacion, pMotivo_Baja, pFK_ID_Estado);
+                        _transaction.Complete();
+                    }
+
+                    _respuesta.Mensaje = "La ubicación se dió de baja correctamente.";
+                    _respuesta.Resultado = Resultado_Operacion.Ok;
+                }
             }
             catch (Exception ex)
             {
@@ -1260,348 +430,15 @@ namespace Electro.BusinessLayer.BusinessObjects
 
         #endregion
 
-        #region consultas EDV
-        public RS_Miembros Obtener_Consolidacion_A_EDV(int pId_Miembro, string pApellido, string pNombre, string pDireccion, short pFK_ID_Consolidador)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+        #region Consultas Materiales
 
-        #region Consultas Lideres
-        public RS_Miembros Obtener_Lideres_Activos()
+        public RS_Materiales Obtener_Areas()
         {
-            RS_Miembros _respuesta = new RS_Miembros();
+            RS_Materiales _respuesta = new RS_Materiales();
 
             try
             {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_Activos();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_Inactivos()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_Inactivos();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_GDV()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_GDV();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_GDV_por_Red(Int32 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_GDV_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_GDV_por_Red2(Int32 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_Lideres_GDV_por_Red2(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_GDV_por_Red3(Int32 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_Lideres_GDV_por_Red3(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_GDV_Nuevo()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Grupo_de_Vida = DataAccess.Miembros.Obtener_Lideres_GDV_Nuevo();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_CDP_por_Red(Int32 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_CDP_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_por_Red(Int32 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Hospedador_Activos_Por_Red(Int32 pID_Session)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Hospedador_Activos_Por_Red(pID_Session);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Lideres_Red()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Lideres_Red();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Escalera_Crecimiento()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Escalera_Crecimiento = DataAccess.Miembros.Obtener_Escalera_Crecimiento();
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-
-            }
-
-            return _respuesta;
-        }
-
-        #endregion
-
-        #region Consultas Bautismo
-        public RS_Miembros Obtener_Estado_Bautismo(Int16 pID_Estado)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Bautismo(pID_Estado);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Bautismo_Por_Red(Int16 pID_Estado, Int16 pID_Lider_Red)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Bautismo_Por_Red(pID_Estado, pID_Lider_Red);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Bautismo_Completo(Int16 pID_Estado)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Bautismo_Completo(pID_Estado);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Bautismo_Completo_Estadistica(Int16 pID_Estado)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Bautismo_Completo_Estadistica(pID_Estado);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Estado_Bautismo_Por_Red_Con_Fecha(Int16 pID_Estado, Int16 pID_Lider_Red, String pFecha_Inicio, String pFecha_Fin)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Estado_Bautismo_Por_Red_Con_Fecha(pID_Estado, pID_Lider_Red, pFecha_Inicio, pFecha_Fin);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-        public RS_Miembros Obtener_Bautismo_Por_Filtro_Red(String pFiltro, Int16 pFK_ID_Lider_Red)
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Miembro = DataAccess.Miembros.Obtener_Bautismo_Por_Filtro_Red(pFiltro, pFK_ID_Lider_Red);
-                _respuesta.Resultado = Resultado_Operacion.Ok;
-            }
-            catch (Exception ex)
-            {
-                _respuesta.Mensaje = ex.Message;
-                _respuesta.Resultado = Resultado_Operacion.Error;
-            }
-
-            return _respuesta;
-        }
-
-
-        #endregion
-
-        #region Consultas Iglesias
-        public RS_Miembros Obtener_Iglesia()
-        {
-            RS_Miembros _respuesta = new RS_Miembros();
-
-            try
-            {
-                _respuesta.Lista_Iglesia = DataAccess.Miembros.Obtener_Iglesia();
+                _respuesta.Lista_Area[0] = DataAccess.Materiales.Obtener_Areas();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)

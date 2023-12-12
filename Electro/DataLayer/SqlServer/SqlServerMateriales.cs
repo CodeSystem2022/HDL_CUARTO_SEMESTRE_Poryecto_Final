@@ -681,6 +681,74 @@ namespace Electro.DataLayer.SqlServer
 
         #region Obtener Cabecera
 
+        private String Obtener_Cabecera_Area()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Area].[ID_Area],[Area].[Descripcion],[Estado].[FK_ID_Estado], [Estado].[Descripcion_Estado]");
+                _sql.AppendLine(",[Area].[Motivo_Baja],[Area].[Fecha_Creacion],[Area].[Abreviatura]");
+                _sql.AppendLine("FROM [dbo].[Area]");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = [Area].FK_ID_Estado");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private String Obtener_Cabecera_Sector()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Sector].[ID_Sector],[Sector].[Descripcion] AS Descripcion_Sector");
+                _sql.AppendLine(",[Planta].[ID_Planta],[Planta].[Descripcion] AS Descripcion_Planta");
+                _sql.AppendLine(",[Area].[ID_Area],[Area].[Descripcion] AS Descripcion_Area");
+                _sql.AppendLine(",[Estado].[ID_Estado],[Estado].[Descripcion_Estado] AS Descripcion_Estado");
+                _sql.AppendLine(",[Sector].[Motivo_Baja],[Sector].[Fecha_Creacion]");
+                _sql.AppendLine("FROM[Sector]");
+                _sql.AppendLine("LEFT OUTER JOIN Planta ON Planta.ID_Planta = Sector.FK_ID_Planta");
+                _sql.AppendLine("LEFT OUTER JOIN Area ON Area.ID_Area = Sector.FK_ID_Area");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = Sector.FK_ID_Estado");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private String Obtener_Cabecera_Ubicacion()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Ubicacion].[ID_Ubicacion],[Ubicacion].[Ubicacion_Estanteria],[Ubicacion].[Ubicacion_Columna],[Ubicacion].[Ubicacion_Fila]");
+                _sql.AppendLine(",[Ubicacion].[Ubicacion_Gaveta],[Planta].[ID_Planta],[Planta].[Descripcion] AS Descripcion_Planta,[Area].[ID_Area],[Area].[Descripcion] AS Descripcion_Area");
+                _sql.AppendLine(",[Ubicacion].[Fecha_Alta],[Ubicacion].[Fecha_Baja],[Condicion].[ID_Condicion],[Condicion].[Descripcion] AS Descripcion_Condicion");
+                _sql.AppendLine("FROM[Ubicacion]");
+                _sql.AppendLine("LEFT OUTER JOIN Planta ON Planta.ID_Planta = Ubicacion.FK_ID_Planta");
+                _sql.AppendLine("LEFT OUTER JOIN Area ON Area.ID_Area = Ubicacion.FK_ID_Area");
+                _sql.AppendLine("LEFT OUTER JOIN Condicion ON Condicion.ID_Condicion = Ubicacion.FK_ID_Condicion");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private String Obtener_Cabecera_Materiales()
         {
             try
@@ -708,7 +776,28 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
+        private String Obtener_Cabecera_Tipo_Materiales()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Tipo_Material].[ID_Tipo_Material],[Tipo_Material].[Tipo_Material],[Tipo_Material].[Descripcion]");
+                _sql.AppendLine(",Estado.[ID_Estado],Estado.Descripcion_Estado,[Tipo_Material].[Motivo_Baja],[Tipo_Material].[Fecha_Creacion]");
+                _sql.AppendLine("FROM [dbo].[Tipo_Material]");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = [Tipo_Material].FK_ID_Estado");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
         #endregion
+        
         #region Obtener Cabecera COMBO
 
         public String Obtener_CMB_Planta()
@@ -721,6 +810,62 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("SELECT Planta.[ID_Planta],Planta.[Descripcion],Planta.[FK_ID_Estado], Estado.Descripcion_Estado,Planta.[Motivo_Baja]");
                 _sql.AppendLine("FROM [dbo].[Planta]");
                 _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = Planta.FK_ID_Estado");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private String Obtener_CMB_Area()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Area].[ID_Area],[Area].[Descripcion],[Estado].[ID_Estado]");
+                _sql.AppendLine(",[Area].[Motivo_Baja],[Area].[Fecha_Creacion],[Area].[Abreviatura]");
+                _sql.AppendLine("FROM [dbo].[Area]");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = Area.FK_ID_Estado");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private String Obtener_CMB_Prioridad()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [ID_Prioridad],[Descripcion]");
+                _sql.AppendLine("FROM [dbo].[Prioridad]");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private String Obtener_CMB_Estado()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("[ID_Estado],[Descripcion_Estado]");
+                _sql.AppendLine("FROM [dbo].[Estado]");
 
                 return _sql.ToString();
             }
@@ -753,11 +898,61 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
+        private String Obtener_CMB_Tipo_Material()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Tipo_Material].[ID_Tipo_Material],[Tipo_Material].[Tipo_Material],[Tipo_Material].[Descripcion]");
+                _sql.AppendLine(",[Estado].[ID_Estado],[Tipo_Material].[Motivo_Baja],[Tipo_Material].[Fecha_Creacion]");
+                _sql.AppendLine("FROM [Tipo_Material]");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = Tipo_Material.FK_ID_Estado");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
+
         #region Consultas Materiales
 
-        //Esta función hay que agregarla en IMateriales
-        public OMaterial Obtener_Material(int pId_Material)
+        //Esta función obtiene el área por ID
+        public OArea Obtener_Area_Por_ID(int pId_Area)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine(Obtener_Cabecera_Materiales());
+                _sql.AppendLine("WHERE [Area].[ID_Area] = " + pId_Area);
+                _sql.AppendLine("ORDER BY [Area].[ID_Area] ASC");
+
+                OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 1)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Area_Por_ID" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+        //Esta función obtiene el material por ID
+        public OMaterial Obtener_Material_Por_ID(int pId_Material)
         {
             try
             {
@@ -777,7 +972,36 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL-" + ex.Message);
+                throw new Exception("SQL- Obtener_Material_Por_ID" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+        //Esta función obtiene el tipo de material por ID
+        public OMaterial Obtener_Tipo_Material_Por_ID(int pId_Material)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine(Obtener_Cabecera_Tipo_Materiales());
+                _sql.AppendLine("WHERE [Material].[ID_Material] = " + pId_Material);
+                _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
+
+                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 1)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Material_Por_ID" + ex.Message);
             }
             catch (Exception ex)
             {
@@ -793,7 +1017,7 @@ namespace Electro.DataLayer.SqlServer
 
                 _sql.AppendLine(Obtener_Cabecera_Materiales());
                 
-                _sql.AppendLine("WHERE  (Material.[Codigo_Origen] LIKE '%" + pFiltro + "%'");
+                _sql.AppendLine("WHERE (Material.[Codigo_Origen] LIKE '%" + pFiltro + "%'");
                 _sql.AppendLine("OR Material.[Codigo_Interno] LIKE '%" + pFiltro + "%'");
                 _sql.AppendLine("AND Material.FK_ID_Estado = 1");
                 _sql.AppendLine("ORDER BY Tipo_Material.Descripcion");
@@ -804,7 +1028,7 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL-" + ex.Message);
+                throw new Exception("SQL- Obtener_Material_Por_Filtro" + ex.Message);
             }
             catch (Exception ex)
             {
@@ -827,7 +1051,76 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL-" + ex.Message);
+                throw new Exception("SQL- Obtener_Condicion" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OArea[] Obtener_Areas()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM [Area]");
+                _sql.AppendLine("ORDER BY [Area].[ID_Area] ASC");
+
+                OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Areas" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OEstado[] Obtener_Estados()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM [Estado]");
+                _sql.AppendLine("ORDER BY [Estado].[ID_Estado] ASC");
+
+                OEstado[] _resultado = Cargar_Estado(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Estados" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OMaterial[] Obtener_Materiales()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM [Material]");
+                _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
+
+                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Materiales" + ex.Message);
             }
             catch (Exception ex)
             {
@@ -861,7 +1154,7 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL-" + ex.Message);
+                throw new Exception("SQL- Obtener_Baja_Material" + ex.Message);
             }
             catch (Exception ex)
             {
