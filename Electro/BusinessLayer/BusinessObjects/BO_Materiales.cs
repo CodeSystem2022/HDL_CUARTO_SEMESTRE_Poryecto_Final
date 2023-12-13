@@ -432,6 +432,8 @@ namespace Electro.BusinessLayer.BusinessObjects
 
         #region Consultas Materiales
 
+        // ÁREAS
+
         public RS_Materiales Obtener_Areas()
         {
             RS_Materiales _respuesta = new RS_Materiales();
@@ -439,6 +441,338 @@ namespace Electro.BusinessLayer.BusinessObjects
             try
             {
                 _respuesta.Lista_Area[0] = DataAccess.Materiales.Obtener_Areas();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Area_Por_ID(Int32 pID_Area)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Area[0] = DataAccess.Materiales.Obtener_Area_Por_ID(pID_Area);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Area_Por_Nombre(String pNombre_Area)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Area[0] = DataAccess.Materiales.Obtener_Area_Por_Nombre(pNombre_Area);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        // MATERIALES
+
+        public RS_Materiales Obtener_Materiales()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Materiales();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Material_Por_ID(Int32 pID_Material)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Material_Por_ID(pID_Material);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Material_Por_Nombre(String pNombre_Material)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Material_Por_Nombre(pNombre_Material);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        // PEDIDO DE MATERIALES
+
+        public RS_Materiales Obtener_Pedidos_Materiales()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedidos_Materiales();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Pedido_Material_Por_ID(Int64 pID_Pedido_Material)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Material);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Pedido_Material_Por_Nombre(String pNombre_Pedido_Material)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedido_Material_Por_Nombre(pNombre_Pedido_Material);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        // TIPO DE MATERIALES
+
+        public RS_Materiales Obtener_Tipo_Materiales()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Tipo_Material[0] = DataAccess.Materiales.Obtener_Tipo_Materiales();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Tipo_Materiales_Por_ID(Int32 pID_Tipo_Material)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Tipo_Material[0] = DataAccess.Materiales.Obtener_Tipo_Material_Por_ID(pID_Tipo_Material);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Tipo_Materiales_Por_Nombre(String pNombre_Tipo_Material)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Tipo_Material[0] = DataAccess.Materiales.Obtener_Tipo_Material_Por_Nombre(pNombre_Tipo_Material);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        // SECTORES
+
+        public RS_Materiales Obtener_Sectores()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Sector[0] = DataAccess.Materiales.Obtener_Sectores();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Sector_Por_ID(Int16 pID_Sector)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Sector[0] = DataAccess.Materiales.Obtener_Sector_Por_ID(pID_Sector);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Sector_Por_Nombre(String pNombre_Sector)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Sector[0] = DataAccess.Materiales.Obtener_Sector_Por_Nombre(pNombre_Sector);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        // UBICACIONES
+
+        public RS_Materiales Obtener_Ubicaciones()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Ubicacion[0] = DataAccess.Materiales.Obtener_Ubicaciones();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Ubicacion_Por_ID(Int16 pID_Ubicacion)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Ubicacion[0] = DataAccess.Materiales.Obtener_Ubicacion_Por_ID(pID_Ubicacion);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Ubicacion_Por_Nombre(Int16 pNombre_Ubicacion)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Ubicacion[0] = DataAccess.Materiales.Obtener_Ubicacion_Por_Nombre(pNombre_Ubicacion);
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)

@@ -17,6 +17,7 @@ namespace Electro.BusinessLayer.ValueObjects
         public OPerfil[] Lista_Perfil;
         public OPlanta[] Lista_Planta;
         public OSector[] Lista_Sector;
+        public OUbicacion[] Lista_Ubicacion;
         public OTipo_Material[] Lista_Tipo_Material;
 	}
 }

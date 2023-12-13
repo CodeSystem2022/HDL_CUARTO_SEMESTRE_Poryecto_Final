@@ -50,8 +50,11 @@ namespace Electro.DataLayer.Interfaces
 
         OMaterial Obtener_Materiales();
         OMaterial Obtener_Material_Por_ID(Int32 pID_Material);
-        OMaterial Obtener_Pedido_Material_Por_ID(Int32 pID_Pedido_Material);
         OMaterial Obtener_Material_Por_Nombre(String pNombre_Material);
+
+        OMaterial Obtener_Pedidos_Materiales();
+        OMaterial Obtener_Pedido_Material_Por_ID(Int64 pID_Pedido_Material);
+        OMaterial Obtener_Pedido_Material_Por_Nombre(String pNombre_Pedido_Material);
 
         OTipo_Material Obtener_Tipo_Materiales();
         OTipo_Material Obtener_Tipo_Material_Por_ID(Int32 pID_Tipo_Material);
@@ -61,7 +64,7 @@ namespace Electro.DataLayer.Interfaces
         OSector Obtener_Sector_Por_ID(Int32 pID_Sector);
         OSector Obtener_Sector_Por_Nombre(String pNombre_Sector);
 
-        OUbicacion Obtener_Ubicacion();
+        OUbicacion Obtener_Ubicaciones();
         OUbicacion Obtener_Ubicacion_Por_ID(Int32 pID_Ubicacion);
         OUbicacion Obtener_Ubicacion_Por_Nombre(String pNombre_Ubicacion);
         

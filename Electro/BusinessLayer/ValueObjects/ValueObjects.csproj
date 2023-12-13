@@ -60,6 +60,7 @@
     <Compile Include="OAccion_Notificacion_Usuario.cs" />
     <Compile Include="OArea.cs" />
     <Compile Include="OCondicion.cs" />
+    <Compile Include="OUbicacion.cs" />
     <Compile Include="OEstado.cs" />
     <Compile Include="OPerfil.cs" />
     <Compile Include="OTipo_Material.cs" />
