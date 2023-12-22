@@ -32,7 +32,7 @@ namespace Electro.DataLayer.Interfaces
         #region Consultas
 
         // Obtiene un usuario
-        OUsuarios Obtener_Usuario(Int32 pId_Usuario);
+        OUsuarios Obtener_Usuario_Por_ID(Int32 pId_Usuario);
         // Obtiene el usuario en el filtro por Apellido, Nombre, Legajo, Nombre de usuario
         OUsuarios[] Obtener_Usuarios_Por_Filtro(String pFiltro);
         //Obtiene los usuarios activos

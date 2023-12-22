@@ -156,6 +156,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
+        #endregion
 
         #region Modificaciones
 
@@ -165,9 +166,9 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                OMaterial _material = DataAccess.Materiales.Obtener_Area(pID_Area);
+                OArea _area = DataAccess.Materiales.Obtener_Area_Por_ID(pID_Area);
 
-                if (_material != null)
+                if (_area != null)
                 {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
@@ -195,7 +196,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                OMaterial _material = DataAccess.Materiales.Obtener_Material(pID_Material);
+                OMaterial _material = DataAccess.Materiales.Obtener_Material_Por_ID(pID_Material);
 
                 if (_material != null)
                 {
@@ -226,7 +227,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                OMaterial _miembro = DataAccess.Materiales.Obtener_Sector_Por_ID(pID_Sector);
+                OSector _miembro = DataAccess.Materiales.Obtener_Sector_Por_ID(pID_Sector);
 
                 if (_miembro != null)
                 {
@@ -250,11 +251,42 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
         
+        // se actualiza el sector o la uap
+        public Respuesta Actualizar_Ubicacion(Int32 pID_Ubicacion, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, String pUbicacion_Gaveta, Int16 pFK_ID_Planta, Int16 pFK_ID_Area, String pMotivo_Baja, Int16 pFK_ID_Condicion)
+        {
+            Respuesta _respuesta = new Respuesta();
+
+            try
+            {
+                OUbicacion _miembro = DataAccess.Materiales.Obtener_Ubicacion_Por_ID(pID_Ubicacion);
+
+                if (_miembro != null)
+                {
+                    using (TransactionScope _transaction = new TransactionScope())
+                    {
+                        DataAccess.Materiales.Actualizar_Ubicacion(pID_Ubicacion, pUbicacion_Estanteria, pUbicacion_Columna, pUbicacion_Fila, pUbicacion_Gaveta, pFK_ID_Planta, pFK_ID_Area, pMotivo_Baja, pFK_ID_Condicion);
+                        _transaction.Complete();
+                    }
+
+                    DataAccess.Log.Informar_Evento(10, "Se actualizo la ubicación: " + pID_Ubicacion + ", en la estanteria: " + pUbicacion_Estanteria + " columna: " + pUbicacion_Columna + " fila: " + pUbicacion_Fila + " gaveta: " + pUbicacion_Gaveta + " planta: " + pFK_ID_Planta + " área: " + pFK_ID_Area + " motivo de baja: " + pMotivo_Baja + " condición: " + pFK_ID_Condicion);
+                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del área: " + pFK_ID_Area;
+                    _respuesta.Resultado = Resultado_Operacion.Ok;
+                }
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+            }
+
+            return _respuesta;
+        }
+        
         #endregion
 
         #region Baja
 
-        public Respuesta Baja_Material(Int32 pId_Material, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Material(Int32 pId_Material, String pMotivo_Baja, Int16 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         
@@ -283,7 +315,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public Respuesta Baja_Sector(Int32 pID_Sector, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Sector(Int32 pID_Sector, String pMotivo_Baja, Int16 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         
@@ -312,7 +344,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public Respuesta Baja_Area(Int32 pID_Area, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Area(Int32 pID_Area, String pMotivo_Baja, Int16 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         
@@ -341,7 +373,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public Respuesta Baja_Pedido_Materiales(Int32 pID_Pedido_Materiales, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Pedido_Materiales(Int32 pID_Pedido_Materiales, String pMotivo_Baja, Int16 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         
@@ -370,7 +402,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public Respuesta Baja_Tipo_Material(Int32 pID_Tipo_Material, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Tipo_Material(Int32 pID_Tipo_Material, String pMotivo_Baja, Int16 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         
@@ -399,7 +431,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public Respuesta Baja_Ubicacion(Int32 pID_Ubicacion, String pMotivo_Baja, Int32 pFK_ID_Estado)
+        public Respuesta Baja_Ubicacion(Int32 pID_Ubicacion, String pMotivo_Baja, Int16 pFK_ID_Estado)
         {
             Respuesta _respuesta = new Respuesta();
         

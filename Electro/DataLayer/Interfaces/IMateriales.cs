@@ -33,12 +33,13 @@ namespace Electro.DataLayer.Interfaces
 
         #region Baja
 
-        void Baja_Area(Int32 pID_Area, String pMotivo_Baja, Int32 pFK_ID_Estado);
-        void Baja_Material(Int32 pID_Material, String pMotivo_Baja, Int32 pFK_ID_Estado);
-        void Baja_Tipo_Material(Int32 pID_Tipo_Material, String pMotivo_Baja, Int32 pFK_ID_Estado);
-        void Baja_Pedido_Materiales(Int32 pID_Pedido_Materiales, String pMotivo_Baja, Int32 pFK_ID_Estado);
-        void Baja_Sector(Int32 pID_Sector, String pMotivo_Baja, Int32 pFK_ID_Estado);
-        void Baja_Ubicacion(Int32 pID_Ubicacion, String pMotivo_Baja, Int32 pFK_ID_Estado);
+        void Baja_Area(Int32 pID_Area, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        void Baja_Material(Int32 pID_Material, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        void Baja_Tipo_Material(Int32 pID_Tipo_Material, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        void Baja_Pedido_Materiales(Int32 pID_Pedido_Materiales, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        void Baja_Sector(Int32 pID_Sector, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        void Baja_Ubicacion(Int32 pID_Ubicacion, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        void Baja_Planta(Int32 pID_Planta, String pMotivo_Baja, Int16 pFK_ID_Estado);
 
         #endregion
 
@@ -67,7 +68,10 @@ namespace Electro.DataLayer.Interfaces
         OUbicacion Obtener_Ubicaciones();
         OUbicacion Obtener_Ubicacion_Por_ID(Int32 pID_Ubicacion);
         OUbicacion Obtener_Ubicacion_Por_Nombre(String pNombre_Ubicacion);
-        
+
+        OPlanta Obtener_Plantas();
+        OPlanta Obtener_Planta_Por_ID(Int32 pID_Planta);
+
         #endregion
 
     }

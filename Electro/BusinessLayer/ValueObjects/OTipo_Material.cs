@@ -18,6 +18,7 @@ namespace Electro.BusinessLayer.ValueObjects
         private String descripcion;
         private Int16 fk_id_estado;
         private String estado_descripcion;
+        private String motivo_baja;
         private String fecha_creacion;
 
         #region Get y Set
@@ -27,7 +28,7 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return id_tipo_material; }
             set { id_tipo_material = value; }
         }
-        public String Tipo_Articulo
+        public String Tipo_Material
         {
             get { return tipo_material; }
             set { tipo_material = value; }
@@ -47,6 +48,11 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return estado_descripcion; }
             set { estado_descripcion = value; }
         }
+        public String Motivo_Baja
+        {
+            get { return motivo_baja; }
+            set { motivo_baja = value; }
+        }
         public String Fecha_Creacion
         {
             get { return fecha_creacion; }
@@ -55,13 +61,14 @@ namespace Electro.BusinessLayer.ValueObjects
 
         #endregion
 
-        public OTipo_Material() 
+        public OTipo_Material()
         {
             id_tipo_material = 0;
             tipo_material = "";
             descripcion = "";
             fk_id_estado = 0;
             estado_descripcion = "";
+            motivo_baja = "";
             fecha_creacion="";
         }
     }

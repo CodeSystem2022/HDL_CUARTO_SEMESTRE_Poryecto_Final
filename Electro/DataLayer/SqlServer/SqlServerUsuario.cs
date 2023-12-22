@@ -168,8 +168,37 @@ namespace Electro.DataLayer.SqlServer
         }
 
         #endregion
-        
 
+        #region Baja Usuarios
+
+        public void Baja_Usuario(Int16 pID_Usuario, String pMotivo_Baja, String pFecha_baja, Int16 pFK_ID_Estado)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("UPDATE Usuarios");
+                _sql.AppendLine("SET    pFK_ID_Estado = " + pFK_ID_Estado + ",");
+                _sql.AppendLine("       Motivo_Baja = " + pMotivo_Baja + ",");
+                _sql.AppendLine("       Fecha_Baja = " + pFecha_baja );
+                _sql.AppendLine("WHERE  ID_Usuario = " + pID_Usuario);
+
+                if (Db_EF.Update(_sql.ToString()) != 1)
+                {
+                    throw new Exception("No se pudieron actualizar los datos del usuario con ID N° " + pID_Usuario);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL Baja_Usuario - " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
 
         #region Consultas Usuarios
 
