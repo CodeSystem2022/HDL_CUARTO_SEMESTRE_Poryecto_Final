@@ -20,10 +20,13 @@ namespace Electro.BusinessLayer.ValueObjects
         private String ubicacion_fila;
         private String ubicacion_gaveta;
         private Int16 fk_id_planta;
+        private String planta_descripcion;
         private Int16 fk_id_area;
+        private String area_descripcion;
         private String fecha_alta;
         private String fecha_baja;
         private Int16 fk_id_condicion;
+        private String condicion_descripcion;
         private String motivo_baja;
 
         #region Get y Set
@@ -64,10 +67,22 @@ namespace Electro.BusinessLayer.ValueObjects
             set { fk_id_planta = value; }
         }
 
+        public String Planta_Descripcion
+        {
+            get { return planta_descripcion; }
+            set { planta_descripcion = value; }
+        }
+
         public Int16 FK_ID_Area
         {
             get { return fk_id_area; }
             set { fk_id_area = value; }
+        }
+
+        public String Area_Descripcion
+        {
+            get { return area_descripcion; }
+            set { area_descripcion = value; }
         }
 
         public String Fecha_Alta
@@ -88,6 +103,12 @@ namespace Electro.BusinessLayer.ValueObjects
             set { fk_id_condicion = value; }
         }
 
+        public String Condicion_Descripcion
+        {
+            get { return condicion_descripcion; }
+            set { condicion_descripcion = value; }
+        }
+
         public String Motivo_Baja
         {
             get { return motivo_baja; }
@@ -104,10 +125,13 @@ namespace Electro.BusinessLayer.ValueObjects
             ubicacion_fila = "";
             ubicacion_gaveta = "";
             fk_id_planta = 0;
+            planta_descripcion = "";
             fk_id_area = 0;
+            area_descripcion = "";
             fecha_alta = "";
             fecha_baja = "";
             fk_id_condicion = 0;
+            condicion_descripcion = "";
         }
     }
 }

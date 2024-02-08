@@ -32,7 +32,7 @@ namespace Electro.DataLayer.SqlServer
             get { return new SqlServerMateriales(); }
         }
 
-        public override IUsuario Usuario
+        public override IUsuarios Usuarios
         {
             get { return new SqlServerUsuario(); }
         }

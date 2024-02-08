@@ -386,7 +386,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        private OTipo_Material[] Cargar_Tipo_Articulo(DataTable pData_Table)
+        private OTipo_Material[] Cargar_Tipo_Material(DataTable pData_Table)
         {
             try
             {
@@ -398,10 +398,11 @@ namespace Electro.DataLayer.SqlServer
                     OTipo_Material _objeto = new OTipo_Material();
 
                     _objeto.Id_Tipo_Material = Int16.Parse(_fila["Id_Tipo_Articulo"].ToString());
-                    _objeto.Tipo_Articulo = _fila["Tipo_Articulo"].ToString();
+                    _objeto.Tipo_Material = _fila["Tipo_Material"].ToString();
                     _objeto.Descripcion = _fila["Descripcion"].ToString();
                     _objeto.FK_ID_Estado = Int16.Parse(_fila["FK_ID_Estado"].ToString());
                     _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
+                    _objeto.Motivo_Baja = _fila["Motivo_Baja"].ToString();
                     _objeto.Fecha_Creacion = _fila["Fecha_Creacion"].ToString();
 
                     _resultado[_i] = _objeto;
@@ -420,19 +421,27 @@ namespace Electro.DataLayer.SqlServer
         {
             try
             {
-                OTipo_Material[] _resultado = new OTipo_Material[pData_Table.Rows.Count];
+                OUbicacion[] _resultado = new OUbicacion[pData_Table.Rows.Count];
                 int _i = 0;
 
                 foreach (DataRow _fila in pData_Table.Rows)
                 {
-                    OTipo_Material _objeto = new OTipo_Material();
+                    OUbicacion _objeto = new OUbicacion();
 
-                    _objeto.Id_Tipo_Material = Int16.Parse(_fila["Id_Tipo_Articulo"].ToString());
-                    _objeto.Tipo_Articulo = _fila["Tipo_Articulo"].ToString();
-                    _objeto.Descripcion = _fila["Descripcion"].ToString();
-                    _objeto.FK_ID_Estado = Int16.Parse(_fila["FK_ID_Estado"].ToString());
-                    _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
-                    _objeto.Fecha_Creacion = _fila["Fecha_Creacion"].ToString();
+                    _objeto.ID_Ubicacion = Int16.Parse(_fila["ID_Ubicacion"].ToString());
+                    _objeto.Ubicacion_Estanteria = _fila["Ubicacion_Estanteria"].ToString();
+                    _objeto.Ubicacion_Columna = _fila["Ubicacion_Columna"].ToString();
+                    _objeto.Ubicacion_Fila = _fila["Ubicacion_Fila"].ToString();
+                    _objeto.Ubicacion_Gaveta = _fila["Ubicacion_Gaveta"].ToString();
+                    _objeto.FK_ID_Planta = Int16.Parse(_fila["FK_ID_Planta"].ToString());
+                    _objeto.Planta_Descripcion = _fila["Planta_Descripcion"].ToString();
+                    _objeto.FK_ID_Area = Int16.Parse(_fila["FK_ID_Area"].ToString());
+                    _objeto.Area_Descripcion = _fila["Area_Descripcion"].ToString();
+                    _objeto.Fecha_Alta = _fila["Fecha_Alta"].ToString();
+                    _objeto.Fecha_Baja = _fila["Fecha_Baja"].ToString();
+                    _objeto.FK_ID_Condicion = Int16.Parse(_fila["FK_ID_Condicion"].ToString());
+                    _objeto.Condicion_Descripcion = _fila["Condicion_Descripcion"].ToString();
+                    _objeto.Motivo_Baja = _fila["Motivo_Baja"].ToString();
 
                     _resultado[_i] = _objeto;
                     _i++;
@@ -442,7 +451,7 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (Exception error)
             {
-                throw new Exception("Ocurrio un error al cargar los datos en SqlServerMateriales - Cargar_Tipo_Material. " + error.Message);
+                throw new Exception("Ocurrio un error al cargar los datos en SqlServerMateriales - Cargar_Ubicacion. " + error.Message);
             }
         }
 
@@ -1161,7 +1170,7 @@ namespace Electro.DataLayer.SqlServer
 
         #region Consultas Materiales
 
-        public OArea[] Obtener_Areas()
+        public OArea Obtener_Areas()
         {
             try
             {
@@ -1172,7 +1181,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
@@ -1212,7 +1221,107 @@ namespace Electro.DataLayer.SqlServer
                 throw ex;
             }
         }
+
+        public OPlanta Obtener_Plantas()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM [Planta]");
+                _sql.AppendLine("ORDER BY [Planta].[ID_Planta] ASC");
+
+                OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Plantas" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         
+        //Esta función obtiene el área por ID
+        public OPlanta Obtener_Planta_Por_ID(int pID_Planta)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT * ");
+                _sql.AppendLine("WHERE [Planta].[ID_Planta] = " + pID_Planta);
+                _sql.AppendLine("ORDER BY [Area].[ID_Area] ASC");
+
+                OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 1)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Planta_Por_ID" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OPlanta Obtener_Baja_Planta()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM Planta");
+                _sql.AppendLine("WHERE Planta.FK_ID_Estado = 2");
+                _sql.AppendLine("ORDER BY [Planta].[ID_Planta] ASC");
+
+                OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Baja_Planta" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OPlanta Obtener_Baja_Planta_Por_ID(int pID_Planta, string pMotivo_Baja, short pFK_ID_Estado)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM Planta");
+                _sql.AppendLine("WHERE Planta.FK_ID_Estado = 2");
+                _sql.AppendLine("ORDER BY [Planta].[ID_Planta] ASC");
+
+                OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Baja_Planta" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         //Esta función obtiene el área por Nombre
         public OArea Obtener_Area_Por_Nombre(string pNombre_Area)
         {
@@ -1242,7 +1351,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
  
-        public OMaterial[] Obtener_Materiales()
+        public OMaterial Obtener_Materiales()
         {
             try
             {
@@ -1253,7 +1362,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
@@ -1324,7 +1433,7 @@ namespace Electro.DataLayer.SqlServer
         }
         
         //Esta función obtiene el pedido de materiales
-        public OPedido_Material Obtener_Pedido_Material()
+        public OMaterial Obtener_Pedido_Materiales()
         {
             try
             {
@@ -1332,7 +1441,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine(Obtener_Cabecera_Pedido_Materiales());
                 _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
 
-                OPedido_Material[] _resultado = Cargar_Pedido_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -1352,7 +1461,7 @@ namespace Electro.DataLayer.SqlServer
         }
 
         //Esta función obtiene el material por ID
-        public OPedido_Material Obtener_Pedido_Material_Por_ID(int pId_Pedido_Material)
+        public OMaterial Obtener_Pedido_Material_Por_ID(int pId_Pedido_Material)
         {
             try
             {
@@ -1361,7 +1470,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("WHERE [Pedido_Material].[ID_Pedido_Material] = " + pId_Pedido_Material);
                 _sql.AppendLine("ORDER BY [Pedido_Material].[ID_Pedido_Material] ASC");
 
-                OPedido_Material[] _resultado = Cargar_Pedido_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -1381,7 +1490,7 @@ namespace Electro.DataLayer.SqlServer
         }
         
         //Esta función obtiene el material por Nombre
-        public OPedido_Material Obtener_Pedido_Material_Por_Nombre(string pNombre_Pedido_Material)
+        public OMaterial Obtener_Pedido_Material_Por_Nombre(string pNombre_Pedido_Material)
         {
             try
             {
@@ -1390,7 +1499,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("WHERE Tipo_Material.Descripcion = " + pNombre_Pedido_Material);
                 _sql.AppendLine("ORDER BY [Pedido_Material].[ID_Pedido_Material] ASC");
 
-                OPedido_Material[] _resultado = Cargar_Pedido_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -1409,7 +1518,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OTipo_Material[] Obtener_Tipo_Materiales()
+        public OTipo_Material Obtener_Tipo_Materiales()
         {
             try
             {
@@ -1420,7 +1529,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OTipo_Material[] _resultado = Cargar_Tipo_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
@@ -1433,16 +1542,16 @@ namespace Electro.DataLayer.SqlServer
         }
 
         //Esta función obtiene el tipo de material por ID
-        public OMaterial Obtener_Tipo_Material_Por_ID(int pId_Material)
+        public OTipo_Material Obtener_Tipo_Material_Por_ID(int pId_Tipo_Material)
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
                 _sql.AppendLine(Obtener_Cabecera_Tipo_Materiales());
-                _sql.AppendLine("WHERE [Material].[ID_Material] = " + pId_Material);
-                _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
+                _sql.AppendLine("WHERE [Tipo_Material].[ID_Tipo_Material] = " + pId_Tipo_Material);
+                _sql.AppendLine("ORDER BY [Tipo_Material].[ID_Tipo_Material] ASC");
 
-                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OTipo_Material[] _resultado = Cargar_Tipo_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -1453,7 +1562,36 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL- Obtener_Material_Por_ID" + ex.Message);
+                throw new Exception("SQL- Obtener_Tipo_Material_Por_ID" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+        //Esta función obtiene el tipo de material por Nombre
+        public OTipo_Material Obtener_Tipo_Material_Por_Nombre(String pNombre_Tipo_Material)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine(Obtener_Cabecera_Tipo_Materiales());
+                _sql.AppendLine("WHERE [Tipo_Material].[ID_Tipo_Material] = " + pNombre_Tipo_Material);
+                _sql.AppendLine("ORDER BY [Tipo_Material].[ID_Tipo_Material] ASC");
+
+                OTipo_Material[] _resultado = Cargar_Tipo_Material(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 1)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Tipo_Material_Por_Nombre" + ex.Message);
             }
             catch (Exception ex)
             {
@@ -1488,7 +1626,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OCondicion[] Obtener_Condicion()
+        public OCondicion Obtener_Condicion()
         {
             try
             {
@@ -1499,7 +1637,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OCondicion[] _resultado = Cargar_Condicion(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
@@ -1511,7 +1649,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
         
-        public OEstado[] Obtener_Estados()
+        public OEstado Obtener_Estados()
         {
             try
             {
@@ -1522,7 +1660,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OEstado[] _resultado = Cargar_Estado(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
@@ -1577,19 +1715,19 @@ namespace Electro.DataLayer.SqlServer
         /// 10 Baja de Pedido de material
         /// </summary>
         /// <returns></returns>
-        public OEstado[] Obtener_Baja_Material()
+        public OMaterial Obtener_Baja_Material()
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
                 _sql.AppendLine("SELECT *");
-                _sql.AppendLine("FROM [Estado]");
-                _sql.AppendLine("WHERE [Estado].ID_Estado IN (5,6,7,8,9,10)");
-                _sql.AppendLine("ORDER BY [Estado].[ID_Estado] ASC");
+                _sql.AppendLine("FROM Material");
+                _sql.AppendLine("WHERE Material.FK_ID_Estado = 2");
+                _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
 
-                OEstado[] _resultado = Cargar_Estado(Db_EF.GetDataTable(_sql.ToString()));
+                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
@@ -1601,7 +1739,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OUbicacion[] Obtener_Ubicaciones()
+        public OUbicacion Obtener_Ubicaciones()
         {
             try
             {
@@ -1610,13 +1748,13 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("FROM [Ubicacion]");
                 _sql.AppendLine("ORDER BY [Ubicacion].[ID_Ubicacion] ASC");
 
-                OUbicacion[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OUbicacion[] _resultado = Cargar_Ubicacion(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                return _resultado[0];
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL- Obtener_Areas" + ex.Message);
+                throw new Exception("SQL- Obtener_Ubicaciones" + ex.Message);
             }
             catch (Exception ex)
             {
@@ -1625,16 +1763,16 @@ namespace Electro.DataLayer.SqlServer
         }
 
         //Esta función obtiene el área por ID
-        public OArea Obtener_Area_Por_ID(int pId_Area)
+        public OUbicacion Obtener_Ubicacion_Por_ID(int pID_Planta)
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
-                _sql.AppendLine(Obtener_Cabecera_Materiales());
-                _sql.AppendLine("WHERE [Area].[ID_Area] = " + pId_Area);
-                _sql.AppendLine("ORDER BY [Area].[ID_Area] ASC");
+                _sql.AppendLine("SELECT * ");
+                _sql.AppendLine("WHERE [Ubicacion].[ID_Ubicacion] = " + pID_Planta);
+                _sql.AppendLine("ORDER BY [Ubicacion].[ID_Ubicacion] ASC");
 
-                OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
+                OUbicacion[] _resultado = Cargar_Ubicacion(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -1645,7 +1783,7 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL- Obtener_Area_Por_ID" + ex.Message);
+                throw new Exception("SQL- Obtener_Ubicacion_Por_ID" + ex.Message);
             }
             catch (Exception ex)
             {
@@ -1654,16 +1792,16 @@ namespace Electro.DataLayer.SqlServer
         }
 
         //Esta función obtiene el área por Nombre
-        public OArea Obtener_Area_Por_Nombre(string pNombre_Area)
+        public OUbicacion Obtener_Ubicacion_Por_Nombre(string pNombre_Area)
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
-                _sql.AppendLine(Obtener_Cabecera_Materiales());
-                _sql.AppendLine("WHERE [Area].[Descripcion] = " + pNombre_Area);
-                _sql.AppendLine("ORDER BY [Area].[ID_Area] ASC");
+                _sql.AppendLine(Obtener_Cabecera_Ubicacion());
+                _sql.AppendLine("WHERE [Ubicacion].[Descripcion] = " + pNombre_Area);
+                _sql.AppendLine("ORDER BY [Ubicacion].[ID_Ubicacion] ASC");
 
-                OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
+                OUbicacion[] _resultado = Cargar_Ubicacion(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -1674,7 +1812,88 @@ namespace Electro.DataLayer.SqlServer
             }
             catch (SqlException ex)
             {
-                throw new Exception("SQL- Obtener_Area_Por_Nombre" + ex.Message);
+                throw new Exception("SQL- Obtener_Ubicacion_Por_Nombre" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OSector Obtener_Sectores()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("FROM [Sector]");
+                _sql.AppendLine("ORDER BY [Sector].[ID_Sector] ASC");
+
+                OSector[] _resultado = Cargar_Sector(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Sectores" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //Esta función obtiene el área por ID
+        public OSector Obtener_Sector_Por_ID(int pID_Sector)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT * ");
+                _sql.AppendLine("WHERE [Sector].[ID_Sector] = " + pID_Sector);
+                _sql.AppendLine("ORDER BY [Sector].[ID_Sector] ASC");
+
+                OSector[] _resultado = Cargar_Sector(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 1)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Sector_Por_ID" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //Esta función obtiene el área por Nombre
+        public OSector Obtener_Sector_Por_Nombre(string pNombre_Sector)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine(Obtener_Cabecera_Sector());
+                _sql.AppendLine("WHERE [Sector].[Descripcion] = " + pNombre_Sector);
+                _sql.AppendLine("ORDER BY [Sector].[ID_Sector] ASC");
+
+                OSector[] _resultado = Cargar_Sector(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 1)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Sector_Por_Nombre" + ex.Message);
             }
             catch (Exception ex)
             {

@@ -589,7 +589,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedidos_Materiales();
+                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedido_Materiales();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -602,7 +602,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public RS_Materiales Obtener_Pedido_Material_Por_ID(Int64 pID_Pedido_Material)
+        public RS_Materiales Obtener_Pedido_Material_Por_ID(Int32 pID_Pedido_Material)
         {
             RS_Materiales _respuesta = new RS_Materiales();
 
@@ -798,7 +798,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public RS_Materiales Obtener_Ubicacion_Por_Nombre(Int16 pNombre_Ubicacion)
+        public RS_Materiales Obtener_Ubicacion_Por_Nombre(String pNombre_Ubicacion)
         {
             RS_Materiales _respuesta = new RS_Materiales();
 
@@ -858,5 +858,3 @@ namespace Electro.BusinessLayer.BusinessObjects
 
     }
 }
-
-#endregion

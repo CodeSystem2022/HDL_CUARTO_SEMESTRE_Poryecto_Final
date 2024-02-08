@@ -39,7 +39,7 @@ namespace Electro.DataLayer.Interfaces
         void Baja_Pedido_Materiales(Int32 pID_Pedido_Materiales, String pMotivo_Baja, Int16 pFK_ID_Estado);
         void Baja_Sector(Int32 pID_Sector, String pMotivo_Baja, Int16 pFK_ID_Estado);
         void Baja_Ubicacion(Int32 pID_Ubicacion, String pMotivo_Baja, Int16 pFK_ID_Estado);
-        void Baja_Planta(Int32 pID_Planta, String pMotivo_Baja, Int16 pFK_ID_Estado);
+        OPlanta Obtener_Baja_Planta_Por_ID(Int32 pID_Planta, String pMotivo_Baja, Int16 pFK_ID_Estado);
 
         #endregion
 
@@ -53,8 +53,8 @@ namespace Electro.DataLayer.Interfaces
         OMaterial Obtener_Material_Por_ID(Int32 pID_Material);
         OMaterial Obtener_Material_Por_Nombre(String pNombre_Material);
 
-        OMaterial Obtener_Pedidos_Materiales();
-        OMaterial Obtener_Pedido_Material_Por_ID(Int64 pID_Pedido_Material);
+        OMaterial Obtener_Pedido_Materiales();
+        OMaterial Obtener_Pedido_Material_Por_ID(Int32 pID_Pedido_Material);
         OMaterial Obtener_Pedido_Material_Por_Nombre(String pNombre_Pedido_Material);
 
         OTipo_Material Obtener_Tipo_Materiales();

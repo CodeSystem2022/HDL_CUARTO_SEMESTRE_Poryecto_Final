@@ -29,9 +29,9 @@ namespace Electro.DataLayer.DataObjects
         {
             get { return factory.Sistema; }
         }
-        public static IUsuario Usuario
+        public static IUsuarios Usuarios
         {
-            get { return factory.Usuario; }
+            get { return factory.Usuarios; }
         }
         public static IMateriales Materiales
         {

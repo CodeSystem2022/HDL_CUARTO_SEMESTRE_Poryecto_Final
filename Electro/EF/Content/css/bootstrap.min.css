@@ -1,4 +1,4 @@
-@charset "UTF-8"; /*!
+﻿@charset "UTF-8"; /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
@@ -79,8 +79,11 @@
     --bs-body-line-height: 1.5;
     --bs-body-color: #212529;
     --bs-body-color-rgb: 33,37,41;
+    /* Cambio de Color de fondo
     --bs-body-bg: #3e403e;
-    --bs-body-bg-rgb: 62, 64, 62;
+    --bs-body-bg-rgb: 62, 64, 62; */
+    --bs-body-bg: #6D6E71;
+    --bs-body-bg-rgb: 109, 110, 113;
     --bs-emphasis-color: #000;
     --bs-emphasis-color-rgb: 0,0,0;
     --bs-secondary-color: rgba(33, 37, 41, 0.75);

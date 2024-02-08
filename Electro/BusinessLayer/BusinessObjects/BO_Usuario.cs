@@ -39,7 +39,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Usuario = DataAccess.Usuario.Obtener_Usuario(pId_Usuario);
+                _respuesta.Usuario = DataAccess.Usuarios.Obtener_Usuario(pId_Usuario);
                 _respuesta.Notificaciones = DataAccess.Accion_Notificacion.Obtener_Notificaciones(pId_Usuario);
                 _respuesta.Acciones = DataAccess.Accion_Notificacion.Obtener_Acciones(pId_Usuario);
                 _respuesta.Resultado = Resultado_Operacion.Ok;
@@ -54,23 +54,19 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public RS_Usuario Obtener_Usuario_Por_DNI(Int32 pNumero_Documento, String pContrasena)
+        public RS_Usuario Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
         {
             RS_Usuario _respuesta = new RS_Usuario();
 
             try
             {
-                _respuesta.Usuario = DataAccess.Usuario.Obtener_Usuario_Por_DNI(pNumero_Documento, pContrasena);
+                _respuesta.Usuario = DataAccess.Usuarios.Obtener_Usuario_Por_Legajo(pNumero_Legajo, pContrasena);
 
                 if (_respuesta.Usuario == null)
                 {
-                    throw new Exception("El documento ingresado no existe en la base de datos");
+                    throw new Exception("El legajo ingresado no existe en la base de datos");
                 }
 
-
-                _respuesta.Notificaciones = DataAccess.Accion_Notificacion.Obtener_Notificaciones(_respuesta.Usuario.Id_Login);
-
-                _respuesta.Acciones = DataAccess.Accion_Notificacion.Obtener_Acciones(_respuesta.Usuario.Id_Login);
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)

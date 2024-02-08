@@ -15,7 +15,7 @@ namespace Electro.DataLayer
         public abstract IAccion_Notificacion Accion_Notificacion { get; }
         public abstract INotificacion Notificacion { get; }
         public abstract ISistema Sistema { get; }
-        public abstract IUsuario Usuario { get; }
+        public abstract IUsuarios Usuarios { get; }
         public abstract IMateriales Materiales { get; }
         public abstract ILog Log { get; }
     }

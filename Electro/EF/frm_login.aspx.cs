@@ -15,7 +15,7 @@ public partial class frm_login : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         try
-        {            
+        {
             if (!Page.IsPostBack)
             {
                 
@@ -35,33 +35,21 @@ public partial class frm_login : System.Web.UI.Page
 
         try
          {
-            
-            //_respuesta = _servicio.Obtener_Usuario_Por_DNI(Int32.Parse(txt_DNI.Text), txt_contrasena.Text);
-            
+            // Se comenta la linea para visualizar Diseño
+           //_respuesta = _servicio.Obtener_Usuario_Por_Legajo(Int32.Parse(txt_Legajo.Text), txt_contrasena.Text);
+           
            if (_respuesta.Resultado == Resultado_Operacion.Error)
             {
                 throw new Exception(_respuesta.Mensaje);
             }
             Session["ADV_Usuario"] = _respuesta;
+
             //Session["ID_ADV_Miembro"] = _respuesta.Usuario.Id_Login;
-           
         }
-        
         catch (Exception ex)
         {
             this.Master.Mostrar_Mensaje("Error: " + ex.Message, Pagina_Maestra_Sin_Menu.Tipo_Mensaje.Mensaje_Advertencia);           
         }
 
-        if (_respuesta.Resultado == Resultado_Operacion.Ok)
-        {
-            if(_respuesta.Usuario.Nombre_Usuario == "2020")
-            {
-                Response.Redirect("./Invasion/frm_crear_peticiones.aspx", false);
-            }
-            else
-            {
-                Response.Redirect("./frm_inicio.aspx", false);
-            }
-        }
     }
 }

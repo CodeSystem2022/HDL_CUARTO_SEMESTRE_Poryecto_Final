@@ -17,7 +17,7 @@ using System.Configuration;
 namespace Electro.DataLayer.SqlServer
 {
     /// <summary>
-    public partial class SqlServerUsuario : IUsuario
+    public partial class SqlServerUsuario : IUsuarios
     {
         #region Carga el Datatable
 
@@ -95,7 +95,7 @@ namespace Electro.DataLayer.SqlServer
             try
             {
                 StringBuilder _sql = new StringBuilder();
-                
+
                 _sql.AppendLine("INSERT INTO [dbo].[Usuarios]");
                 _sql.AppendLine("([Nombre]");
                 _sql.AppendLine(",[Apellido]");
@@ -180,7 +180,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("UPDATE Usuarios");
                 _sql.AppendLine("SET    pFK_ID_Estado = " + pFK_ID_Estado + ",");
                 _sql.AppendLine("       Motivo_Baja = " + pMotivo_Baja + ",");
-                _sql.AppendLine("       Fecha_Baja = " + pFecha_baja );
+                _sql.AppendLine("       Fecha_Baja = " + pFecha_baja);
                 _sql.AppendLine("WHERE  ID_Usuario = " + pID_Usuario);
 
                 if (Db_EF.Update(_sql.ToString()) != 1)
@@ -230,7 +230,7 @@ namespace Electro.DataLayer.SqlServer
 
                 // Realizamos un SELECT para poder obtener la cabecera de la consulta
                 _sql.AppendLine("SELECT [Perfil_Usuario].[ID_Perfil_Usuario],[Perfil_Usuario].[Descripcion],[Estado].ID_Estado],[Perfil_Usuario].[Fecha_Creacion]");
-                _sql.AppendLine("FROM [dbo].[Perfil_Usuario]");
+                _sql.AppendLine("FROM [Perfil_Usuario]");
                 _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = [Perfil_Usuario].[FK_ID_Estado]");
 
                 return _sql.ToString();
@@ -245,7 +245,34 @@ namespace Electro.DataLayer.SqlServer
 
         #region Consultas de Usuario
 
-        public OUsuarios Obtener_Usuario(Int32 pId_Usuario)
+        public OUsuarios Obtener_Usuarios()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Cabecera_Usuario());
+
+                OUsuarios[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 0)
+                {
+                    return null;
+                }
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OUsuarios Obtener_Usuario_Por_ID(Int32 pId_Usuario)
         {
             try
             {
@@ -272,7 +299,35 @@ namespace Electro.DataLayer.SqlServer
                 throw ex;
             }
         }
-        
+
+        public OUsuarios Obtener_Usuario_Por_Legajo(Int16 pNumero_Legajo, String pContrasena)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Cabecera_Usuario());
+                _sql.AppendLine("WHERE  Usuario.[Nombre_Usuario] = " + pNumero_Legajo);
+
+                OUsuarios[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 0)
+                {
+                    return null;
+                }
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public OUsuarios[] Obtener_Usuarios_Activos()
         {
             try
