@@ -16,7 +16,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EF", "EF\", "{ECECA744-E969-4A9E-B457-7A4C96EDB700}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		ProjectReferences = "{1d196e09-130d-41f8-8e9c-ad7d9317d7a0}|Electro.BusinessLayer.BusinessObjects.dll;{A81A28DF-071D-4C75-AECB-0DAD6A44A7CF}|Electro.BusinessLayer.ValueObjects.dll;"
+		ProjectReferences = "{1d196e09-130d-41f8-8e9c-ad7d9317d7a0}|Electro.BusinessLayer.BusinessObjects.dll;{A81A28DF-071D-4C75-AECB-0DAD6A44A7CF}|Electro.BusinessLayer.ValueObjects.dll;{57337CE2-AAF6-47C6-A209-1DD541403D19}|Electro.DataLayer.DataObjects.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_56042"
 		Debug.AspNetCompiler.PhysicalPath = "EF\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56042\"
@@ -108,7 +108,7 @@ Global
 		{57337CE2-AAF6-47C6-A209-1DD541403D19} = {C587C628-F0A4-49E2-B9DB-CE388D1C18A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		VisualSVNWorkingCopyRoot = .
 		SolutionGuid = {141D28A5-7D9F-4B61-B118-E3CA3846FDE3}
+		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection
 EndGlobal

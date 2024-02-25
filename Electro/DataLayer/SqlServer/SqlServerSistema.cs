@@ -47,7 +47,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("FROM   Integrales.Sistemas WITH(NOLOCK)");
                 _sql.AppendLine("WHERE  Id_Sistema = " + pId_Sistema);
 
-                OSistema[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OSistema[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -75,7 +75,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("FROM   Integrales.Sistemas WITH(NOLOCK)");
                 _sql.AppendLine("ORDER BY Nombre");
 
-                OSistema[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OSistema[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }

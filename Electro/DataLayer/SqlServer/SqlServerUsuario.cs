@@ -300,7 +300,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OUsuarios Obtener_Usuario_Por_Legajo(Int16 pNumero_Legajo, String pContrasena)
+        public OUsuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
         {
             try
             {

@@ -39,7 +39,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Usuario = DataAccess.Usuarios.Obtener_Usuario(pId_Usuario);
+                _respuesta.Usuario = DataAccess.Usuarios.Obtener_Usuario_Por_ID(pId_Usuario);
                 _respuesta.Notificaciones = DataAccess.Accion_Notificacion.Obtener_Notificaciones(pId_Usuario);
                 _respuesta.Acciones = DataAccess.Accion_Notificacion.Obtener_Acciones(pId_Usuario);
                 _respuesta.Resultado = Resultado_Operacion.Ok;

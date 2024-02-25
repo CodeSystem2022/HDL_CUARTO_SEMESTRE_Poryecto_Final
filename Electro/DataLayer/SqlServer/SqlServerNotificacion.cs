@@ -151,11 +151,11 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       INNER JOIN Integrales.Notificaciones_Configuraciones WITH(NOLOCK) ON FK_Id_Notificacion_Configuracion = Id_Notificacion_Configuracion");
                 _sql.AppendLine("       INNER JOIN Integrales.Notificaciones WITH(NOLOCK) ON Id_Notificacion = FK_Id_Notificacion");
                 _sql.AppendLine("       INNER JOIN Integrales.Sistemas WITH(NOLOCK) ON FK_Id_Sistema = Id_Sistema");
-                _sql.AppendLine("WHERE  Fecha = " + Db_hvj.Escape(pFecha));
+                _sql.AppendLine("WHERE  Fecha = " + Db_EF.Escape(pFecha));
                 _sql.AppendLine("       AND Id_Notificacion = " + pId_Notificacion);
                 _sql.AppendLine("       AND Fecha_Hora_Envio IS NULL");
 
-                ONotificacion_Programada[] _resultado = Cargar_DataTable_Notificaciones_Programadas(Db_hvj.GetDataTable(_sql.ToString()));
+                ONotificacion_Programada[] _resultado = Cargar_DataTable_Notificaciones_Programadas(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -180,7 +180,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("WHERE  Id_Notificacion_Programada = " + pId_Notificacion_Programada);
                 _sql.AppendLine("       AND Fecha_Hora_Envio IS NULL");
 
-                if (Db_hvj.Update(_sql.ToString())!= 1)
+                if (Db_EF.Update(_sql.ToString())!= 1)
                 {
                     throw new Exception("Ocurrio un error al informar el envio de la notificación programada N° " + pId_Notificacion_Programada);
                 }
@@ -245,7 +245,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("                    AND Fecha = CONVERT(DATE,GETDATE())");
                 _sql.AppendLine("        ) = 0");
 
-                DataTable _dt = Db_hvj.GetDataTable(_sql.ToString());
+                DataTable _dt = Db_EF.GetDataTable(_sql.ToString());
 
                 if (_dt.Rows.Count == 0)
                 {
@@ -262,7 +262,7 @@ namespace Electro.DataLayer.SqlServer
                     _sql.AppendLine(_fila["Id_Notificacion_Configuracion"].ToString() + ",");
                     _sql.AppendLine("GETDATE())");
 
-                    Db_hvj.Insert(_sql.ToString());
+                    Db_EF.Insert(_sql.ToString());
                 }
             }
             catch (SqlException ex)

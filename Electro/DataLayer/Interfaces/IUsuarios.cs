@@ -40,7 +40,7 @@ namespace Electro.DataLayer.Interfaces
         //Obtiene los usuarios activos
         OUsuarios[] Obtener_Usuarios_Activos();
         // Obtiene los usuarios por número de legajo
-        OUsuarios Obtener_Usuario_Por_Legajo(Int16 pNumero_Legajo, String pContrasena);
+        OUsuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena);
 
         #endregion
 

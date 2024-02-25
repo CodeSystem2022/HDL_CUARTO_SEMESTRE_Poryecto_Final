@@ -151,7 +151,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND Tipo = 'A'");
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
                 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -183,7 +183,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND Id_Accion_Notificacion = " + pId_Accion_Notificacion);
                 _sql.AppendLine("ORDER BY Usuarios.Apellido, Usuarios.Nombre");
 
-                DataTable _dt = Db_hvj.GetDataTable(_sql.ToString());
+                DataTable _dt = Db_EF.GetDataTable(_sql.ToString());
 
                 if (_dt.Rows.Count == 0)
                 {
@@ -227,7 +227,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND Tipo = 'N'");
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -252,7 +252,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND Tipo = 'A'");
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -277,7 +277,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND Tipo = 'N'");
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -312,7 +312,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       )");
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -347,7 +347,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("                                           )");
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 return _resultado;
             }
@@ -375,7 +375,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine(pId_Accion_Notificacion + ",");
                 _sql.AppendLine("GETDATE())");
 
-                Db_hvj.Insert(_sql.ToString());
+                Db_EF.Insert(_sql.ToString());
             }
             catch (SqlException ex)
             {
@@ -398,7 +398,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND FK_Id_Accion_Notificacion = " + pId_Accion_Notificacion);
                 _sql.AppendLine("       AND Fecha_Baja IS NULL");
 
-                if (Db_hvj.Update(_sql.ToString())!= 1)
+                if (Db_EF.Update(_sql.ToString())!= 1)
                 {
                     throw new Exception("No se pudo dar de baja la acción/notificación");
                 }
@@ -424,7 +424,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND FK_Id_Accion_Notificacion = " + pId_Accion_Notificacion);
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -452,7 +452,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("       AND Id_Accion_Notificacion = " + pId_Accion_Notificacion);
                 _sql.AppendLine("ORDER BY Sistemas.Nombre, Acciones_Notificaciones.Nombre");
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
                 if (_resultado.Length == 1)
                 {
@@ -478,7 +478,7 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine(Obtener_Cabecera_Accion_Notificacion_Vinculando_Usuario());
                 _sql.AppendLine("WHERE  Usuarios_Acciones_Notificaciones.Id_Usuario_Accion_Notificacion = " + pId_Usuario_Accion_Notificacion);
 
-                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_hvj.GetDataTable(_sql.ToString()));
+                OAccion_Notificacion[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
                 if (_resultado.Length == 1)
                 {
                     return _resultado[0];
