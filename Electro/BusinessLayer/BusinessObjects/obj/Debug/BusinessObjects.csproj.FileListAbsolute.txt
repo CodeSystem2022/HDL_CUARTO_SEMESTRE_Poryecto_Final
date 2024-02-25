@@ -1,2 +1,0 @@
-C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Poryecto_Final\Electro\BusinessLayer\BusinessObjects\obj\Debug\BusinessObjects.csprojAssemblyReference.cache
-C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Poryecto_Final\Electro\BusinessLayer\BusinessObjects\obj\Debug\BusinessObjects.csproj.CoreCompileInputs.cache

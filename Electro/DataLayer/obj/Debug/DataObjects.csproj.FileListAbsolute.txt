@@ -1,2 +1,0 @@
-C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Poryecto_Final\Electro\DataLayer\obj\Debug\DataObjects.csprojAssemblyReference.cache
-C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Poryecto_Final\Electro\DataLayer\obj\Debug\DataObjects.csproj.CoreCompileInputs.cache
