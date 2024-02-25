@@ -8,12 +8,12 @@
     <!-- Definimos fondo de formulario -->
     <div class="card bg-light">
         <!-- comienzo de encabezado formulario -->
-        <div class="card-header bg-light text-center ">
+        <div class="card-header bg-success text-center ">
             
                 <h4>Pedido de materiales</h4>
         </div>
         <!-- comienzo de formulario -->
-        <div class="card-body bg-secondary">
+        <div class="card-body bg-light">
             <!-- Encabezado -->
             <div class="col-sm-12 form-check-inline justify-content-between">
                 <div class="col-sm-3 col-xs-12 float-start">
@@ -70,17 +70,25 @@
                     <asp:TextBox ID="cantidad_a_solicitar" runat="server" CssClass="col-sm-12" placeholder="Cantidad"></asp:TextBox>
                 </div>
             </div>
+            <!-- Bloque 3 -->
             <div class="col-sm-12 input-group justify-content-between">
-                <!-- Bloque 3 -->
-                <div class="col-sm-3 col-xs-12 align-bottom">
-                    <label>Recambio:</label>
-                    <input type="radio" name="recambio_si" runat="server" id="rb_recambio_si" value="SI" />SI
-                    <input type="radio" name="recambio_no" runat="server" id="rb_recambio_no" checked="checked" value="NO" />NO
-                    <span class="btn-check"></span>
-                </div>
                 <div class="col-sm-6 col-xs-12">
                     <label>Observaciones:</label>
                     <asp:TextBox ID="observaciones" runat="server" TextMode="MultiLine" CssClass="col-sm-12" placeholder="Observaciones"></asp:TextBox>
+                </div>
+                <div class="col-sm-3 col-xs-12">
+                    <label>Recambio:</label>
+                    <input type="checkbox" name="recambio_si" runat="server" id="rb_recambio_si" value="SI" />
+                    <span class="btn-check"></span>
+                </div>
+                </div>
+            <!-- Bloque 4 botones -->
+            <div class="col-sm-12 input-group justify-content-between">
+                <div class="col-sm-6 col-xs-12">
+                    <asp:Button ID="btn_enviar_pedido" CssClass="btn float-end col-sm-6 mt-5 me-3 btn-success" runat="server" Text="Enviar" />
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <asp:Button ID="btn_cancelar_pedido" CssClass="btn float-start mt-5 ms-3 col-sm-6 btn-danger" runat="server" Text="Cancelar" />
                 </div>
                 </div>
         </div>
