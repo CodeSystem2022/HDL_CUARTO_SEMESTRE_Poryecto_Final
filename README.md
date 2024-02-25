@@ -8,7 +8,7 @@
 		<h1 align="center">Repositorio del grupo HDL</h1>
 		<h2 align="center">-En este repositorio subiremos lo realizado en la Práctica Final-</h2>
 </div>
-
+//seg
 <div align="center">
 	<h2>-Materia y Lenguajes- 
 	<br>
