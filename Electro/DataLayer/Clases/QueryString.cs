@@ -12,7 +12,7 @@ namespace Electro.DataLayer.DataObjects
     {
         private string _documento;
 
-        public string Documento
+        public string Documento.
         {
             get { return _documento; }
         }
