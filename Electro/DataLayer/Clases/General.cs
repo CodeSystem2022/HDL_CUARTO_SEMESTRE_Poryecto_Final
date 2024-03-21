@@ -16,7 +16,7 @@ namespace Electro.DataLayer.DataObjects
         static string initVector = "@1B2c3D4e5F6g7H8";
         static int keySize = 192;
 
-        private General().
+        private General()
         {
         }
 
