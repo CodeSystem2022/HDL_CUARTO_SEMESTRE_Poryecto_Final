@@ -97,6 +97,36 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
+        public Respuesta Alta_Pedido_Material(String pFecha_Solicitud, Int32 pFK_ID_Sector, Int32 pFK_ID_Tipo_Prioridad, Int32 pFK_ID_Material, Int16 pCantidad_A_Solicitar, Boolean pRecambio, String pObservaciones, Int32 pFK_ID_Usuario_Pedido, Int32 pFK_ID_Estado)
+        {
+            Respuesta _respuesta = new Respuesta();
+
+            try
+            {
+                using (TransactionScope _transaction = new TransactionScope())
+                {
+                    DataAccess.Materiales.Alta_Pedido_Material(pFecha_Solicitud, pFK_ID_Sector, pFK_ID_Tipo_Prioridad, pFK_ID_Material, pCantidad_A_Solicitar, pRecambio, pObservaciones, pFK_ID_Usuario_Pedido, pFK_ID_Estado);
+
+                    _transaction.Complete();
+                }
+
+                // Se genera un LOG para el alta
+                DataAccess.Log.Informar_Evento(1, "Se realizó correctamente el pedido de material el dia " + pFecha_Solicitud + ", sector: " + pFK_ID_Sector + ", tipo de prioridad: "+ pFK_ID_Tipo_Prioridad + ", material: " + pFK_ID_Material + ", cantidad: " + pCantidad_A_Solicitar + ", recambio: " + pRecambio + ", observaciones: "+ pObservaciones + ", pedido por el usuario: "+ pFK_ID_Usuario_Pedido + ", estado del pedido: "+ pFK_ID_Estado);
+                _respuesta.Mensaje = "El material se ingreso correctamente";
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+
+            }
+            catch (Exception ex)
+            {
+                // Se genera un LOG para el error
+                DataAccess.Log.Informar_Evento(1, "Alta_Pedido_Material - " + ex.Message + " pedido el dia " + pFecha_Solicitud + ", sector: " + pFK_ID_Sector + ", tipo de prioridad: " + pFK_ID_Tipo_Prioridad + ", material: " + pFK_ID_Material + ", cantidad: " + pCantidad_A_Solicitar + ", recambio: " + pRecambio + ", observaciones: " + pObservaciones + ", pedido por el usuario: " + pFK_ID_Usuario_Pedido + ", estado del pedido: " + pFK_ID_Estado);
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+            }
+
+            return _respuesta;
+        }
+
         public Respuesta Alta_Tipo_Materiales(String pNombre_Tipo_Material, String pDescripcion, Int16 pFK_ID_Estado, Int32 pFK_ID_Usuario)
         {
             Respuesta _respuesta = new Respuesta();
@@ -126,7 +156,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public Respuesta Alta_Sector(String pNombre_Sector, Int16 pFK_ID_Planta, Int16 pFK_ID_Area, Int32 pFK_ID_Usuario)
+        public Respuesta Alta_Sector(String pNombre_Sector, Int16 pFK_ID_Planta, Int32 pFK_ID_Usuario)
         {
             Respuesta _respuesta = new Respuesta();
 
@@ -134,13 +164,13 @@ namespace Electro.BusinessLayer.BusinessObjects
             {
                 using (TransactionScope _transaction = new TransactionScope())
                 {
-                    DataAccess.Materiales.Alta_Sector(pNombre_Sector, pFK_ID_Planta, pFK_ID_Area, pFK_ID_Usuario);
+                    DataAccess.Materiales.Alta_Sector(pNombre_Sector, pFK_ID_Planta, pFK_ID_Usuario);
 
                     _transaction.Complete();
                 }
 
                 // Se genera un LOG para el alta
-                DataAccess.Log.Informar_Evento(7, "Se realizó correctamente el alta del sector " + pNombre_Sector + " en el área " + pFK_ID_Area + " en la planta: " + pFK_ID_Planta + "con el usuario: " + pFK_ID_Usuario);
+                DataAccess.Log.Informar_Evento(7, "Se realizó correctamente el alta del sector " + pNombre_Sector  + " en la planta: " + pFK_ID_Planta + "con el usuario: " + pFK_ID_Usuario);
                 _respuesta.Mensaje = "El sector se ingreso correctamente";
                 _respuesta.Resultado = Resultado_Operacion.Ok;
 
@@ -155,8 +185,10 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             return _respuesta;
         }
-
-        #endregion
+        
+        // Se debe agregar el alta de usuarios en esta sección 
+        
+            #endregion
 
         #region Modificaciones
 
@@ -220,8 +252,38 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
+        public Respuesta Actualizar_Pedido_Material(Int32 pID_Pedido_Material, String pFecha_Solicitud, Int32 pFK_ID_Sector, Int32 pFK_ID_Tipo_Prioridad, Int32 pFK_ID_Material, Int16 pCantidad_A_Solicitar, Boolean pRecambio, String pObservaciones, Int32 pFK_ID_Usuario_Pedido, Int32 pFK_ID_Usuario_Autorizacion, Int32 pFK_ID_Estado)
+        {
+            Respuesta _respuesta = new Respuesta();
+
+            try
+            {
+                OPedido_Material _pedido_material = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Material);
+
+                if (_pedido_material != null)
+                {
+                    using (TransactionScope _transaction = new TransactionScope())
+                    {
+                        DataAccess.Materiales.Actualizar_Pedido_Material(pID_Pedido_Material, pFecha_Solicitud, pFK_ID_Sector, pFK_ID_Tipo_Prioridad, pFK_ID_Material, pCantidad_A_Solicitar, pRecambio, pObservaciones, pFK_ID_Usuario_Pedido, pFK_ID_Usuario_Autorizacion, pFK_ID_Estado);
+                        _transaction.Complete();
+                    }
+
+                    DataAccess.Log.Informar_Evento(10, "Se actualizo el pedido de material " + pID_Pedido_Material + " el dia " + pFecha_Solicitud + ", sector: " + pFK_ID_Sector + ", tipo de prioridad: " + pFK_ID_Tipo_Prioridad + ", material: " + pFK_ID_Material + ", cantidad: " + pCantidad_A_Solicitar + ", recambio: " + pRecambio + ", observaciones: " + pObservaciones + ", pedido por el usuario: " + pFK_ID_Usuario_Pedido + ", estado del pedido: " + pFK_ID_Estado);
+                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del pedido de material: " + pID_Pedido_Material;
+                    _respuesta.Resultado = Resultado_Operacion.Ok;
+                }
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+            }
+
+            return _respuesta;
+        }
+
         // se actualiza el sector o la uap
-        public Respuesta Actualizar_Sector(Int32 pID_Sector,String pDescripcion, Int16 pFK_ID_Planta, Int16 pFK_ID_Area, Int16 pFK_ID_Estado, String pMotivo_Baja)
+        public Respuesta Actualizar_Sector(Int32 pID_Sector,String pDescripcion, Int16 pFK_ID_Planta, Int16 pFK_ID_Estado, String pMotivo_Baja)
         {
             Respuesta _respuesta = new Respuesta();
 
@@ -233,12 +295,12 @@ namespace Electro.BusinessLayer.BusinessObjects
                 {
                     using (TransactionScope _transaction = new TransactionScope())
                     {
-                        DataAccess.Materiales.Actualizar_Sector(pID_Sector, pDescripcion, pFK_ID_Planta, pFK_ID_Area, pFK_ID_Estado, pMotivo_Baja);
+                        DataAccess.Materiales.Actualizar_Sector(pID_Sector, pDescripcion, pFK_ID_Planta, pFK_ID_Estado, pMotivo_Baja);
                         _transaction.Complete();
                     }
 
-                    DataAccess.Log.Informar_Evento(10, "Se actualizo el sector: " + pID_Sector + ", con la descripción: " + pDescripcion + " planta: " + pFK_ID_Planta + " área: " + pFK_ID_Area + " motivo de baja: " + pMotivo_Baja);
-                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del área: " + pFK_ID_Area;
+                    DataAccess.Log.Informar_Evento(10, "Se actualizo el sector: " + pID_Sector + ", con la descripción: " + pDescripcion + " planta: " + pFK_ID_Planta  + " motivo de baja: " + pMotivo_Baja);
+                    _respuesta.Mensaje = "Se actualizaron correctamente los datos del sector: " + pID_Sector;
                     _respuesta.Resultado = Resultado_Operacion.Ok;
                 }
             }
@@ -379,7 +441,7 @@ namespace Electro.BusinessLayer.BusinessObjects
         
             try
             {
-                OMaterial _pedido_material = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Materiales);
+                OPedido_Material _pedido_material = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Materiales);
 
                 if (_pedido_material != null)
                 {
@@ -472,7 +534,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Area[0] = DataAccess.Materiales.Obtener_Areas();
+                _respuesta.Lista_Area = DataAccess.Materiales.Obtener_Areas();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -531,7 +593,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Materiales();
+                _respuesta.Lista_Materiales = DataAccess.Materiales.Obtener_Materiales();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -589,7 +651,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedido_Materiales();
+                _respuesta.Lista_Pedido_Material = DataAccess.Materiales.Obtener_Pedido_Materiales();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -608,7 +670,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Material);
+                _respuesta.Lista_Pedido_Material[0] = DataAccess.Materiales.Obtener_Pedido_Material_Por_ID(pID_Pedido_Material);
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -627,7 +689,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Materiales[0] = DataAccess.Materiales.Obtener_Pedido_Material_Por_Nombre(pNombre_Pedido_Material);
+                _respuesta.Lista_Pedido_Material[0] = DataAccess.Materiales.Obtener_Pedido_Material_Por_Nombre(pNombre_Pedido_Material);
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -648,7 +710,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Tipo_Material[0] = DataAccess.Materiales.Obtener_Tipo_Materiales();
+                _respuesta.Lista_Tipo_Material = DataAccess.Materiales.Obtener_Tipo_Materiales();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -707,7 +769,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Sector[0] = DataAccess.Materiales.Obtener_Sectores();
+                _respuesta.Lista_Sector = DataAccess.Materiales.Obtener_Sectores();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -758,6 +820,27 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
+        // PRIORIDAD
+
+        public RS_Materiales Obtener_Prioridad()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Prioridad = DataAccess.Materiales.Obtener_Prioridad(); 
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
         // UBICACIONES
 
         public RS_Materiales Obtener_Ubicaciones()
@@ -766,7 +849,7 @@ namespace Electro.BusinessLayer.BusinessObjects
 
             try
             {
-                _respuesta.Lista_Ubicacion[0] = DataAccess.Materiales.Obtener_Ubicaciones();
+                _respuesta.Lista_Ubicacion = DataAccess.Materiales.Obtener_Ubicaciones();
                 _respuesta.Resultado = Resultado_Operacion.Ok;
             }
             catch (Exception ex)
@@ -812,6 +895,95 @@ namespace Electro.BusinessLayer.BusinessObjects
                 _respuesta.Mensaje = ex.Message;
                 _respuesta.Resultado = Resultado_Operacion.Error;
 
+            }
+
+            return _respuesta;
+        }
+        
+        // PLANTAS
+        public RS_Materiales Obtener_Plantas()
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Planta = DataAccess.Materiales.Obtener_Plantas();
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Planta_Por_ID(Int16 pID_Planta)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Lista_Planta[0] = DataAccess.Materiales.Obtener_Planta_Por_ID(pID_Planta);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+
+        #endregion
+
+        #region Consultas Usuarios
+
+        public RS_Materiales Obtener_Usuario_Por_Id(Int32 pId_Usuario)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Usuario = DataAccess.Usuarios.Obtener_Usuario_Por_ID(pId_Usuario);
+                //_respuesta.Notificaciones = DataAccess.Accion_Notificacion.Obtener_Notificaciones(pId_Usuario);
+                //_respuesta.Acciones = DataAccess.Accion_Notificacion.Obtener_Acciones(pId_Usuario);
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
+
+            }
+
+            return _respuesta;
+        }
+
+        public RS_Materiales Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
+        {
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            try
+            {
+                _respuesta.Usuario = DataAccess.Usuarios.Obtener_Usuario_Por_Legajo(pNumero_Legajo, pContrasena);
+
+                if (_respuesta.Usuario == null)
+                {
+                    throw new Exception("El legajo ingresado no existe en la base de datos");
+                }
+
+                _respuesta.Resultado = Resultado_Operacion.Ok;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Mensaje = ex.Message;
+                _respuesta.Resultado = Resultado_Operacion.Error;
             }
 
             return _respuesta;

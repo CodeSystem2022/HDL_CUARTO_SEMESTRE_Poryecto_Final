@@ -18,3 +18,13 @@ C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Diseno\Electro\BusinessLayer\ValueObjects\obj\
 C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Diseno\Electro\BusinessLayer\ValueObjects\obj\Debug\ValueObjects.csproj.CopyComplete
 C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Diseno\Electro\BusinessLayer\ValueObjects\obj\Debug\Electro.BusinessLayer.ValueObjects.dll
 C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Diseno\Electro\BusinessLayer\ValueObjects\obj\Debug\Electro.BusinessLayer.ValueObjects.pdb
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\bin\Debug\Electro.BusinessLayer.ValueObjects.dll.config
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\bin\Debug\Electro.BusinessLayer.ValueObjects.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\bin\Debug\Electro.BusinessLayer.ValueObjects.pdb
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\bin\Debug\HtmlReportControl.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\bin\Debug\en\HtmlReportControl.resources.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\obj\Debug\ValueObjects.csprojAssemblyReference.cache
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\obj\Debug\ValueObjects.csproj.CoreCompileInputs.cache
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\obj\Debug\ValueObjects.csproj.CopyComplete
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\obj\Debug\Electro.BusinessLayer.ValueObjects.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\BusinessLayer\ValueObjects\obj\Debug\Electro.BusinessLayer.ValueObjects.pdb

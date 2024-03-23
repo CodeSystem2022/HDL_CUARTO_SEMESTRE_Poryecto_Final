@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +8,7 @@ using Electro.BusinessLayer.ValueObjects;
 
 public static class Acceso
 {
-    public static Boolean Tiene_Acceso(RS_Usuario pUsuario, Int32[] pId_Lista_Acciones)
+    public static Boolean Tiene_Acceso(RS_Usuarios pUsuario, Int32[] pId_Lista_Acciones)
     {
         
         foreach (OAccion_Notificacion _accion in pUsuario.Acciones)

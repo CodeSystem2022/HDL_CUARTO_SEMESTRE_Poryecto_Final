@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -12,14 +12,15 @@ using Electro.BusinessLayer.ValueObjects;
 public static class Metodos
 {
     #region Métodos Sistema
-    public static void Cargar_Combo_Lideres(DropDownList pCombo_List)
+
+    public static void Cargar_Combo_Areas(DropDownList pCombo_List)
     {
         try
         {
             BO_Materiales _servicio = new BO_Materiales();
             RS_Materiales _respuesta = new RS_Materiales();
 
-            //_respuesta = _servicio.Obtener_Lideres_Activos();
+            _respuesta = _servicio.Obtener_Areas();
 
             if (_respuesta.Resultado == Resultado_Operacion.Error)
             {
@@ -34,11 +35,11 @@ public static class Metodos
             pCombo_List.Items.Add(_item);
 
 
-            foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
+            foreach (OArea _objeto in _respuesta.Lista_Area)
             {
                 _item = new ListItem();
-                //_item.Text = _objeto.Nombre_Completo_Miembro.ToString();
-                //_item.Value = _objeto.Id_Miembro.ToString();
+                _item.Text = _objeto.Descripcion.ToString();
+                _item.Value = _objeto.Id_Area.ToString();
                 pCombo_List.Items.Add(_item);
             }
         }
@@ -47,14 +48,15 @@ public static class Metodos
             throw ex;
         }
     }
-    public static void Cargar_Combo_Lider_Red(DropDownList pCombo_List)
+
+    public static void Cargar_Combo_Materiales(DropDownList pCombo_List)
     {
         try
         {
             BO_Materiales _servicio = new BO_Materiales();
             RS_Materiales _respuesta = new RS_Materiales();
 
-            //_respuesta = _servicio.Obtener_Lideres_Red();
+            _respuesta = _servicio.Obtener_Materiales();
 
             if (_respuesta.Resultado == Resultado_Operacion.Error)
             {
@@ -68,12 +70,11 @@ public static class Metodos
             _item.Value = "0";
             pCombo_List.Items.Add(_item);
 
-
             foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
             {
                 _item = new ListItem();
-                //_item.Text = _objeto.Nombre_Completo_Miembro.ToString();
-                //_item.Value = _objeto.Id_Miembro.ToString();
+                _item.Text = _objeto.Material_Descripcion.ToString();
+                _item.Value = _objeto.Id_Material.ToString();
                 pCombo_List.Items.Add(_item);
             }
         }
@@ -82,14 +83,50 @@ public static class Metodos
             throw ex;
         }
     }
-    public static void Cargar_Combo_Hospedador_Activos_Por_Red(DropDownList pCombo_List, Int32 pID_Session)
+
+  public static void Cargar_Combo_Tipo_Materiales(DropDownList pCombo_List)
+  {
+    try
+    {
+      BO_Materiales _servicio = new BO_Materiales();
+      RS_Materiales _respuesta = new RS_Materiales();
+
+      _respuesta = _servicio.Obtener_Tipo_Materiales();
+
+      if (_respuesta.Resultado == Resultado_Operacion.Error)
+      {
+        throw new Exception(_respuesta.Mensaje);
+      }
+
+      pCombo_List.Items.Clear();
+
+      ListItem _item = new ListItem();
+      _item.Text = "- Seleccione -";
+      _item.Value = "0";
+      pCombo_List.Items.Add(_item);
+
+      foreach (OTipo_Material _objeto in _respuesta.Lista_Tipo_Material)
+      {
+        _item = new ListItem();
+        _item.Text = _objeto.Descripcion.ToString();
+        _item.Value = _objeto.Id_Tipo_Material.ToString();
+        pCombo_List.Items.Add(_item);
+      }
+    }
+    catch (Exception ex)
+    {
+      throw ex;
+    }
+  }
+
+  public static void Cargar_Combo_Pedido_Materiales(DropDownList pCombo_List)
     {
         try
         {
             BO_Materiales _servicio = new BO_Materiales();
             RS_Materiales _respuesta = new RS_Materiales();
 
-            //_respuesta = _servicio.Obtener_Hospedador_Activos_Por_Red(pID_Session);
+            _respuesta = _servicio.Obtener_Pedidos_Materiales();
 
             if (_respuesta.Resultado == Resultado_Operacion.Error)
             {
@@ -104,11 +141,11 @@ public static class Metodos
             pCombo_List.Items.Add(_item);
 
 
-            foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
+            foreach (OPedido_Material _objeto in _respuesta.Lista_Pedido_Material)
             {
                 _item = new ListItem();
-                //_item.Text = _objeto.Nombre_Completo_Miembro.ToString();
-                //_item.Value = _objeto.Id_Miembro.ToString();
+                _item.Text = _objeto.Material_Descripcion.ToString();
+                _item.Value = _objeto.Id_Pedido_Material.ToString();
                 pCombo_List.Items.Add(_item);
             }
         }
@@ -117,15 +154,15 @@ public static class Metodos
             throw ex;
         }
     }
-   
-    public static void Cargar_Combo_Lider_GDV_Dia_Hora(DropDownList pCombo_List)
+
+    public static void Cargar_Combo_Sector(DropDownList pCombo_List)
     {
         try
         {
             BO_Materiales _servicio = new BO_Materiales();
             RS_Materiales _respuesta = new RS_Materiales();
 
-            //_respuesta = _servicio.Obtener_Lideres_GDV_Nuevo();
+            _respuesta = _servicio.Obtener_Sectores();
 
             if (_respuesta.Resultado == Resultado_Operacion.Error)
             {
@@ -138,14 +175,87 @@ public static class Metodos
             _item.Text = "- Seleccione -";
             _item.Value = "0";
             pCombo_List.Items.Add(_item);
-            
-            /*foreach (OGrupo_de_Vida _objeto in _respuesta.Lista_Grupo_de_Vida)
+
+
+            foreach (OSector _objeto in _respuesta.Lista_Sector)
             {
                 _item = new ListItem();
-                _item.Text = _objeto.Nombre_Completo_Lider_GDV.ToString() + " - " + _objeto.Dia_Semana + " - " + _objeto.Horario_GDV;
-                _item.Value = _objeto.ID_Grupo_de_Vida.ToString();
+                _item.Text = _objeto.Descripcion.ToString();
+                _item.Value = _objeto.Id_Sector.ToString();
                 pCombo_List.Items.Add(_item);
-            }*/
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+  public static void Cargar_Combo_Prioridad(DropDownList pCombo_List)
+    {
+        try
+        {
+            BO_Materiales _servicio = new BO_Materiales();
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            _respuesta = _servicio.Obtener_Prioridad();
+
+            if (_respuesta.Resultado == Resultado_Operacion.Error)
+            {
+                throw new Exception(_respuesta.Mensaje);
+            }
+
+            pCombo_List.Items.Clear();
+
+            ListItem _item = new ListItem();
+            _item.Text = "- Seleccione -";
+            _item.Value = "0";
+            pCombo_List.Items.Add(_item);
+
+
+            foreach (OPrioridad _objeto in _respuesta.Lista_Prioridad)
+            {
+                _item = new ListItem();
+                _item.Text = _objeto.Descripcion.ToString();
+                _item.Value = _objeto.Id_Prioridad.ToString();
+                pCombo_List.Items.Add(_item);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public static void Cargar_Combo_Plantas(DropDownList pCombo_List)
+    {
+        try
+        {
+            BO_Materiales _servicio = new BO_Materiales();
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            _respuesta = _servicio.Obtener_Plantas();
+
+            if (_respuesta.Resultado == Resultado_Operacion.Error)
+            {
+                throw new Exception(_respuesta.Mensaje);
+            }
+
+            pCombo_List.Items.Clear();
+
+            ListItem _item = new ListItem();
+            _item.Text = "- Seleccione -";
+            _item.Value = "0";
+            pCombo_List.Items.Add(_item);
+
+
+            foreach (OPlanta _objeto in _respuesta.Lista_Planta)
+            {
+                _item = new ListItem();
+                _item.Text = _objeto.Descripcion.ToString();
+                _item.Value = _objeto.Id_Planta.ToString();
+                pCombo_List.Items.Add(_item);
+            }
         }
         catch (Exception ex)
         {
@@ -157,35 +267,6 @@ public static class Metodos
 
 
     #region Metodos varios
-
-    public static void Cargar_Combo_Tipos_Documento(DropDownList pCombo_List)
-    {
-        try
-        {
-            /*WS_Usuario.WS_Usuario _servicio = new WS_Usuario.WS_Usuario();
-            WS_Usuario.RS_Tipos_Documentos _respuesta = new WS_Usuario.RS_Tipos_Documentos();
-
-            _respuesta = _servicio.Obtener_Tipos_Documentos();
-            if (_respuesta.Resultado == WS_Usuario.Resultado_Operacion.Error)
-            {
-                throw new Exception(_respuesta.Mensaje);
-            }
-
-            pCombo_List.Items.Clear();
-
-            foreach (WS_Usuario.OTipo_Documento _objeto in _respuesta.Tipos_Documentos)
-            {
-                ListItem item = new ListItem();
-                item.Text = _objeto.Nombre;
-                item.Value = _objeto.Id_Tipo_Documento.ToString();
-                pCombo_List.Items.Add(item);
-            }*/
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
 
     public static int Obtener_Entero(String pValor)
     {
@@ -221,35 +302,6 @@ public static class Metodos
         catch
         {
             return false;
-        }
-    }
-
-    public static void Cargar_Combo_Sistemas(DropDownList pCombo_List)
-    {
-        try
-        {
-            /*WS_EX_General.WS_General _servicio = new WS_EX_General.WS_General();
-            WS_EX_General.RS_Sistemas _respuesta = new WS_EX_General.RS_Sistemas();
-
-            _respuesta = _servicio.Obtener_Sistemas();
-            if (_respuesta.Resultado == WS_EX_General.Resultado_Operacion.Error)
-            {
-                throw new Exception(_respuesta.Mensaje);
-            }
-
-            pCombo_List.Items.Clear();
-            ListItem _item = new ListItem("- Seleccione -", "0");
-            pCombo_List.Items.Add(_item);
-
-            foreach (WS_EX_General.OSistema _objeto in _respuesta.Lista)
-            {
-                _item = new ListItem(_objeto.Nombre, _objeto.Id_Sistema.ToString());
-                pCombo_List.Items.Add(_item);
-            }*/
-        }
-        catch (Exception ex)
-        {
-            throw ex;
         }
     }
 

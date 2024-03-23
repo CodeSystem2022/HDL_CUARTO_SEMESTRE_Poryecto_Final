@@ -1,4 +1,7 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/PaginaMaestra/Master_Sin_Menu.master" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
+<%@ MasterType VirtualPath="~/PaginaMaestra/Master_Sin_Menu.master" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   <div class="card-header text-center">
@@ -23,15 +26,15 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Iniciar sesion </button>
+            <asp:Button runat="server" class="btn btn-primary btn-block" Text="Iniciar sesion" OnClick="btn_ingreso_Click"></asp:Button>
           </div>
           <!-- /.col -->
         </div>
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+      <div class="mb-1">
         <p class=" my-5 mb-3 text-muted">&copy; ElectroFueguina 2024</p>
-      </p>
+      </div>
     </div>
 </asp:Content>
 

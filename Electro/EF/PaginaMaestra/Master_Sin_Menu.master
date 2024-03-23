@@ -1,11 +1,13 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="Master_Sin_Menu.master.cs" Inherits="PaginaMaestra_Master_Sin_Menu" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <title>Sistema GAMat</title>
+  <link rel="icon" href="../Content/Images/Logo_EF-2.png" type="image/png" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
     <!-- Font Awesome -->
@@ -17,23 +19,101 @@
 </head>
 <body class="hold-transition login-page">
     <form id="form1" runat="server">
-
+      <asp:ScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="True">
+        </asp:ScriptManager>
+      <asp:UpdatePanel runat="server" ID="updt1">
+        <ContentTemplate>
         <div class="login-box">
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
+              <label runat="server" visible="false" id="lbl_usuario"></label>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
-
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
         <!-- /.login-box -->
+
+        <!-- Modal mensaje información OK -->
+            <asp:Panel ID="pnl_informacion_ok" runat="server" HorizontalAlign="Center">
+                <div class="modal fade" id="modal-informacion-ok">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">INFORMACION:</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <asp:Label ID="lbl_Informacion_OK" runat="server"></asp:Label>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
+          <cc1:ModalPopupExtender ID="MPE_OK" runat="server" TargetControlID="lbl_Informacion_OK" PopupControlID="pnl_informacion_ok" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+
+        <!-- Modal mensaje información ADVERTENCIA -->
+          <asp:Panel ID="pnl_informacion_advertencia" runat="server" HorizontalAlign="Center">
+        <div class="modal fade" id="modal-informacion-advertencia">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">INFORMACION:</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Label ID="lbl_Informacion_ADVERTENCIA" runat="server"></asp:Label>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </asp:Panel>
+          <cc1:ModalPopupExtender ID="MPE_ADVERTENCIA" runat="server" TargetControlID="lbl_Informacion_ADVERTENCIA" PopupControlID="pnl_informacion_advertencia" RepositionMode="RepositionOnWindowResizeAndScroll" />
+
+        <!-- Modal mensaje información ERROR -->
+          <asp:Panel ID="pnl_informacion_error" runat="server" HorizontalAlign="Center">
+        <div class="modal fade" id="modal-informacion-error">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">INFORMACION:</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Label ID="lbl_Informacion_ERROR" runat="server"></asp:Label>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </asp:Panel>
+          <cc1:ModalPopupExtender ID="MP_ERROR" runat="server" TargetControlID="lbl_Informacion_ERROR" PopupControlID="pnl_informacion_error" RepositionMode="RepositionOnWindowResizeAndScroll" />
+        </ContentTemplate>
+
+      </asp:UpdatePanel>
     </form>
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
 </body>

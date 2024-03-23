@@ -29,9 +29,9 @@ namespace Electro.DataLayer.SqlServer
 
                     _objeto.FK_Id_Tipo_Material = Int32.Parse(_fila["FK_ID_Material"].ToString());
 
-                    if (_fila["Tipo_Material_Descripcion"].ToString().Length > 0)
+                    if (_fila["Tipo_Material"].ToString().Length > 0)
                     {
-                        _objeto.Tipo_Material_Descripcion = _fila["Tipo_Material_Descripcion"].ToString();
+                        _objeto.Tipo_Material_Descripcion = _fila["Tipo_Material"].ToString();
                     }
                     if (_fila["Codigo_Origen"].ToString().Length > 0)
                     {
@@ -54,29 +54,30 @@ namespace Electro.DataLayer.SqlServer
                     {
                         _objeto.Ubicacion_Fila = _fila["Ubicacion_Fila"].ToString();
                     }
-                    _objeto.FK_ID_Area = Int16.Parse(_fila["FK_ID_Area"].ToString());
-                    if (_fila["Area_Descripcion"].ToString().Length > 0)
+                    _objeto.FK_ID_Area = Int16.Parse(_fila["ID_Area"].ToString());
+
+                    if (_fila["Area"].ToString().Length > 0)
                     {
-                        _objeto.Area_Descripcion = _fila["Area_Descripcion"].ToString();
+                        _objeto.Area_Descripcion = _fila["Area"].ToString();
                     }
                     if (_fila["Ubicacion_Gaveta"].ToString().Length > 0)
                     {
                         _objeto.Ubicacion_Gaveta = _fila["Ubicacion_Gaveta"].ToString();
                     }
-                    _objeto.FK_ID_Estado = Int16.Parse(_fila["FK_ID_Estado"].ToString());
-                    if (_fila["Estado_Descripcion"].ToString().Length > 0)
+                    _objeto.FK_ID_Estado = Int16.Parse(_fila["ID_Estado"].ToString());
+                    if (_fila["Descripcion_Estado"].ToString().Length > 0)
                     {
-                        _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
+                        _objeto.Estado_Descripcion = _fila["Descripcion_Estado"].ToString();
                     }
-                    _objeto.FK_ID_Planta = Int16.Parse(_fila["FK_ID_Planta"].ToString());
-                    if (_fila["Planta_Descripcion"].ToString().Length > 0)
+                    _objeto.FK_ID_Planta = Int16.Parse(_fila["ID_Planta"].ToString());
+                    if (_fila["Planta"].ToString().Length > 0)
                     {
-                        _objeto.Estado_Descripcion = _fila["Planta_Descripcion"].ToString();
+                        _objeto.Estado_Descripcion = _fila["Planta"].ToString();
                     }
-                    _objeto.FK_ID_Sector = Int16.Parse(_fila["FK_ID_Sector"].ToString());
-                    if (_fila["Sector_Descripcion"].ToString().Length > 0)
+                    _objeto.FK_ID_Sector = Int16.Parse(_fila["ID_Sector"].ToString());
+                    if (_fila["Sector"].ToString().Length > 0)
                     {
-                        _objeto.Sector_Descripcion = _fila["Sector_Descripcion"].ToString();
+                        _objeto.Sector_Descripcion = _fila["Sector"].ToString();
                     }
                     _resultado[_i] = _objeto;
                     _i++;
@@ -170,10 +171,8 @@ namespace Electro.DataLayer.SqlServer
                     {
                         _objeto.Material_Descripcion = _fila["Material_Descripcion"].ToString();
                     }
-                    if (_fila["Cantidad_A_Solicitar"].ToString().Length > 0)
-                    {
-                        _objeto.Cantidad_A_Solicitar = _fila["Cantidad_A_Solicitar"].ToString();
-                    }
+                    _objeto.Cantidad_A_Solicitar = Int16.Parse(_fila["Cantidad_A_Solicitar"].ToString());
+                    
                     if (_fila["Recambio"].ToString().Length > 0)
                     {
                         _objeto.Recambio = Boolean.Parse(_fila["Recambio"].ToString());
@@ -181,6 +180,21 @@ namespace Electro.DataLayer.SqlServer
                     if (_fila["Observaciones"].ToString().Length > 0)
                     {
                         _objeto.Observaciones = _fila["Observaciones"].ToString();
+                    }
+                    _objeto.FK_ID_Usuario_Autorizacion = Int32.Parse(_fila["FK_ID_Usuario_Autorizacion"].ToString());
+                    if (_fila["Usuario_Autorizacion_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Usuario_Autorizacion_Descripcion = _fila["Usuario_Autorizacion_Descripcion"].ToString();
+                    }
+                    _objeto.FK_ID_Estado = Int32.Parse(_fila["FK_ID_Estado"].ToString());
+                    if (_fila["Estado_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
+                    }
+                    _objeto.FK_ID_Usuario_Pedido = Int32.Parse(_fila["FK_ID_Usuario_Pedido"].ToString());
+                    if (_fila["Usuario_Pedido_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Usuario_Pedido_Descripcion = _fila["Usuario_Pedido_Descripcion"].ToString();
                     }
 
                     _resultado[_i] = _objeto;
@@ -220,6 +234,31 @@ namespace Electro.DataLayer.SqlServer
             catch (Exception error)
             {
                 throw new Exception("Ocurrio un error al cargar los datos en SqlServerMateriales - Cargar_Area. " + error.Message);
+            }
+        }
+
+        private OPrioridad[] Cargar_Prioridad(DataTable pData_Table)
+        {
+            try
+            {
+                OPrioridad[] _resultado = new OPrioridad[pData_Table.Rows.Count];
+                int _i = 0;
+
+                foreach (DataRow _fila in pData_Table.Rows)
+                {
+                    OPrioridad _objeto = new OPrioridad();
+
+                    _objeto.Id_Prioridad = Int16.Parse(_fila["ID_Prioridad"].ToString());
+                    _objeto.Descripcion = _fila["Descripcion"].ToString();
+                    _resultado[_i] = _objeto;
+                    _i++;
+                }
+
+                return _resultado;
+            }
+            catch (Exception error)
+            {
+                throw new Exception("Ocurrio un error al cargar los datos en SqlServerMateriales - Cargar_Prioridad. " + error.Message);
             }
         }
 
@@ -318,8 +357,9 @@ namespace Electro.DataLayer.SqlServer
                     _resultado[_i] = _objeto;
                     _i++;
                 }
-
+                
                 return _resultado;
+                
             }
             catch (Exception error)
             {
@@ -340,13 +380,15 @@ namespace Electro.DataLayer.SqlServer
 
                     _objeto.Id_Sector = Int16.Parse(_fila["ID_Sector"].ToString());
                     _objeto.Descripcion = _fila["Descripcion"].ToString();
-                    _objeto.FK_ID_Planta = Int16.Parse(_fila["FK_ID_Panta"].ToString());
-                    _objeto.Planta_Descripcion = _fila["Planta_Descripcion"].ToString();
-                    _objeto.FK_ID_Area = Int16.Parse(_fila["FK_ID_Area"].ToString());
-                    _objeto.Area_Descripcion = _fila["Area_Descripcion"].ToString();
-                    _objeto.FK_ID_Estado = Int16.Parse(_fila["FK_ID_Estado"].ToString());
-                    _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
-                    _objeto.Motivo_Baja = _fila["Motivo_Baja"].ToString();
+                    _objeto.FK_ID_Planta = Int16.Parse(_fila["ID_Planta"].ToString());
+                    _objeto.Planta_Descripcion = _fila["Planta"].ToString();
+                    _objeto.FK_ID_Estado = Int16.Parse(_fila["ID_Estado"].ToString());
+                    _objeto.Estado_Descripcion = _fila["Descripcion_Estado"].ToString();
+
+                    if (_fila["Motivo_Baja"].ToString().Length > 0)
+                    {
+                        _objeto.Motivo_Baja = _fila["Motivo_Baja"].ToString();
+                    }
                     _objeto.Fecha_Creacion= _fila["Fecha_Creacion"].ToString();
 
                     _resultado[_i] = _objeto;
@@ -354,6 +396,7 @@ namespace Electro.DataLayer.SqlServer
                 }
 
                 return _resultado;
+                
             }
             catch (Exception error)
             {
@@ -467,19 +510,35 @@ namespace Electro.DataLayer.SqlServer
                     OUsuarios _objeto = new OUsuarios();
 
                     _objeto.ID_Usuario = Int16.Parse(_fila["ID_Usuario"].ToString());
-                    _objeto.Nombre = _fila["Nombre"].ToString();
                     _objeto.Apellido = _fila["Apellido"].ToString();
-                    _objeto.Nombre_Usuario = _fila["Nombre_Usuario"].ToString();
+                    _objeto.Nombre = _fila["Nombre"].ToString();
+                    _objeto.Nombre_Completo_Usuario = _objeto.Apellido + ", " + _objeto.Nombre;
+                    _objeto.Legajo = _fila["Legajo"].ToString();
                     _objeto.Contrasena = _fila["Contrasena"].ToString();
                     _objeto.FK_ID_Perfil = Int16.Parse(_fila["FK_ID_Perfil"].ToString());
-                    _objeto.Perfil_Descripcion = _fila["Perfil_Descripcion"].ToString();
+                    if (_fila["Perfil_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Perfil_Descripcion = _fila["Perfil_Descripcion"].ToString();
+                    }
                     _objeto.FK_ID_Area = Int16.Parse(_fila["FK_ID_Area"].ToString());
-                    _objeto.Area_Descripcion = _fila["Area_Descripcion"].ToString();
+                    if (_fila["Area_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Area_Descripcion = _fila["Area_Descripcion"].ToString();
+                    }
                     _objeto.FK_ID_Planta = Int16.Parse(_fila["FK_ID_Planta"].ToString());
-                    _objeto.Planta_Descripcion = _fila["Planta_Descripcion"].ToString();
+                    if (_fila["Planta_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Planta_Descripcion = _fila["Planta_Descripcion"].ToString();
+                    }
                     _objeto.FK_ID_Estado = Int16.Parse(_fila["FK_ID_Estado"].ToString());
-                    _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
-                    _objeto.Fecha_Creacion = _fila["Fecha_Creacion"].ToString();
+                    if (_fila["Estado_Descripcion"].ToString().Length > 0)
+                    {
+                        _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
+                    }
+                    if (_fila["Fecha_Creacion"].ToString().Length > 0)
+                    {
+                        _objeto.Fecha_Creacion = _fila["Fecha_Creacion"].ToString();
+                    }
 
                     _resultado[_i] = _objeto;
                     _i++;
@@ -546,6 +605,31 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
+        public void Alta_Pedido_Material(string pFecha_Solicitud, int pFK_ID_Sector, int pFK_ID_Tipo_Prioridad, int pFK_ID_Material, short pCantidad_A_Solicitar, bool pRecambio, string pObservaciones, int pFK_ID_Usuario_Pedido, int pFK_ID_Estado)
+        {
+            try
+            {
+                /// Método para INSETAR un Material, no se agrega ID_Material porque es AUTOINCREMENTAL
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("INSERT INTO [dbo].[Pedido_Materiales]");
+                _sql.AppendLine("([Fecha_Solicitud],[FK_ID_Sector],[FK_ID_Tipo_Prioridad],[FK_ID_Material],[Cantidad_A_Solicitar],[Recambio]");
+                _sql.AppendLine(",[Observaciones],[FK_ID_Usuario_Autorizacion],[FK_ID_Estado],[FK_ID_Usuario_Pedido])");
+                _sql.AppendLine("VALUES (" + pFecha_Solicitud + ", " + pFK_ID_Sector + ", " + pFK_ID_Tipo_Prioridad + pFK_ID_Material + ", " + pCantidad_A_Solicitar + ", " + pRecambio + ", ");
+                _sql.AppendLine(pObservaciones + ", NULL, " + pFK_ID_Estado + ", " + pFK_ID_Usuario_Pedido + ")");
+                
+                Db_EF.Insert(_sql.ToString());
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL Alta_Pedido_Material - " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void Alta_Tipo_Material(string pTipo_Material, string pDescripcion, short pFK_ID_Estado)
         {
             try
@@ -594,7 +678,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public void Alta_Sector(string pDescripcion, short pFK_ID_Planta, short pFK_ID_Area, int pFK_ID_Usuario)
+        public void Alta_Sector(string pDescripcion, short pFK_ID_Planta, int pFK_ID_Usuario)
         {
             try
             {
@@ -604,11 +688,10 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("INSERT INTO [dbo].[Sector]");
                 _sql.AppendLine("([Descripcion]");
                 _sql.AppendLine(",[FK_ID_Planta]");
-                _sql.AppendLine(",[FK_ID_Area]");
                 _sql.AppendLine(",[FK_ID_Estado]");
                 _sql.AppendLine(",[Motivo_Baja]");
                 _sql.AppendLine(",[Fecha_Creacion])");
-                _sql.AppendLine("VALUES (" + pDescripcion + ", " + pFK_ID_Planta + ", " + pFK_ID_Area + ", " + pFK_ID_Usuario + ")");
+                _sql.AppendLine("VALUES (" + pDescripcion + ", " + pFK_ID_Planta + ", " + pFK_ID_Usuario + ")");
 
                 Db_EF.Insert(_sql.ToString());
             }
@@ -621,6 +704,34 @@ namespace Electro.DataLayer.SqlServer
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// Da de Alta por primera vez a un Usuario
+        /// </summary>
+        public void Alta_Usuario(String pApellido, String pNombre, String pLegajo, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Planta)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("INSERT INTO [dbo].[Usuarios]");
+                _sql.AppendLine("([Nombre],[Apellido],[Legajo],[Contrasena],[FK_ID_Perfil]");
+                _sql.AppendLine(",[FK_ID_Area],[FK_ID_Planta],[FK_ID_Estado],[fecha_creacion],[Motivo_Baja])");
+                _sql.AppendLine("VALUES (" + pNombre + "," + pApellido + "," + pLegajo + "," + pContrasena + "," + pFK_ID_Perfil_Usuario + ",");
+                _sql.AppendLine(pFK_ID_Area + "," + pFK_ID_Planta + ", 1, GETDATE(), NULL)");
+
+                Db_EF.Insert(_sql.ToString());
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #endregion
 
@@ -682,7 +793,38 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public void Actualizar_Sector(int pID_Sector, string pDescripcion, short pFK_ID_Planta, short pFK_ID_Area, short pFK_ID_Estado, string pMotivo_Baja)
+        public void Actualizar_Pedido_Material(int pID_Pedido_Material, string pFecha_Solicitud, int pFK_ID_Sector, int pFK_ID_Tipo_Prioridad, int pFK_ID_Material, short pCantidad_A_Solicitar, bool pRecambio, string pObservaciones, int pFK_ID_Usuario_Pedido, int pFK_ID_Usuario_Autorizacion, int pFK_ID_Estado)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("UPDATE [dbo].[Materiales]");
+                _sql.AppendLine("SET [Fecha_Solicitud] = " + pFecha_Solicitud);
+                _sql.AppendLine(",[FK_ID_Sector] = " + pFK_ID_Sector);
+                _sql.AppendLine(",[FK_ID_Tipo_Prioridad] = " +pFK_ID_Tipo_Prioridad);
+                _sql.AppendLine(",[FK_ID_Material] = " + pFK_ID_Material);
+                _sql.AppendLine(",[Cantidad_A_Solicitar] = " + pCantidad_A_Solicitar);
+                _sql.AppendLine(",[Recambio] = " + Db_EF.Convertir_Boolean_En_String(pRecambio));
+                _sql.AppendLine(",[Observaciones] = " + Db_EF.Escape(pObservaciones));
+                _sql.AppendLine(",[FK_ID_Usuario_Pedido] = " + pFK_ID_Usuario_Pedido);
+                _sql.AppendLine(",[FK_ID_Usuario_Autorizacion] = " + pFK_ID_Usuario_Autorizacion);
+                _sql.AppendLine(",[FK_ID_Estado] = " + pFK_ID_Estado);
+                _sql.AppendLine("WHERE [Pedido_Materiales].[ID_Pedido_Material] = " + pID_Pedido_Material);
+
+                Db_EF.Update(_sql.ToString());
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL Actualizar_Pedido_Material - " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Actualizar_Sector(int pID_Sector, string pDescripcion, short pFK_ID_Planta, short pFK_ID_Estado, string pMotivo_Baja)
         {
             try
             {
@@ -691,7 +833,6 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine("UPDATE [dbo].[[Sector]]");
                 _sql.AppendLine("SET [Descripcion] = " + pDescripcion);
                 _sql.AppendLine(",[FK_ID_Planta] = " + pFK_ID_Planta);
-                _sql.AppendLine(",[FK_ID_Area] = " + pFK_ID_Area);
                 _sql.AppendLine(",[FK_ID_Estado] = " + pFK_ID_Estado);
                 _sql.AppendLine(",[Motivo_Baja] = " + pMotivo_Baja);
                 _sql.AppendLine("WHERE [Sector].[ID_Sector] = " + pID_Sector);
@@ -760,6 +901,39 @@ namespace Electro.DataLayer.SqlServer
                 throw ex;
             }
         }
+
+        /// Actualiza un usuario
+        public void Actualizar_Usuario(Int16 pID_Usuario, String pApellido, String pNombre, String pLegajo, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Planta)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("UPDATE Usuarios");
+                _sql.AppendLine("SET    Nombre = " + pNombre + ",");
+                _sql.AppendLine("       Apellido = " + pApellido + ",");
+                _sql.AppendLine("       Legajo = " + pLegajo + ",");
+                _sql.AppendLine("       Contrasena = " + Db_EF.Escape(pContrasena) + ",");
+                _sql.AppendLine("       pFK_ID_Perfil = " + pFK_ID_Perfil_Usuario + ",");
+                _sql.AppendLine("       pFK_ID_Area = " + pFK_ID_Area + ",");
+                _sql.AppendLine("       pFK_ID_Planta = " + pFK_ID_Planta + ",");
+                _sql.AppendLine("WHERE  ID_Usuario = " + pID_Usuario);
+
+                if (Db_EF.Update(_sql.ToString()) != 1)
+                {
+                    throw new Exception("No se pudieron actualizar los datos del usuario con ID N° " + pID_Usuario);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL Actualizar_Usuario - " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #endregion
 
@@ -903,6 +1077,33 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
+        public void Baja_Usuario(Int16 pID_Usuario, String pMotivo_Baja, String pFecha_baja, Int16 pFK_ID_Estado)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("UPDATE Usuarios");
+                _sql.AppendLine("SET    pFK_ID_Estado = " + pFK_ID_Estado + ",");
+                _sql.AppendLine("       Motivo_Baja = " + pMotivo_Baja + ",");
+                _sql.AppendLine("       Fecha_Baja = " + pFecha_baja);
+                _sql.AppendLine("WHERE  ID_Usuario = " + pID_Usuario);
+
+                if (Db_EF.Update(_sql.ToString()) != 1)
+                {
+                    throw new Exception("No se pudieron actualizar los datos del usuario con ID N° " + pID_Usuario);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL Baja_Usuario - " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Obtener Cabecera
@@ -936,7 +1137,6 @@ namespace Electro.DataLayer.SqlServer
                 // Realizamos un SELECT para poder obtener la cabecera de la consulta
                 _sql.AppendLine("SELECT [Sector].[ID_Sector],[Sector].[Descripcion] AS Descripcion_Sector");
                 _sql.AppendLine(",[Planta].[ID_Planta],[Planta].[Descripcion] AS Descripcion_Planta");
-                _sql.AppendLine(",[Area].[ID_Area],[Area].[Descripcion] AS Descripcion_Area");
                 _sql.AppendLine(",[Estado].[ID_Estado],[Estado].[Descripcion_Estado] AS Descripcion_Estado");
                 _sql.AppendLine(",[Sector].[Motivo_Baja],[Sector].[Fecha_Creacion]");
                 _sql.AppendLine("FROM[Sector]");
@@ -1043,9 +1243,30 @@ namespace Electro.DataLayer.SqlServer
                 throw ex;
             }
         }
-        
+
+        private String Obtener_Cabecera_Usuario()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine("SELECT [Usuarios].[ID_Login],[Usuarios].[FK_ID_Permisos],[Usuarios].[FK_ID_Usuario]");
+                _sql.AppendLine(",(Usuarios.Apellido + ', ' + Usuarios.Nombre) AS Usuario,[Usuarios].[Legajo]");
+                _sql.AppendLine(",[Usuarios].[Contrasena],[Perfil_Usuario].[Descripcion] AS Perfil,[Usuarios].[Fecha_Creacion]");
+                _sql.AppendLine("FROM [Usuarios]");
+                _sql.AppendLine("INNER JOIN Perfil on Perfil_Usuario.ID_Perfil = Usuarios.FK_ID_Perfil");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+       
         #endregion
-        
+
         #region Obtener Cabecera COMBO
 
         public String Obtener_CMB_Planta()
@@ -1166,11 +1387,30 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
+        private String Obtener_CMB_Perfil_Usuario()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                // Realizamos un SELECT para poder obtener la cabecera de la consulta
+                _sql.AppendLine("SELECT [Perfil_Usuario].[ID_Perfil_Usuario],[Perfil_Usuario].[Descripcion],[Estado].ID_Estado],[Perfil_Usuario].[Fecha_Creacion]");
+                _sql.AppendLine("FROM [Perfil_Usuario]");
+                _sql.AppendLine("LEFT OUTER JOIN Estado ON Estado.ID_Estado = [Perfil_Usuario].[FK_ID_Estado]");
+
+                return _sql.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Consultas Materiales
 
-        public OArea Obtener_Areas()
+        public OArea[] Obtener_Areas()
         {
             try
             {
@@ -1181,7 +1421,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1205,7 +1450,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1222,7 +1467,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OPlanta Obtener_Plantas()
+        public OPlanta[] Obtener_Plantas()
         {
             try
             {
@@ -1233,7 +1478,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1257,7 +1507,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1274,7 +1524,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OPlanta Obtener_Baja_Planta()
+        public OPlanta[] Obtener_Baja_Planta()
         {
             try
             {
@@ -1286,7 +1536,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1310,7 +1565,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OPlanta[] _resultado = Cargar_Planta(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1334,7 +1594,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OArea[] _resultado = Cargar_Area(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1351,18 +1611,34 @@ namespace Electro.DataLayer.SqlServer
             }
         }
  
-        public OMaterial Obtener_Materiales()
+        public OMaterial[] Obtener_Materiales()
         {
             try
             {
+                // indice fuera de la matriz revisar carga de materiales
                 StringBuilder _sql = new StringBuilder();
-                _sql.AppendLine("SELECT *");
+                _sql.AppendLine("SELECT Material.ID_Material, Tipo_Material.ID_Tipo_Material, Material.Codigo_Origen, Material.Codigo_Interno,");
+                _sql.AppendLine("Material.Cantidad, Material.Ubicacion_Estanteria, Material.Ubicacion_Columna, Material.Ubicacion_Fila,");
+                _sql.AppendLine("Area.ID_Area, Area.Abreviatura AS Area, Material.Ubicacion_Gaveta, Estado.ID_Estado, Estado.Descripcion_Estado,");
+                _sql.AppendLine("Planta.ID_Planta, Planta.Descripcion AS Planta, Sector.ID_Sector, Sector.Descripcion AS Sector, Material.Minimo_Requerido,");
+                _sql.AppendLine("Material.Descripcion_Articulo, Material.Motivo_Baja, Material.Fecha_Creacion");
                 _sql.AppendLine("FROM [Material]");
-                _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
+                _sql.AppendLine("INNER JOIN Area ON[Material].FK_ID_Area = Area.ID_Area");
+                _sql.AppendLine("INNER JOIN Tipo_Material ON Material.FK_ID_Tipo_Material = Tipo_Material.ID_Tipo_Material");
+                _sql.AppendLine("INNER JOIN Planta ON[Material].FK_ID_Planta = Planta.ID_Planta");
+                _sql.AppendLine("INNER JOIN Estado ON[Material].FK_ID_Estado = Estado.ID_Estado");
+                _sql.AppendLine("INNER JOIN Sector ON[Material].FK_ID_Sector = Sector.ID_Sector");
+                _sql.AppendLine("INNER JOIN Perfil_Usuario ON[Material].FK_ID_Area = Perfil_Usuario.ID_Perfil_Usuario");
+                _sql.AppendLine("ORDER BY[Material].[ID_Material] ASC");
 
                 OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1386,7 +1662,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1415,7 +1691,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1433,7 +1709,7 @@ namespace Electro.DataLayer.SqlServer
         }
         
         //Esta función obtiene el pedido de materiales
-        public OMaterial Obtener_Pedido_Materiales()
+        public OPedido_Material[] Obtener_Pedido_Materiales()
         {
             try
             {
@@ -1441,11 +1717,11 @@ namespace Electro.DataLayer.SqlServer
                 _sql.AppendLine(Obtener_Cabecera_Pedido_Materiales());
                 _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
 
-                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OPedido_Material[] _resultado = Cargar_Pedido_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
-                    return _resultado[0];
+                    return _resultado;
                 }
 
                 return null;
@@ -1461,18 +1737,18 @@ namespace Electro.DataLayer.SqlServer
         }
 
         //Esta función obtiene el material por ID
-        public OMaterial Obtener_Pedido_Material_Por_ID(int pId_Pedido_Material)
+        public OPedido_Material Obtener_Pedido_Material_Por_ID(int pId_Pedido_Material)
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
-                _sql.AppendLine(Obtener_Cabecera_Materiales());
+                _sql.AppendLine(Obtener_Cabecera_Pedido_Materiales());
                 _sql.AppendLine("WHERE [Pedido_Material].[ID_Pedido_Material] = " + pId_Pedido_Material);
                 _sql.AppendLine("ORDER BY [Pedido_Material].[ID_Pedido_Material] ASC");
 
-                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OPedido_Material[] _resultado = Cargar_Pedido_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1489,19 +1765,19 @@ namespace Electro.DataLayer.SqlServer
             }
         }
         
-        //Esta función obtiene el material por Nombre
-        public OMaterial Obtener_Pedido_Material_Por_Nombre(string pNombre_Pedido_Material)
+        //Esta función obtiene el pedido de material por Nombre
+        public OPedido_Material Obtener_Pedido_Material_Por_Nombre(string pNombre_Pedido_Material)
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
-                _sql.AppendLine(Obtener_Cabecera_Materiales());
+                _sql.AppendLine(Obtener_Cabecera_Pedido_Materiales());
                 _sql.AppendLine("WHERE Tipo_Material.Descripcion = " + pNombre_Pedido_Material);
                 _sql.AppendLine("ORDER BY [Pedido_Material].[ID_Pedido_Material] ASC");
 
-                OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
+                OPedido_Material[] _resultado = Cargar_Pedido_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1518,18 +1794,23 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OTipo_Material Obtener_Tipo_Materiales()
+        public OTipo_Material[] Obtener_Tipo_Materiales()
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
                 _sql.AppendLine("SELECT *");
                 _sql.AppendLine("FROM [Tipo_Material]");
-                _sql.AppendLine("ORDER BY [Material].[ID_Material] ASC");
+                _sql.AppendLine("ORDER BY [Tipo_Material].[ID_Tipo_Material] ASC");
 
                 OTipo_Material[] _resultado = Cargar_Tipo_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1553,7 +1834,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OTipo_Material[] _resultado = Cargar_Tipo_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1582,7 +1863,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OTipo_Material[] _resultado = Cargar_Tipo_Material(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1599,7 +1880,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
         
-        public OMaterial[] Obtener_Material_Por_Filtro(String pFiltro)
+        public OMaterial Obtener_Material_Por_Filtro(String pFiltro)
         {
             try
             {
@@ -1614,7 +1895,12 @@ namespace Electro.DataLayer.SqlServer
                 
                 OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                if (_resultado.Length != 0)
+                {
+                    return _resultado[0];
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1626,7 +1912,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OCondicion Obtener_Condicion()
+        public OCondicion[] Obtener_Condicion()
         {
             try
             {
@@ -1637,7 +1923,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OCondicion[] _resultado = Cargar_Condicion(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1649,7 +1940,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
         
-        public OEstado Obtener_Estados()
+        public OEstado[] Obtener_Estados()
         {
             try
             {
@@ -1660,7 +1951,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OEstado[] _resultado = Cargar_Estado(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1693,7 +1989,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OEstado[] _resultado = Cargar_Estado(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado;
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1715,7 +2016,7 @@ namespace Electro.DataLayer.SqlServer
         /// 10 Baja de Pedido de material
         /// </summary>
         /// <returns></returns>
-        public OMaterial Obtener_Baja_Material()
+        public OMaterial[] Obtener_Baja_Material()
         {
             try
             {
@@ -1727,7 +2028,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OMaterial[] _resultado = Cargar_Materiales(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1739,7 +2045,7 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OUbicacion Obtener_Ubicaciones()
+        public OUbicacion[] Obtener_Ubicaciones()
         {
             try
             {
@@ -1750,7 +2056,12 @@ namespace Electro.DataLayer.SqlServer
 
                 OUbicacion[] _resultado = Cargar_Ubicacion(Db_EF.GetDataTable(_sql.ToString()));
 
-                return _resultado[0];
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1774,7 +2085,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OUbicacion[] _resultado = Cargar_Ubicacion(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1803,7 +2114,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OUbicacion[] _resultado = Cargar_Ubicacion(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1820,18 +2131,28 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
-        public OSector Obtener_Sectores()
+        public OSector[] Obtener_Sectores()
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
-                _sql.AppendLine("SELECT *");
-                _sql.AppendLine("FROM [Sector]");
+                _sql.AppendLine("SELECT Sector.[ID_Sector],Sector.[Descripcion]");
+                _sql.AppendLine(", Planta.[ID_Planta], Planta.Descripcion AS Planta");
+                _sql.AppendLine(", Estado.[ID_Estado], Estado.Descripcion_Estado");
+                _sql.AppendLine(", Sector.[Motivo_Baja], Sector.[Fecha_Creacion]");
+                _sql.AppendLine("FROM[Sector]");
+                _sql.AppendLine("INNER JOIN Planta ON Sector.FK_ID_Planta = Planta.ID_Planta");
+                _sql.AppendLine("INNER JOIN Estado ON Sector.FK_ID_Estado = Estado.ID_Estado");
                 _sql.AppendLine("ORDER BY [Sector].[ID_Sector] ASC");
 
                 OSector[] _resultado = Cargar_Sector(Db_EF.GetDataTable(_sql.ToString()));
+                
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
 
-                return _resultado[0];
+                return null;
             }
             catch (SqlException ex)
             {
@@ -1855,7 +2176,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OSector[] _resultado = Cargar_Sector(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1884,7 +2205,7 @@ namespace Electro.DataLayer.SqlServer
 
                 OSector[] _resultado = Cargar_Sector(Db_EF.GetDataTable(_sql.ToString()));
 
-                if (_resultado.Length == 1)
+                if (_resultado.Length != 0)
                 {
                     return _resultado[0];
                 }
@@ -1901,7 +2222,179 @@ namespace Electro.DataLayer.SqlServer
             }
         }
 
+        public OPrioridad[] Obtener_Prioridad()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+                _sql.AppendLine("SELECT [ID_Prioridad]");
+                _sql.AppendLine(",[Descripcion]");
+                _sql.AppendLine("FROM[Prioridad]");
+                _sql.AppendLine("ORDER BY [Prioridad].[ID_Prioridad] ASC");
+
+                OPrioridad[] _resultado = Cargar_Prioridad(Db_EF.GetDataTable(_sql.ToString()));
+
+                return _resultado;
+                
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL- Obtener_Prioridad" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
 
+        #region Consultas de Usuario
+
+        public OUsuarios[] Obtener_Usuarios()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+
+                OUsuarios[] _resultado = Cargar_Usuarios(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 0)
+                {
+                    return null;
+                }
+
+                return _resultado;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OUsuarios Obtener_Usuario_Por_ID(Int32 pId_Usuario)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+                _sql.AppendLine("WHERE  Usuario.ID_Usuario = " + pId_Usuario);
+
+                OUsuarios[] _resultado = Cargar_Usuarios(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 0)
+                {
+                    return null;
+                }
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OUsuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+                _sql.AppendLine("WHERE  Usuario.[Legajo] = " + pNumero_Legajo);
+
+                OUsuarios[] _resultado = Cargar_Usuarios(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length == 0)
+                {
+                    return null;
+                }
+
+                return _resultado[0];
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OUsuarios[] Obtener_Usuarios_Activos()
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+                _sql.AppendLine("WHERE  Usuarios.[FK_ID_Estado] = 1");
+                _sql.AppendLine("ORDER BY Usuarios.Apellido");
+
+                OUsuarios[] _resultado = Cargar_Usuarios(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public OUsuarios[] Obtener_Usuarios_Por_Filtro(String pFiltro)
+        {
+            try
+            {
+                StringBuilder _sql = new StringBuilder();
+
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+                _sql.AppendLine("WHERE  (Usuarios.Apellido LIKE '%" + pFiltro + "%'");
+                _sql.AppendLine("       OR Usuarios.Nombre LIKE '%" + pFiltro + "%'");
+                _sql.AppendLine("       OR Usuarios.Legajo LIKE '%" + pFiltro + "%'");
+                _sql.AppendLine("       AND Usuarios.ID_Usuario > 0");
+                _sql.AppendLine("ORDER BY Usuarios.Apellido");
+
+                OUsuarios[] _resultado = Cargar_Usuarios(Db_EF.GetDataTable(_sql.ToString()));
+
+                if (_resultado.Length != 0)
+                {
+                    return _resultado;
+                }
+
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("SQL-" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
     }
 }

@@ -41,27 +41,28 @@ namespace Electro.DataLayer.SqlServer
                     _objeto.Apellido = _fila["Apellido"].ToString();
                     _objeto.Nombre = _fila["Nombre"].ToString();
                     _objeto.Legajo = _fila["Legajo"].ToString();
-                    if (_fila["Nombre_Usuario"].ToString().Length > 0)
-                    {
-                        _objeto.Nombre_Usuario = _fila["Nombre_Usuario"].ToString();
-                    }
+                    
+                    _objeto.Nombre_Completo_Usuario = _fila["Apellido"].ToString() + ", " + _fila["Nombre"].ToString();
+                    
                     _objeto.Contrasena = _fila["Contrasena"].ToString();
-                    _objeto.FK_ID_Perfil = Int16.Parse(_fila["FK_ID_Perfil"].ToString());
-                    if (_fila["Perfil_Descripcion"].ToString().Length > 0)
+
+                    _objeto.FK_ID_Perfil = Int16.Parse(_fila["ID_Perfil_Usuario"].ToString());
+
+                    if (_fila["Perfil_Usuario"].ToString().Length > 0)
                     {
-                        _objeto.Perfil_Descripcion = _fila["Perfil_Descripcion"].ToString();
+                        _objeto.Perfil_Descripcion = _fila["Perfil_Usuario"].ToString();
                     }
-                    _objeto.FK_ID_Area = Int16.Parse(_fila["FK_ID_Area"].ToString());
+                    _objeto.FK_ID_Area = Int16.Parse(_fila["ID_Area"].ToString());
                     if (_fila["Area_Descripcion"].ToString().Length > 0)
                     {
                         _objeto.Area_Descripcion = _fila["Area_Descripcion"].ToString();
                     }
-                    _objeto.FK_ID_Planta = Int16.Parse(_fila["FK_ID_Planta"].ToString());
+                    _objeto.FK_ID_Planta = Int16.Parse(_fila["ID_Planta"].ToString());
                     if (_fila["Planta_Descripcion"].ToString().Length > 0)
                     {
                         _objeto.Planta_Descripcion = _fila["Planta_Descripcion"].ToString();
                     }
-                    _objeto.FK_ID_Estado = Int16.Parse(_fila["FK_ID_Estado"].ToString());
+                    _objeto.FK_ID_Estado = Int16.Parse(_fila["ID_Estado"].ToString());
                     if (_fila["Estado_Descripcion"].ToString().Length > 0)
                     {
                         _objeto.Estado_Descripcion = _fila["Estado_Descripcion"].ToString();
@@ -202,17 +203,23 @@ namespace Electro.DataLayer.SqlServer
 
         #region Consultas Usuarios
 
-        private String Cabecera_Usuario()
+        private String Obtener_Cabecera_Usuario()
         {
             try
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine("SELECT [Usuarios].[ID_Login],[Usuarios].[FK_ID_Permisos],[Usuarios].[FK_ID_Usuario]");
-                _sql.AppendLine(",(Usuarios.Apellido + ', ' + Usuarios.Nombre) AS Usuario,[Usuarios].[Nombre_Usuario]");
-                _sql.AppendLine(",[Usuarios].[Contrasena],[Perfil_Usuario].[Descripcion] AS Perfil,[Usuarios].[Fecha_Creacion]");
-                _sql.AppendLine("FROM [Usuarios]");
-                _sql.AppendLine("INNER JOIN Perfil on Perfil_Usuario.ID_Perfil = Usuarios.FK_ID_Perfil");
+                _sql.AppendLine("SELECT [Usuarios].[ID_Usuario],[Usuarios].[Nombre],[Usuarios].[Apellido],[Usuarios].[Legajo],[Usuarios].[Contrasena]");
+                _sql.AppendLine(", Perfil_Usuario.ID_Perfil_Usuario, Perfil_Usuario.Descripcion as Perfil_Usuario");
+                _sql.AppendLine(", Area.[ID_Area], Area.Abreviatura as Area_Descripcion");
+                _sql.AppendLine(", Planta.[ID_Planta], Planta.Descripcion as Planta_Descripcion");
+                _sql.AppendLine(", Estado.[ID_Estado], Estado.Descripcion_Estado as Estado_Descripcion");
+                _sql.AppendLine(",[Usuarios].[Fecha_Creacion],[Usuarios].[Motivo_Baja],[Usuarios].[Fecha_Baja]");
+                _sql.AppendLine("FROM[Usuarios]");
+                _sql.AppendLine("INNER JOIN Area ON Usuarios.FK_ID_Area = Area.ID_Area");
+                _sql.AppendLine("INNER JOIN Planta ON Usuarios.FK_ID_Planta = Planta.ID_Planta");
+                _sql.AppendLine("INNER JOIN Estado ON Usuarios.FK_ID_Estado = Estado.ID_Estado");
+                _sql.AppendLine("INNER JOIN Perfil_Usuario ON Usuarios.FK_ID_Area = Perfil_Usuario.ID_Perfil_Usuario");
 
                 return _sql.ToString();
             }
@@ -251,7 +258,7 @@ namespace Electro.DataLayer.SqlServer
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine(Cabecera_Usuario());
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
 
                 OUsuarios[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
@@ -278,8 +285,8 @@ namespace Electro.DataLayer.SqlServer
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine(Cabecera_Usuario());
-                _sql.AppendLine("WHERE  Usuario.ID_Login = " + pId_Usuario);
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+                _sql.AppendLine("WHERE  Usuarios.ID_Usuario = " + pId_Usuario);
 
                 OUsuarios[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
@@ -306,8 +313,8 @@ namespace Electro.DataLayer.SqlServer
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine(Cabecera_Usuario());
-                _sql.AppendLine("WHERE  Usuario.[Nombre_Usuario] = " + pNumero_Legajo);
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
+                _sql.AppendLine("WHERE  Usuarios.[Legajo] = " + pNumero_Legajo);
 
                 OUsuarios[] _resultado = Cargar_DataTable(Db_EF.GetDataTable(_sql.ToString()));
 
@@ -334,7 +341,7 @@ namespace Electro.DataLayer.SqlServer
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine(Cabecera_Usuario());
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
                 _sql.AppendLine("WHERE  Usuarios.[FK_ID_Estado] = 1");
                 _sql.AppendLine("ORDER BY Usuarios.Apellido");
 
@@ -358,11 +365,10 @@ namespace Electro.DataLayer.SqlServer
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine(Cabecera_Usuario());
+                _sql.AppendLine(Obtener_Cabecera_Usuario());
                 _sql.AppendLine("WHERE  (Usuarios.Apellido LIKE '%" + pFiltro + "%'");
                 _sql.AppendLine("       OR Usuarios.Nombre LIKE '%" + pFiltro + "%'");
                 _sql.AppendLine("       OR Usuarios.Legajo LIKE '%" + pFiltro + "%'");
-                _sql.AppendLine("       OR Usuarios.Nombre_Usuario LIKE '%" + pFiltro + "%'");
                 _sql.AppendLine("       AND Usuarios.ID_Usuario > 0");
                 _sql.AppendLine("ORDER BY Usuarios.Apellido");
 

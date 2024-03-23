@@ -14,6 +14,7 @@ namespace Electro.BusinessLayer.ValueObjects
     public class OMaterial
     {
         private Int32 id_material;
+        private String material_descripcion;
         private Int32 fk_id_tipo_material;
         private String tipo_material_descripcion;
         private String codigo_origen;
@@ -38,6 +39,11 @@ namespace Electro.BusinessLayer.ValueObjects
         {
             get { return id_material; }
             set { id_material = value; }
+        }
+        public String Material_Descripcion
+        {
+            get { return material_descripcion; }
+            set { material_descripcion = value; }
         }
         public Int32 FK_Id_Tipo_Material
         {
@@ -130,6 +136,7 @@ namespace Electro.BusinessLayer.ValueObjects
         public OMaterial()
         {
             id_material = 0;
+            material_descripcion = "";
             fk_id_tipo_material = 0;
             tipo_material_descripcion = "";
             codigo_origen = "";

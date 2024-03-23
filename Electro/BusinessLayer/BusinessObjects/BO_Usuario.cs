@@ -33,9 +33,9 @@ namespace Electro.BusinessLayer.BusinessObjects
         #endregion
 
         #region Consultas Usuarios
-        public RS_Usuario Obtener_Usuario_Por_Id(Int32 pId_Usuario)
+        public RS_Usuarios Obtener_Usuario_Por_Id(Int32 pId_Usuario)
         {
-            RS_Usuario _respuesta = new RS_Usuario();
+            RS_Usuarios _respuesta = new RS_Usuarios();
 
             try
             {
@@ -54,9 +54,9 @@ namespace Electro.BusinessLayer.BusinessObjects
             return _respuesta;
         }
 
-        public RS_Usuario Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
+        public RS_Usuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
         {
-            RS_Usuario _respuesta = new RS_Usuario();
+            RS_Usuarios _respuesta = new RS_Usuarios();
 
             try
             {

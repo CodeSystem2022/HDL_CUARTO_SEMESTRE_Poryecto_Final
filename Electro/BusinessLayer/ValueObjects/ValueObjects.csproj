@@ -61,6 +61,7 @@
     <Compile Include="OArea.cs" />
     <Compile Include="OCondicion.cs" />
     <Compile Include="OPedido_Material.cs" />
+    <Compile Include="OPrioridad.cs" />
     <Compile Include="OUbicacion.cs" />
     <Compile Include="OEstado.cs" />
     <Compile Include="OPerfil.cs" />
@@ -79,7 +80,6 @@
     <Compile Include="Respuestas\RS_Acciones_Notificaciones.cs" />
     <Compile Include="Respuestas\RS_Materiales.cs" />
     <Compile Include="Respuestas\RS_Sistemas.cs" />
-    <Compile Include="Respuestas\RS_Usuario.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

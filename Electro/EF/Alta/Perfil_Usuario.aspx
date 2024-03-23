@@ -1,4 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/PaginaMaestra/Master_Admin.master" AutoEventWireup="true" CodeFile="Perfil_Usuario.aspx.cs" Inherits="Perfil_Usuario" %>
+<%@ MasterType VirtualPath="~/PaginaMaestra/Master_Admin.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
   <h1>Perfil de usuario</h1>
@@ -18,12 +19,9 @@
                   <label>Descripcion:</label>
                     <asp:TextBox ID="txt_descripcion" runat="server" CssClass="form-control" placeholder="Descripcion"></asp:TextBox>
                 </div>
-                  
               </div>
-
                 <!-- columna derecha -->
-              <div class="col-md-6">
-                
+              <div class="col-md-6">                
               </div>
               <!-- /.col -->
             </div>

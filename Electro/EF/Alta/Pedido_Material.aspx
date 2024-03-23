@@ -1,14 +1,14 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/PaginaMaestra/Master_Admin.master" AutoEventWireup="true" CodeFile="Pedido_Material.aspx.cs" Inherits="Pedido_Material" %>
+<%@ MasterType VirtualPath="~/PaginaMaestra/Master_Admin.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-  <h1>Pedido de materiales</h1>
+    <h1>Pedido de materiales</h1>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-   <!-- SELECT2 EXAMPLE -->
+    <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title">Fecha de solicitud:  <label runat="server" id="lbl_fecha_solicitud">17/02/2024</label> </h3>
-            <h3 class="card-title float-lg-right">Pedido:  <label runat="server" id="Nro_Pedido">0000001</label> </h3>
+            <h3 class="card-title">Fecha de solicitud:  <label runat="server" id="lbl_fecha_solicitud"></label> </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label>Cantidad:</label>
-                    <asp:TextBox ID="txtcantidad_a_solicitar" runat="server" CssClass="form-control" placeholder="Cantidad"></asp:TextBox>
+                    <asp:TextBox ID="txt_cantidad_a_solicitar" runat="server" CssClass="form-control" placeholder="Cantidad"></asp:TextBox>
                 </div>
                 <div class="form-group">
                     <label>Recambio:</label>
@@ -66,9 +66,9 @@
               <!-- /.col -->
             </div>
        <div class="card-footer">
-           <asp:Button ID="btn_enviar_pedido" CssClass="btn btn-info col-xl-5" runat="server" Text="Enviar" />
+           <asp:Button ID="btn_enviar_pedido" CssClass="btn btn-info col-xl-5" runat="server" Text="Enviar" OnClick="btn_enviar_pedido_Click" />
 
-           <asp:Button ID="btn_cancelar_pedido" CssClass="btn btn-danger float-right col-xl-5" runat="server" Text="Cancelar" />
+           <asp:Button ID="btn_cancelar_pedido" CssClass="btn btn-danger float-right col-xl-5" runat="server" Text="Cancelar" OnClick="btn_cancelar_pedido_Click" />
        </div>
             <!-- /.row -->
           </div>

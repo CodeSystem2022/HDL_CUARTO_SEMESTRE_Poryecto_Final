@@ -17,8 +17,6 @@ namespace Electro.BusinessLayer.ValueObjects
         private String descripcion;
         private Int16 fk_id_planta;
         private String planta_descripcion;
-        private Int16 fk_id_area;
-        private String area_descripcion;
         private Int16 fk_id_estado;
         private String estado_descripcion;
         private String motivo_baja;
@@ -48,18 +46,6 @@ namespace Electro.BusinessLayer.ValueObjects
         {
             get { return planta_descripcion; }
             set { planta_descripcion = value; }
-        }
-
-        public Int16 FK_ID_Area
-        {
-            get { return fk_id_area; }
-            set { fk_id_area = value; }
-        }
-
-        public String Area_Descripcion
-        {
-            get { return area_descripcion; }
-            set { area_descripcion = value; }
         }
 
         public Int16 FK_ID_Estado
@@ -93,8 +79,6 @@ namespace Electro.BusinessLayer.ValueObjects
             descripcion = "";
             fk_id_planta = 0;
             planta_descripcion = "";
-            fk_id_area = 0;
-            area_descripcion = "";
             fk_id_estado = 0;
             estado_descripcion = "";
             motivo_baja = "";

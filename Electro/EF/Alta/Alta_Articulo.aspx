@@ -1,4 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/PaginaMaestra/Master_Admin.master" AutoEventWireup="true" CodeFile="Alta_Articulo.aspx.cs" Inherits="Pedido_Material" %>
+<%@ MasterType VirtualPath="~/PaginaMaestra/Master_Admin.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
   <h1>Alta de articulo</h1>
@@ -15,8 +16,10 @@
                 <!-- columna izquierda -->
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Nombre:</label>
-                  <asp:TextBox ID="txt_nombre_articulo" runat="server" CssClass="form-control" placeholder="Nombre de articulo"></asp:TextBox>
+                  <label>Tipo material:</label>
+                  <asp:DropDownList ID="cmb_tipo_material" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                        <asp:ListItem Value="Seleccione..."></asp:ListItem>
+                    </asp:DropDownList>
                 </div>
                   <div class="form-group">
                   <label>Codigo proveedor:</label>
@@ -25,12 +28,26 @@
 
                 <div class="form-group">
                     <label>Cantidad:</label>
-                    <asp:TextBox ID="cantidad_ingresante" runat="server" CssClass="form-control" placeholder="Cantidad"></asp:TextBox>
+                    <asp:TextBox ID="txt_cantidad_ingresante" runat="server" CssClass="form-control" placeholder="Cantidad"></asp:TextBox>
                 </div>
                 <!-- Ubicacion en estanteria -->
                 <div class="form-group">
                     <label>Estanteria:</label>
                     <asp:TextBox ID="txt_estanteria_articulo" runat="server" CssClass="form-control" placeholder="Estanteria"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label>Fila:</label>
+                    <asp:TextBox ID="txt_fila_articulo" runat="server" CssClass="form-control" placeholder="Fila"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label>Gaveta:</label>
+                    <asp:TextBox ID="txt_gaveta_articulo" runat="server" CssClass="form-control" placeholder="Gaveta"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                  <label>Sector:</label>
+                  <asp:DropDownList ID="cmb_sector" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                        <asp:ListItem Value="Seleccione..."></asp:ListItem>
+                    </asp:DropDownList>
                 </div>
               </div>
 
@@ -46,21 +63,33 @@
                 </div>
                 <div class="form-group">
                     <label>Minimo requerido:</label>
-                    <asp:TextBox ID="cantidad_minima" runat="server" CssClass="form-control" placeholder="Cantidad minima"></asp:TextBox>
+                    <asp:TextBox ID="txt_cantidad_minima" runat="server" CssClass="form-control" placeholder="Cantidad minima"></asp:TextBox>
                 </div>
                 <!-- Ubicacion en estanteria -->
                 <div class="form-group">
                     <label>Columna:</label>
                     <asp:TextBox ID="txt_columna_articulo" runat="server" CssClass="form-control" placeholder="Cantidad minima"></asp:TextBox>
                 </div>
+                <div class="form-group">
+                  <label>Area:</label>
+                  <asp:DropDownList ID="cmb_area" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                        <asp:ListItem Value="Seleccione..."></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="form-group">
+                  <label>Planta:</label>
+                  <asp:DropDownList ID="cmb_planta" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                        <asp:ListItem Value="Seleccione..."></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
                 <!-- /.form-group -->
               </div>
               <!-- /.col -->
             </div>
        <div class="card-footer">
-           <asp:Button ID="btn_enviar_pedido" CssClass="btn btn-info col-xl-5" runat="server" Text="Enviar" />
+           <asp:Button ID="btn_enviar_pedido" CssClass="btn btn-info col-xl-5" runat="server" Text="Enviar" OnClick="btn_enviar_pedido_Click" />
 
-           <asp:Button ID="btn_cancelar_pedido" CssClass="btn btn-danger float-right col-xl-5" runat="server" Text="Cancelar" />
+           <asp:Button ID="btn_cancelar_pedido" CssClass="btn btn-danger float-right col-xl-5" runat="server" Text="Cancelar" OnClick="btn_cancelar_pedido_Click"  />
        </div>
             <!-- /.row -->
           </div>

@@ -1,4 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/PaginaMaestra/Master_Admin.master" AutoEventWireup="true" CodeFile="Alta_Planta.aspx.cs" Inherits="Alta_Planta" %>
+<%@ MasterType VirtualPath="~/PaginaMaestra/Master_Admin.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
   <h1>Alta de plantañ</h1>

@@ -16,8 +16,8 @@ namespace Electro.BusinessLayer.ValueObjects
         private Int32 id_usuario;
         private String apellido;
         private String nombre;
+        private String nombre_completo_usuario;
         private String legajo;
-        private String nombre_usuario;
         private String contrasena;
         private Int32 fk_id_perfil;
         private String perfil_descripcion;
@@ -46,15 +46,15 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return nombre; }
             set { nombre = value; }
         }
+        public String Nombre_Completo_Usuario
+        {
+            get { return nombre_completo_usuario; }
+            set {nombre_completo_usuario = value; }
+        }
         public String Legajo
         {
             get { return legajo; }
             set {legajo = value; }
-        }
-        public String Nombre_Usuario
-        {
-            get { return nombre_usuario; }
-            set { nombre_usuario = value; }
         }
         public String Contrasena
         {
@@ -114,8 +114,8 @@ namespace Electro.BusinessLayer.ValueObjects
             id_usuario = 0;
             apellido = "";
             nombre = "";
+            nombre_completo_usuario = "";
             legajo = "";
-            nombre_usuario = "";
             contrasena = "";
             fk_id_perfil = 0;
             perfil_descripcion = "";
