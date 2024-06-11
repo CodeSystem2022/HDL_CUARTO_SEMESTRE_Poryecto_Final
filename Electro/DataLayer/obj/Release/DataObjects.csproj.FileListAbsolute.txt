@@ -1,0 +1,10 @@
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\bin\Release\Electro.DataLayer.DataObjects.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\bin\Release\Electro.DataLayer.DataObjects.pdb
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\bin\Release\Electro.BusinessLayer.ValueObjects.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\bin\Release\Electro.BusinessLayer.ValueObjects.pdb
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\bin\Release\Electro.BusinessLayer.ValueObjects.dll.config
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\obj\Release\DataObjects.csprojAssemblyReference.cache
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\obj\Release\DataObjects.csproj.CoreCompileInputs.cache
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\obj\Release\DataObjects.csproj.CopyComplete
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\obj\Release\Electro.DataLayer.DataObjects.dll
+C:\GitHub\HDL\HDL_CUARTO_SEMESTRE_Proyecto_Final\Electro\DataLayer\obj\Release\Electro.DataLayer.DataObjects.pdb

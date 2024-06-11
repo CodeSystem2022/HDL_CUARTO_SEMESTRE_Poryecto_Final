@@ -8,7 +8,7 @@
    <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
-            <h3 class="card-title">Fecha de alta:  <label runat="server" id="lbl_fecha_alta">17/02/2024</label> </h3>
+            <h3 class="card-title">Fecha de alta:  <asp:Label runat="server" id="lbl_fecha_alta"></asp:Label> </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">

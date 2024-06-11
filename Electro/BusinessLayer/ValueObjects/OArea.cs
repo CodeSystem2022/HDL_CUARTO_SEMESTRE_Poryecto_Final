@@ -15,8 +15,10 @@ namespace Electro.BusinessLayer.ValueObjects
     {
 
         private Int16 id_area;
-        private String descripcion;
+        private String descripcion_area;
+        private String abreviatura;
         private Int16 fk_id_estado;
+        private String descripcion_estado;
         private String motivo_baja;
         private String fecha_creacion;
 
@@ -28,10 +30,16 @@ namespace Electro.BusinessLayer.ValueObjects
             set { id_area = value; }
         }
 
-        public String Descripcion
+        public String Descripcion_Area
         {
-            get { return descripcion; }
-            set { descripcion = value; }
+            get { return descripcion_area; }
+            set { descripcion_area = value; }
+        }
+
+        public String Abreviatura
+        {
+            get { return abreviatura; }
+            set { abreviatura = value; }
         }
 
         public Int16 FK_Id_Estado
@@ -40,6 +48,11 @@ namespace Electro.BusinessLayer.ValueObjects
             set { fk_id_estado = value; }
         }
 
+        public String Descripcion_Estado
+        {
+            get { return descripcion_estado; }
+            set { descripcion_estado = value; }
+        }
         public String Motivo_Baja
         {
             get { return motivo_baja; }
@@ -55,8 +68,10 @@ namespace Electro.BusinessLayer.ValueObjects
         public OArea()
         {
             id_area = 0;
-            descripcion = "";
+            descripcion_area = "";
+            abreviatura = "";
             fk_id_estado = 0;
+            descripcion_estado = "";
             motivo_baja = "";
             fecha_creacion = "";
         }

@@ -13,7 +13,7 @@ public partial class Master_Admin : System.Web.UI.MasterPage
   private BO_Materiales _servicio = new BO_Materiales();
   private RS_Materiales _respuesta = new RS_Materiales();
 
-  private RS_Usuarios _Usuario_Logueado = new RS_Usuarios();
+  private RS_Materiales _Usuario_Logueado = new RS_Materiales();
 
   public enum Tipo_Mensaje
   {
@@ -27,23 +27,17 @@ public partial class Master_Admin : System.Web.UI.MasterPage
   {
     try
     {
-      Session["ID_Usuario"] = "ID_Usuario";
-      Session["ID_Perfil"] = "ID_Perfil";
-      Session["ADV_Usuario"] = "ADV_Usuario";
 
-      if (Session["ID_Usuario"] != null)
+      if (Session["ID_Usuario"] == null)
       {
-        RS_Usuarios _usuario = (RS_Usuarios)Session["ID_Usuario"];
-
-        Session["ADV_Usuario"] = _usuario.Usuario;
-        Session["ID_Usuario"] = _usuario.Usuario.ID_Usuario;
-        Session["ID_Perfil"] = _usuario.Usuario.FK_ID_Perfil;
-
-
+        Response.Redirect("~/frm_ingreso.aspx", true);
+      }
+      else
+      {
         _respuesta = _servicio.Obtener_Usuario_Por_Id(Int32.Parse(Session["ID_Usuario"].ToString()));
 
-        lbl_usuario.InnerText = "Usuario: " + _respuesta.Lista_Usuario[0].Nombre_Completo_Usuario;
-        lbl_nombre_usuario.InnerText = "Usuario: " + _respuesta.Lista_Usuario[0].Nombre_Completo_Usuario;
+        lbl_usuario.InnerText = _respuesta.Lista_Usuario[0].Nombre_Completo_Usuario;
+        lbl_nombre_usuario.Text = _respuesta.Lista_Usuario[0].Nombre_Completo_Usuario;
       }
     }
     catch (Exception ex)

@@ -16,9 +16,9 @@ namespace Electro.DataLayer.Interfaces
         #region Altas y Actualizaciones
 
         // Se realiza el alta de cada usuario solicitando los datos personales y el nombre de usuario a elección
-        void Alta_Usuario(String pApellido, String pNombre, String pLegajo, String pNombre_Usuario, String pContrasena,  Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Planta);
+        void Alta_Usuario(String pApellido, String pNombre, String pLegajo, String pNombre_Usuario, String pContrasena,  Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Sector, Int16 pFK_ID_Planta);
         // Se puede actualizar cada dato del usuario
-        void Actualizar_Usuario(Int16 pId_Usuario, String pApellido, String pNombre, String pLegajo, String pNombre_Usuario, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Planta);
+        void Actualizar_Usuario(Int16 pId_Usuario, String pApellido, String pNombre, String pLegajo, String pNombre_Usuario, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Sector, Int16 pFK_ID_Planta);
         
         #endregion
 
@@ -32,15 +32,15 @@ namespace Electro.DataLayer.Interfaces
         #region Consultas
 
         // Obtiene un usuario
-        OUsuarios Obtener_Usuarios();
+        //OUsuarios Obtener_Usuarios();
         // Obtiene un usuario por ID
-        OUsuarios Obtener_Usuario_Por_ID(Int32 pId_Usuario);
+        //OUsuarios Obtener_Usuario_Por_ID(Int32 pId_Usuario);
         // Obtiene el usuario en el filtro por Apellido, Nombre, Legajo, Nombre de usuario
-        OUsuarios[] Obtener_Usuarios_Por_Filtro(String pFiltro);
+        //OUsuarios[] Obtener_Usuarios_Por_Filtro(String pFiltro);
         //Obtiene los usuarios activos
         OUsuarios[] Obtener_Usuarios_Activos();
         // Obtiene los usuarios por número de legajo
-        OUsuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena);
+        //OUsuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena);
 
         #endregion
 

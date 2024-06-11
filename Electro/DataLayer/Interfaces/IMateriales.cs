@@ -14,28 +14,33 @@ namespace Electro.DataLayer.Interfaces
     {
         #region Alta
 
-        void Alta_Area(String pDescripcion, Int16 pFK_ID_Estado, Int32 pFK_ID_Usuario);
-        void Alta_Materiales(Int16 pFK_ID_Tipo_Material, String pCodigo_Origen, String pCodigo_Interno, Int16 pCantidad, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, Int16 pFK_ID_Area, String pUbicacion_Gaveta, Int16 pFK_ID_Planta, Int16 pFK_ID_Sector);
-        void Alta_Pedido_Material(String pFecha_Solicitud, Int32 pFK_ID_Sector, Int32 pFK_ID_Tipo_Prioridad, Int32 pFK_ID_Material, Int16 pCantidad_A_Solicitar, Boolean pRecambio, String pObservaciones, Int32 pFK_ID_Usuario_Pedido, Int32 pFK_ID_Estado);
+        void Alta_Area(String pNombre_Area, Int16 pFK_ID_Estado, String pAbreviatura, Int32 pFK_ID_Usuario);
         void Alta_Tipo_Material(String pTipo_Material, String pDescripcion, Int16 pFK_ID_Estado);
+        void Alta_Materiales(String pNombre_Tipo_Material, String pDescripcion_Tipo_Material, String pCodigo_Origen, String pCodigo_Interno, Int16 pCantidad, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, Int16 pFK_ID_Area, String pUbicacion_Gaveta, Int16 pFK_ID_Planta, Int16 pFK_ID_Sector, String pMinimo_Requerido);
+        void Alta_Pedido_Material(String pFecha_Solicitud, Int32 pFK_ID_Sector, Int32 pFK_ID_Tipo_Prioridad, Int32 pFK_ID_Material, Int16 pCantidad_A_Solicitar, String pRecambio, String pObservaciones, Int32 pFK_ID_Usuario_Pedido, Int32 pFK_ID_Estado);
         void Alta_Sector(String pDescripcion, Int16 pFK_ID_Planta, Int32 pFK_ID_Usuario);
+        void Alta_Planta(String pDescripcion);
 
         // Se realiza el alta de cada usuario solicitando los datos personales y el nombre de usuario a elección
-        void Alta_Usuario(String pApellido, String pNombre, String pLegajo, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Planta);
-        
+        void Alta_Usuario(String pApellido, String pNombre, String pLegajo, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Sector, Int16 pFK_ID_Planta);
+        void Alta_Perfil_Usuario(String pDescripcion);
+
         #endregion
 
         #region Modificación
 
-        void Actualizar_Area(Int32 pID_Area, String pDescripcion, Int16 pFK_ID_Estado);
-        void Actualizar_Material(Int32 pID_Material, Int32 pFK_ID_Tipo_Material, String pCodigo_Origen, String pCodigo_Interno, Int32 pCantidad, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, Int16 pFK_ID_Area, String pUbicacion_Gaveta, Int16 pFK_ID_Estado, Int16 pFK_ID_Planta, Int16 pFK_ID_Sector);
-        void Actualizar_Pedido_Material(Int32 pID_Pedido_Material, String pFecha_Solicitud, Int32 pFK_ID_Sector, Int32 pFK_ID_Tipo_Prioridad, Int32 pFK_ID_Material, Int16 pCantidad_A_Solicitar, Boolean pRecambio, String pObservaciones, Int32 pFK_ID_Usuario_Pedido, Int32 pFK_ID_Usuario_Autorizacion, Int32 pFK_ID_Estado);
+        void Actualizar_Area(Int32 pID_Area, String pDescripcion, String pAbreviatura, Int16 pFK_ID_Estado);
+        void Actualizar_Material(Int32 pID_Material, String pNombre_Tipo_Material, String pDescripcion_Tipo_Material, String pCodigo_Origen, String pCodigo_Interno, Int16 pCantidad, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, Int16 pFK_ID_Area, String pUbicacion_Gaveta, Int16 pFK_ID_Estado, Int16 pFK_ID_Planta, Int16 pFK_ID_Sector, String pMinimo_Requerido, String pMotivo_Baja);
+        void Actualizar_Cantidad_Material(Int32 pID_Material, Int32 pCantidad);
+        void Actualizar_Pedido_Material(Int32 pID_Pedido_Material, String pFecha_Solicitud, Int32 pFK_ID_Sector, Int32 pFK_ID_Tipo_Prioridad, Int32 pFK_ID_Material, Int16 pCantidad_A_Solicitar, String pRecambio, String pObservaciones, Int32 pFK_ID_Usuario_Pedido, Int32 pFK_ID_Usuario_Autorizacion, Int32 pFK_ID_Estado);
+        void Actualizar_Estado_Pedido_Material(Int32 pID_Pedido_Material, Int16 pCantidad_A_Solicitar, Int32 pFK_ID_Usuario_Autorizacion, Int32 pFK_ID_Estado);
         void Actualizar_Tipo_Material(Int32 pID_Tipo_Material, String pTipo_Material, String pDescripcion, Int16 pFK_ID_Estado);
         void Actualizar_Sector(Int32 pID_Sector, String pDescripcion, Int16 pFK_ID_Planta, Int16 pFK_ID_Estado, String pMotivo_Baja);
         void Actualizar_Ubicacion(Int32 pID_Ubicacion, String pUbicacion_Estanteria, String pUbicacion_Columna, String pUbicacion_Fila, String pUbicacion_Gaveta, Int16 pFK_ID_Planta, Int16 pFK_ID_Area, String pMotivo_Baja, Int16 pFK_ID_Condicion);
         
         // Se puede actualizar cada dato del usuario
-        void Actualizar_Usuario(Int16 pId_Usuario, String pApellido, String pNombre, String pLegajo, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Planta);
+        void Actualizar_Usuario(Int32 pId_Usuario, String pApellido, String pNombre, String pLegajo, String pContrasena, Int16 pFK_ID_Perfil_Usuario, Int16 pFK_ID_Area, Int16 pFK_ID_Sector, Int16 pFK_ID_Planta);
+        void Actualizar_Perfil_Usuario(Int32 pId_Perfil_Usuario, String pDescripcion, Int16 pFK_ID_Estado);
 
         #endregion
 
@@ -62,14 +67,21 @@ namespace Electro.DataLayer.Interfaces
         OArea Obtener_Area_Por_Nombre(String p_Nombre_Area);
 
         OMaterial[] Obtener_Materiales();
+        OMaterial[] Obtener_Materiales_CMB();
+        OMaterial[] Obtener_Tipo_Materiales_CMB();
         OMaterial Obtener_Material_Por_ID(Int32 pID_Material);
         OMaterial Obtener_Material_Por_Nombre(String pNombre_Material);
 
         OPedido_Material[] Obtener_Pedido_Materiales();
-        OPedido_Material Obtener_Pedido_Material_Por_ID(Int32 pID_Pedido_Material);
-        OPedido_Material Obtener_Pedido_Material_Por_Nombre(String pNombre_Pedido_Material);
+        OPedido_Material[] Obtener_Pedido_Material_Por_Estado(Int32 pID_Estado);
+        OPedido_Material[] Obtener_Pedido_Material_Por_Estado_Aprobado(Int32 pID_Estado);
+        OPedido_Material[] Obtener_Pedido_Material_Por_Estado_Entregado(Int32 pID_Estado);
 
-        OTipo_Material[] Obtener_Tipo_Materiales();
+        OPedido_Material Obtener_Pedido_Material_Por_ID(Int32 pID_Pedido_Material);
+        OPedido_Material Obtener_Pedido_Material_Por_ID_Aprobado(Int32 pID_Pedido_Material);
+        OPedido_Material Obtener_Pedido_Material_Por_Nombre(String pNombre_Pedido_Material);
+        OPedido_Material Obtener_Pedido_Material_Por_Nombre_Aprobado(String pNombre_Pedido_Material);
+
         OTipo_Material Obtener_Tipo_Material_Por_ID(Int32 pID_Tipo_Material);
         OTipo_Material Obtener_Tipo_Material_Por_Nombre(String pNombre_Tipo_Material);
 
@@ -96,6 +108,10 @@ namespace Electro.DataLayer.Interfaces
         OUsuarios[] Obtener_Usuarios_Activos();
         // Obtiene los usuarios por número de legajo
         OUsuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena);
+
+        // Obtiene el perfil de usuario
+        OPerfil[] Obtener_Perfil_Usuario();
+        OPerfil Obtener_Perfil_Usuario_Por_ID(Int32 pId_Perfil_Usuario);
 
         #endregion
 

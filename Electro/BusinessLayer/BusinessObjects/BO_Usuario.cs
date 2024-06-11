@@ -19,7 +19,7 @@ namespace Electro.BusinessLayer.BusinessObjects
     /// <summary>
     /// Clase que presenta la logica de negocio de Cliente.
 	/// para la utilizacion desde la capa de presentación
-    /// </summary>  
+    /// </summary>
     [DataObject(true)]
     public partial class BO_Usuario
     {
@@ -33,7 +33,7 @@ namespace Electro.BusinessLayer.BusinessObjects
         #endregion
 
         #region Consultas Usuarios
-        public RS_Usuarios Obtener_Usuario_Por_Id(Int32 pId_Usuario)
+        /*public RS_Usuarios Obtener_Usuario_Por_Id(Int32 pId_Usuario)
         {
             RS_Usuarios _respuesta = new RS_Usuarios();
 
@@ -52,9 +52,9 @@ namespace Electro.BusinessLayer.BusinessObjects
             }
 
             return _respuesta;
-        }
+        }*/
 
-        public RS_Usuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
+        /*public RS_Usuarios Obtener_Usuario_Por_Legajo(Int32 pNumero_Legajo, String pContrasena)
         {
             RS_Usuarios _respuesta = new RS_Usuarios();
 
@@ -76,7 +76,7 @@ namespace Electro.BusinessLayer.BusinessObjects
             }
 
             return _respuesta;
-        }
+        }*/
 
         public void Informar_Evento(Int16 pId_Tipo_Log, String pDetalle, Int32 pId_Usuario)
         {

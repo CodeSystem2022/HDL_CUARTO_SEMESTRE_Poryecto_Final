@@ -13,15 +13,15 @@ public partial class Alta_Sector : System.Web.UI.Page
   private BO_Materiales _servicio = new BO_Materiales();
   private Respuesta _respuesta = new Respuesta();
 
-  private RS_Usuarios _Usuario_Logueado = new RS_Usuarios();
+  private RS_Materiales _Usuario_Logueado = new RS_Materiales();
   private OUsuarios _Usuario_Seleccionado = new OUsuarios();
 
   protected void Page_Load(object sender, EventArgs e)
   {
     try
     {
-      _Usuario_Logueado = (RS_Usuarios)Session["ID_Usuario"];
-
+      _Usuario_Logueado = (RS_Materiales)Session["ADV_Usuario"];
+      lbl_fecha_alta.Text = DateTime.Now.ToString("dd/MM/yyyy");
       //Se debe realizar la validación del perfil de usuario
       /*if (!Acceso.Tiene_Acceso(_Usuario_Logueado, new Int32[] { 4, 5, 7 }))
       {
@@ -31,7 +31,6 @@ public partial class Alta_Sector : System.Web.UI.Page
       Response.Cache.SetCacheability(HttpCacheability.NoCache);
       if (!Page.IsPostBack)
       {
-        Metodos.Cargar_Combo_Areas(cmb_area);
         Metodos.Cargar_Combo_Plantas(cmb_planta);
       }
     }
@@ -54,10 +53,6 @@ public partial class Alta_Sector : System.Web.UI.Page
       {
         _errores.AppendLine(" <br/>- Debe ingresar el Nombre de sector <br/>");
       }
-      if (cmb_area.SelectedIndex == 0)
-      {
-        _errores.AppendLine("- Debe seleccionar un area <br/>");
-      }
       if (cmb_planta.SelectedIndex == 0)
       {
         _errores.AppendLine("- Debe seleccionar una planta <br/>");
@@ -70,7 +65,7 @@ public partial class Alta_Sector : System.Web.UI.Page
 
       #endregion
 
-      _respuesta = _servicio.Alta_Sector(txt_nombre_sector.Text.ToUpper(), Int16.Parse(cmb_planta.SelectedValue.ToString()), _Usuario_Logueado.Usuario.ID_Usuario);
+      _respuesta = _servicio.Alta_Sector(txt_nombre_sector.Text.ToUpper(), Int16.Parse(cmb_planta.SelectedValue.ToString()), _Usuario_Logueado.Lista_Usuario[0].ID_Usuario);
 
       if (_respuesta.Resultado == Resultado_Operacion.Error)
       {
@@ -96,7 +91,6 @@ public partial class Alta_Sector : System.Web.UI.Page
   public void Limpiar_Campos()
   {
     txt_nombre_sector.Text = "";
-    cmb_area.SelectedIndex = 0;
     cmb_planta.SelectedIndex = 0;
   }
 }

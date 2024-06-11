@@ -10,8 +10,8 @@ using Electro.BusinessLayer.BusinessObjects;
 
 public partial class Login : System.Web.UI.Page
 {
-  BO_Usuario _servicio = new BO_Usuario();
-  RS_Usuarios _respuesta = new RS_Usuarios();
+  BO_Materiales _servicio = new BO_Materiales();
+  RS_Materiales _respuesta = new RS_Materiales();
 
   protected void Page_Load(object sender, EventArgs e)
   {
@@ -36,7 +36,6 @@ public partial class Login : System.Web.UI.Page
 
     try
     {
-
       _respuesta = _servicio.Obtener_Usuario_Por_Legajo(Int16.Parse(txt_Legajo.Text), txt_contrasena.Text);
 
       if (_respuesta.Resultado == Resultado_Operacion.Error)
@@ -44,8 +43,8 @@ public partial class Login : System.Web.UI.Page
         throw new Exception(_respuesta.Mensaje);
       }
       Session["ADV_Usuario"] = _respuesta;
-      Session["ID_Usuario"] = _respuesta.Usuario.ID_Usuario;
-      Session["ID_Perfil"] = _respuesta.Usuario.FK_ID_Perfil;
+      Session["ID_Usuario"] = _respuesta.Lista_Usuario[0].ID_Usuario;
+      Session["ID_Perfil"] = _respuesta.Lista_Usuario[0].FK_ID_Perfil;
 
       if (_respuesta.Resultado == Resultado_Operacion.Ok)
       {

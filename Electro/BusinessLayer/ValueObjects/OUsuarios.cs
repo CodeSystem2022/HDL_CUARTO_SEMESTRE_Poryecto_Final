@@ -20,14 +20,18 @@ namespace Electro.BusinessLayer.ValueObjects
         private String legajo;
         private String contrasena;
         private Int32 fk_id_perfil;
-        private String perfil_descripcion;
+        private String perfil_usuario_descripcion;
         private Int32 fk_id_area;
         private String area_descripcion;
+        private Int32 fk_id_sector;
+        private String sector_descripcion;
         private Int32 fk_id_planta;
         private String planta_descripcion;
         private Int32 fk_id_estado;
         private String estado_descripcion;
         private String fecha_creacion;
+        private String motivo_baja;
+        private String fecha_baja;
 
         #region Get y Set
 
@@ -66,10 +70,10 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return fk_id_perfil; }
             set { fk_id_perfil = value; }
         }
-        public String Perfil_Descripcion
+        public String Perfil_Usuario_Descripcion
         {
-            get { return perfil_descripcion; }
-            set { perfil_descripcion = value; }
+            get { return perfil_usuario_descripcion; }
+            set { perfil_usuario_descripcion = value; }
         }
         public Int32 FK_ID_Area
         {
@@ -80,6 +84,16 @@ namespace Electro.BusinessLayer.ValueObjects
         {
             get { return area_descripcion; }
             set { area_descripcion = value; }
+        }
+        public Int32 FK_ID_Sector
+        {
+            get { return fk_id_sector; }
+            set { fk_id_sector = value; }
+        }
+        public String Sector_Descripcion
+        {
+            get { return sector_descripcion; }
+            set { sector_descripcion = value; }
         }
         public Int32 FK_ID_Planta
         {
@@ -106,6 +120,16 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return fecha_creacion; }
             set { fecha_creacion = value; }
         }
+        public String Motivo_Baja
+        {
+            get { return motivo_baja; }
+            set { motivo_baja = value; }
+        }
+        public String Fecha_Baja
+        {
+            get { return fecha_baja; }
+            set { fecha_baja = value; }
+        }
 
         #endregion
 
@@ -118,14 +142,18 @@ namespace Electro.BusinessLayer.ValueObjects
             legajo = "";
             contrasena = "";
             fk_id_perfil = 0;
-            perfil_descripcion = "";
+            perfil_usuario_descripcion = "";
             fk_id_area = 0;
             area_descripcion = "";
+            fk_id_sector = 0;
+            sector_descripcion = "";
             fk_id_planta = 0;
             planta_descripcion = "";
             fk_id_estado = 0;
             estado_descripcion = "";
             fecha_creacion = "";
+            motivo_baja = "";
+            fecha_baja = "";
         }
     }
 }

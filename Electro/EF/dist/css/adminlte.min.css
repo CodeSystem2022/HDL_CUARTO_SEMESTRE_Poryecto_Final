@@ -32,6 +32,8 @@
   --danger: #dc3545;
   --light: #f8f9fa;
   --dark: #343a40;
+  --electro1: #B01886;
+  --fueguina1: #440099;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -226,10 +228,12 @@ button {
   }
 
 button, input, optgroup, select, textarea {
-  margin: 0;
   font-family: inherit;
   font-size: inherit;
-  line-height: inherit
+  line-height: inherit;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
 }
 
 button, input {
@@ -5993,20 +5997,32 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
     overflow-y: auto
   }
 
+
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1050;
-  display: none;
+  display: block;
+  visibility: visible;
   width: 100%;
   height: 100%;
   overflow: hidden;
   outline: 0
+} 
+ 
+    .bs-tooltip-auto[x-placement^=right] .arrow::before, .bs-tooltip-right .arrow::before {
+      right: 0;
+      border-width: .4rem .4rem .4rem 0;
+      border-right-color: #000
+    }
+
+.bs-tooltip-auto[x-placement^=bottom], .bs-tooltip-bottom {
+  padding: .4rem 0
 }
 
-.modal-dialog {
-  position: relative;
+  .bs-tooltip-auto[x-placement^=bottom] .arrow, .bs-tooltip-bottom .arrow {
+    top    .bs-tooltip-aon: relative;
   width: auto;
   margin: .5rem;
   pointer-events: none
@@ -6017,7 +6033,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   transition: transform .3s ease-out;
   transition: transform .3s ease-out,-webkit-transform .3s ease-out;
   -webkit-transform: translate(0,-50px);
-  transform: translate(0,-50px)
+  transform: translate(0,-50px)}
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -8135,7 +8151,9 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .float-right {
-  float: right !important
+  float: right !important;
+    top: 0px;
+    left: 0px;
 }
 
 .float-none {
@@ -12873,7 +12891,7 @@ body:not(.layout-fixed) .main-sidebar {
 
 .user-panel, .user-panel .info {
   overflow: hidden;
-  white-space: nowrap
+  white-space: inherit
 }
 
   .user-panel .image {
@@ -12888,7 +12906,7 @@ body:not(.layout-fixed) .main-sidebar {
 
   .user-panel .info {
     display: inline-block;
-    padding: 5px 5px 5px 10px
+    padding: 5px 5px 5px 0px
   }
 
   .user-panel .dropdown-menu, .user-panel .status {
@@ -42716,6 +42734,10 @@ blockquote.quote-gray-dark {
     }
 
 .bg-secondary {
+  background-color: #6c757d !important
+}
+
+.bg-electro-gris {
   background-color: #6c757d !important
 }
 

@@ -63,14 +63,12 @@ namespace Electro.DataLayer.SqlServer
             {
                 StringBuilder _sql = new StringBuilder();
 
-                _sql.AppendLine("[dbo].[Logs]");
+                _sql.AppendLine("INSERT INTO [dbo].[Logs]");
                 _sql.AppendLine("([FK_ID_Tipo_Evento]");
                 _sql.AppendLine(",[Descripcion]");
-                _sql.AppendLine(",[fecha_hora])");
-                _sql.AppendLine("VALUES(");
-                _sql.AppendLine(pFK_ID_Tipo_Evento + ",");
-                _sql.AppendLine(pDescripcion + ",");
-                _sql.AppendLine("GETDATE())");
+                _sql.AppendLine(",[Fecha_Creacion])");
+                _sql.AppendLine("VALUES(" + pFK_ID_Tipo_Evento + ", '" + pDescripcion + "',");
+                _sql.AppendLine("FORMAT(GETDATE(),'dd/MM/yyyy hh:mm:ss'))");
 
                 Db_EF.Insert(_sql.ToString());
             }

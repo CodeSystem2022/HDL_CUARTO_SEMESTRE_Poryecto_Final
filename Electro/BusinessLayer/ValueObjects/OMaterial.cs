@@ -14,24 +14,26 @@ namespace Electro.BusinessLayer.ValueObjects
     public class OMaterial
     {
         private Int32 id_material;
-        private String material_descripcion;
-        private Int32 fk_id_tipo_material;
-        private String tipo_material_descripcion;
+        private String nombre_tipo_material;
+        private String descripcion_tipo_material;
         private String codigo_origen;
         private String codigo_interno;
         private Int32 cantidad;
         private String ubicacion_estanteria;
         private String ubicacion_columna;
         private String ubicacion_fila;
-        private Int16 fk_id_area;
+        private Int16 id_area;
         private String area_descripcion;
         private String ubicacion_gaveta;
-        private Int16 fk_id_estado;
+        private Int16 id_estado;
         private String estado_descripcion;
-        private Int16 fk_id_planta;
+        private Int16 id_planta;
         private String planta_descripcion;
-        private Int32 fk_id_sector;
+        private Int32 id_sector;
         private String sector_descripcion;
+        private String minimo_requerido;
+        private String motivo_baja;
+        private String fecha_creacion;
 
         #region Get y Set
 
@@ -40,20 +42,15 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return id_material; }
             set { id_material = value; }
         }
-        public String Material_Descripcion
+        public String Nombre_Tipo_Material
         {
-            get { return material_descripcion; }
-            set { material_descripcion = value; }
+            get { return nombre_tipo_material; }
+            set { nombre_tipo_material = value; }
         }
-        public Int32 FK_Id_Tipo_Material
+        public String Descripcion_Tipo_Material
         {
-            get { return fk_id_tipo_material; }
-            set { fk_id_tipo_material = value; }
-        }
-        public String Tipo_Material_Descripcion
-        {
-            get { return tipo_material_descripcion; }
-            set { tipo_material_descripcion = value; }
+            get { return descripcion_tipo_material; }
+            set { descripcion_tipo_material = value; }
         }
         public String Codigo_Origen
         {
@@ -85,10 +82,10 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return ubicacion_fila; }
             set { ubicacion_fila = value; }
         }
-        public Int16 FK_ID_Area
+        public Int16 ID_Area
         {
-            get { return fk_id_area; }
-            set { fk_id_area = value; }
+            get { return id_area; }
+            set { id_area = value; }
         }
         public String Area_Descripcion
         {
@@ -100,35 +97,50 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return ubicacion_gaveta; }
             set { ubicacion_gaveta = value; }
         }
-        public Int16 FK_ID_Estado
+        public Int16 ID_Estado
         {
-            get { return fk_id_estado; }
-            set { fk_id_estado = value; }
+            get { return id_estado; }
+            set { id_estado = value; }
         }
         public String Estado_Descripcion
         {
             get { return estado_descripcion; }
             set { estado_descripcion = value; }
         }
-        public Int16 FK_ID_Planta
+        public Int16 ID_Planta
         {
-            get { return fk_id_planta; }
-            set { fk_id_planta = value; }
+            get { return id_planta; }
+            set { id_planta = value; }
         }
         public String Planta_Descripcion
         {
             get { return planta_descripcion; }
             set { planta_descripcion = value; }
         }
-        public Int32 FK_ID_Sector
+        public Int32 ID_Sector
         {
-            get { return fk_id_sector; }
-            set { fk_id_sector = value; }
+            get { return id_sector; }
+            set { id_sector = value; }
         }
         public String Sector_Descripcion
         {
             get { return sector_descripcion; }
             set { sector_descripcion = value; }
+        }
+        public String Minimo_Requerido
+        {
+            get { return minimo_requerido; }
+            set { minimo_requerido = value; }
+        }
+        public String Motivo_Baja
+        {
+            get { return motivo_baja; }
+            set { motivo_baja = value; }
+        }
+        public String Fecha_Creacion
+        {
+            get { return fecha_creacion; }
+            set { fecha_creacion = value; }
         }
         
         #endregion
@@ -136,24 +148,27 @@ namespace Electro.BusinessLayer.ValueObjects
         public OMaterial()
         {
             id_material = 0;
-            material_descripcion = "";
-            fk_id_tipo_material = 0;
-            tipo_material_descripcion = "";
+            nombre_tipo_material = "";
+            descripcion_tipo_material = "";
             codigo_origen = "";
             codigo_interno = "";
             cantidad = 0;
             ubicacion_estanteria = "";
             ubicacion_columna = "";
             ubicacion_fila = "";
-            fk_id_area = 0;
+            id_area = 0;
             area_descripcion = "";
             ubicacion_gaveta = "";
-            fk_id_estado = 0;
+            id_estado = 0;
             estado_descripcion = "";
-            fk_id_planta = 0;
+            id_planta = 0;
             planta_descripcion = "";
-            fk_id_sector = 0;
+            id_sector = 0;
             sector_descripcion = "";
+            minimo_requerido = "";
+            motivo_baja = "";
+            fecha_creacion = "";
         }
     }
 }
+

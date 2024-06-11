@@ -15,21 +15,22 @@ namespace Electro.BusinessLayer.ValueObjects
     {
         private Int32 id_pedido_material;
         private String fecha_solicitud;
-        private Int32 fk_id_sector;
-        private String sector_descripcion;
-        private Int32 fk_id_tipo_prioridad;
-        private String tipo_prioridad_descripcion;
-        private Int32 fk_id_material;
-        private String material_descripcion;
+        private Int32 id_sector;
+        private String descripcion_sector;
+        private Int32 id_prioridad;
+        private String descripcion_prioridad;
+        private Int32 id_material;
+        private String nombre_tipo_material;
+        private String descripcion_tipo_material;
         private Int16 cantidad_a_solicitar;
-        private Boolean recambio;
-        private String observaciones;
-        private Int32 fk_id_usuario_autorizacion;
-        private String usuario_autorizacion_descripcion;
-        private Int32 fk_id_estado;
-        private String estado_descripcion;
-        private Int32 fk_id_usuario_pedido;
-        private String usuario_pedido_descripcion;
+        private String recambio;
+        private String observaciones; 
+        private Int32 id_usuario_autorizacion;
+        private String nombre_completo_autorizacion;
+        private Int32 id_estado;
+        private String descripcion_estado;
+        private Int32 id_usuario_pedido;
+        private String nombre_completo_pedido;
 
         #region Get y Set
 
@@ -45,40 +46,46 @@ namespace Electro.BusinessLayer.ValueObjects
             set { fecha_solicitud = value; }
         }
 
-        public Int32 FK_ID_Sector
+        public Int32 ID_Sector
         {
-            get { return fk_id_sector; }
-            set { fk_id_sector = value; }
+            get { return id_sector; }
+            set { id_sector = value; }
         }
 
-        public String Sector_Descripcion
+        public String Descripcion_Sector
         {
-            get { return sector_descripcion; }
-            set { sector_descripcion = value; }
+            get { return descripcion_sector; }
+            set { descripcion_sector = value; }
         }
 
-        public Int32 FK_ID_Tipo_Prioridad
+        public Int32 ID_Prioridad
         {
-            get { return fk_id_tipo_prioridad; }
-            set { fk_id_tipo_prioridad = value; }
+            get { return id_prioridad; }
+            set { id_prioridad = value; }
         }
 
-        public String Tipo_Prioridad_Descripcion
+        public String Descripcion_Prioridad
         {
-            get { return tipo_prioridad_descripcion; }
-            set { tipo_prioridad_descripcion = value; }
+            get { return descripcion_prioridad; }
+            set { descripcion_prioridad = value; }
         }
 
-        public Int32 FK_ID_Material
+        public Int32 ID_Material
         {
-            get { return fk_id_material; }
-            set { fk_id_material = value; }
+            get { return id_material; }
+            set { id_material = value; }
         }
 
-        public String Material_Descripcion
+        public String Nombre_Tipo_Material
         {
-            get { return material_descripcion; }
-            set { material_descripcion = value; }
+            get { return nombre_tipo_material; }
+            set { nombre_tipo_material = value; }
+        }
+
+        public String Descripcion_Tipo_Material
+        {
+            get { return descripcion_tipo_material; }
+            set { descripcion_tipo_material = value; }
         }
 
         public Int16 Cantidad_A_Solicitar
@@ -87,7 +94,7 @@ namespace Electro.BusinessLayer.ValueObjects
             set { cantidad_a_solicitar = value; }
         }
 
-        public Boolean Recambio
+        public String Recambio
         {
             get { return recambio; }
             set { recambio = value; }
@@ -99,40 +106,40 @@ namespace Electro.BusinessLayer.ValueObjects
             set { observaciones = value; }
         }
 
-        public Int32 FK_ID_Usuario_Autorizacion
+        public Int32 ID_Usuario_Autorizacion
         {
-            get { return fk_id_usuario_autorizacion; }
-            set { fk_id_usuario_autorizacion = value; }
+            get { return id_usuario_autorizacion; }
+            set { id_usuario_autorizacion = value; }
         }
 
-        public String Usuario_Autorizacion_Descripcion
+        public String Nombre_Completo_Autorizacion
         {
-            get { return usuario_autorizacion_descripcion; }
-            set { usuario_autorizacion_descripcion = value; }
+            get { return nombre_completo_autorizacion; }
+            set { nombre_completo_autorizacion = value; }
         }
 
-        public Int32 FK_ID_Estado
+        public Int32 ID_Estado
         {
-            get { return fk_id_estado; }
-            set { fk_id_estado = value; }
+            get { return id_estado; }
+            set { id_estado = value; }
         }
 
-        public String Estado_Descripcion
+        public String Descripcion_Estado
         {
-            get { return estado_descripcion; }
-            set { estado_descripcion = value; }
+            get { return descripcion_estado; }
+            set { descripcion_estado = value; }
         }
 
-        public Int32 FK_ID_Usuario_Pedido
+        public Int32 ID_Usuario_Pedido
         {
-            get { return fk_id_usuario_pedido; }
-            set { fk_id_usuario_pedido = value; }
+            get { return id_usuario_pedido; }
+            set { id_usuario_pedido = value; }
         }
 
-        public String Usuario_Pedido_Descripcion
+        public String Nombre_Completo_Pedido
         {
-            get { return usuario_pedido_descripcion; }
-            set { usuario_pedido_descripcion = value; }
+            get { return nombre_completo_pedido; }
+            set { nombre_completo_pedido = value; }
         }
 
         #endregion
@@ -140,21 +147,22 @@ namespace Electro.BusinessLayer.ValueObjects
         public OPedido_Material()
         {
             id_pedido_material = 0;
-            fk_id_sector = 0;
-            sector_descripcion = "";
-            fk_id_tipo_prioridad = 0;
-            tipo_prioridad_descripcion = "";
-            fk_id_material = 0;
-            material_descripcion = "";
+            id_sector = 0;
+            descripcion_sector = "";
+            id_prioridad = 0;
+            descripcion_prioridad = "";
+            id_material = 0;
+            nombre_tipo_material = "";
+            descripcion_tipo_material = "";
             cantidad_a_solicitar = 0;
-            recambio = false;
+            recambio = "";
             observaciones = "";
-            fk_id_usuario_autorizacion = 0;
-            usuario_autorizacion_descripcion = "";
-            fk_id_estado = 0;
-            estado_descripcion = "";
-            fk_id_usuario_pedido = 0;
-            usuario_pedido_descripcion = "";
+            id_usuario_autorizacion = 0;
+            nombre_completo_autorizacion = "";
+            id_estado = 0;
+            descripcion_estado = "";
+            id_usuario_pedido = 0;
+            nombre_completo_pedido = "";
         }
     }
 }

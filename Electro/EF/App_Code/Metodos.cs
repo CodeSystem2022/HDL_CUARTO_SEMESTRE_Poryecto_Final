@@ -38,7 +38,7 @@ public static class Metodos
             foreach (OArea _objeto in _respuesta.Lista_Area)
             {
                 _item = new ListItem();
-                _item.Text = _objeto.Descripcion.ToString();
+                _item.Text = _objeto.Descripcion_Area.ToString();
                 _item.Value = _objeto.Id_Area.ToString();
                 pCombo_List.Items.Add(_item);
             }
@@ -56,6 +56,7 @@ public static class Metodos
             BO_Materiales _servicio = new BO_Materiales();
             RS_Materiales _respuesta = new RS_Materiales();
 
+            // Debo mejorar la consulta porque no funcionan los INNER JOIN
             _respuesta = _servicio.Obtener_Materiales();
 
             if (_respuesta.Resultado == Resultado_Operacion.Error)
@@ -73,7 +74,7 @@ public static class Metodos
             foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
             {
                 _item = new ListItem();
-                _item.Text = _objeto.Material_Descripcion.ToString();
+                _item.Text = _objeto.Nombre_Tipo_Material.ToString() + " - " + _objeto.Descripcion_Tipo_Material.ToString();
                 _item.Value = _objeto.Id_Material.ToString();
                 pCombo_List.Items.Add(_item);
             }
@@ -105,11 +106,80 @@ public static class Metodos
       _item.Value = "0";
       pCombo_List.Items.Add(_item);
 
-      foreach (OTipo_Material _objeto in _respuesta.Lista_Tipo_Material)
+      foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
       {
         _item = new ListItem();
-        _item.Text = _objeto.Descripcion.ToString();
-        _item.Value = _objeto.Id_Tipo_Material.ToString();
+        _item.Text = _objeto.Nombre_Tipo_Material.ToString();
+        _item.Value = _objeto.Id_Material.ToString();
+        pCombo_List.Items.Add(_item);
+      }
+    }
+    catch (Exception ex)
+    {
+      throw ex;
+    }
+  }
+  public static void Cargar_Combo_Tipo_Materiales_Pendiente(DropDownList pCombo_List)
+  {
+    try
+    {
+      BO_Materiales _servicio = new BO_Materiales();
+      RS_Materiales _respuesta = new RS_Materiales();
+
+      _respuesta = _servicio.Obtener_Materiales_CMB();
+
+      if (_respuesta.Resultado == Resultado_Operacion.Error)
+      {
+        throw new Exception(_respuesta.Mensaje);
+      }
+
+      pCombo_List.Items.Clear();
+
+      ListItem _item = new ListItem();
+      _item.Text = "- Seleccione -";
+      _item.Value = "0";
+      pCombo_List.Items.Add(_item);
+
+      foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
+      {
+        _item = new ListItem();
+        _item.Text = _objeto.Nombre_Tipo_Material.ToString();
+        _item.Value = _objeto.Id_Material.ToString();
+        pCombo_List.Items.Add(_item);
+      }
+    }
+    catch (Exception ex)
+    {
+      throw ex;
+    }
+  }
+
+  public static void Cargar_Combo_Descripcion_Tipo_Materiales(DropDownList pCombo_List)
+  {
+    try
+    {
+      BO_Materiales _servicio = new BO_Materiales();
+      RS_Materiales _respuesta = new RS_Materiales();
+
+      _respuesta = _servicio.Obtener_Tipo_Materiales();
+
+      if (_respuesta.Resultado == Resultado_Operacion.Error)
+      {
+        throw new Exception(_respuesta.Mensaje);
+      }
+
+      pCombo_List.Items.Clear();
+
+      ListItem _item = new ListItem();
+      _item.Text = "- Seleccione -";
+      _item.Value = "0";
+      pCombo_List.Items.Add(_item);
+
+      foreach (OMaterial _objeto in _respuesta.Lista_Materiales)
+      {
+        _item = new ListItem();
+        _item.Text = _objeto.Descripcion_Tipo_Material.ToString();
+        _item.Value = _objeto.Id_Material.ToString();
         pCombo_List.Items.Add(_item);
       }
     }
@@ -141,10 +211,10 @@ public static class Metodos
             pCombo_List.Items.Add(_item);
 
 
-            foreach (OPedido_Material _objeto in _respuesta.Lista_Pedido_Material)
+            foreach (OPedido_Material _objeto in _respuesta.Lista_Material)
             {
                 _item = new ListItem();
-                _item.Text = _objeto.Material_Descripcion.ToString();
+                _item.Text = _objeto.Nombre_Tipo_Material.ToString();
                 _item.Value = _objeto.Id_Pedido_Material.ToString();
                 pCombo_List.Items.Add(_item);
             }
@@ -180,8 +250,44 @@ public static class Metodos
             foreach (OSector _objeto in _respuesta.Lista_Sector)
             {
                 _item = new ListItem();
-                _item.Text = _objeto.Descripcion.ToString();
+                _item.Text = _objeto.Descripcion_Sector.ToString();
                 _item.Value = _objeto.Id_Sector.ToString();
+                pCombo_List.Items.Add(_item);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+  public static void Cargar_Combo_Perfil_Usuario(DropDownList pCombo_List)
+    {
+        try
+        {
+            BO_Materiales _servicio = new BO_Materiales();
+            RS_Materiales _respuesta = new RS_Materiales();
+
+            _respuesta = _servicio.Obtener_Perfil_Usuario();
+
+            if (_respuesta.Resultado == Resultado_Operacion.Error)
+            {
+                throw new Exception(_respuesta.Mensaje);
+            }
+
+            pCombo_List.Items.Clear();
+
+            ListItem _item = new ListItem();
+            _item.Text = "- Seleccione -";
+            _item.Value = "0";
+            pCombo_List.Items.Add(_item);
+
+
+            foreach (OPerfil _objeto in _respuesta.Lista_Perfil)
+            {
+                _item = new ListItem();
+                _item.Text = _objeto.Perfil_Descripcion.ToString();
+                _item.Value = _objeto.Id_Perfil.ToString();
                 pCombo_List.Items.Add(_item);
             }
         }

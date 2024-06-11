@@ -13,31 +13,30 @@ public partial class Alta_Area : System.Web.UI.Page
   private BO_Materiales _servicio = new BO_Materiales();
   private Respuesta _respuesta = new Respuesta();
 
-  private RS_Usuarios _Usuario_Logueado = new RS_Usuarios();
+  private RS_Materiales _Usuario_Logueado = new RS_Materiales();
   private OUsuarios _Usuario_Seleccionado = new OUsuarios();
 
   protected void Page_Load(object sender, EventArgs e)
   {
     try
     {
-      _Usuario_Logueado = (RS_Usuarios)Session["ID_Usuario"];
-
+      _Usuario_Logueado = (RS_Materiales)Session["ADV_Usuario"];
+      // Con esto obtengo la fecha actual
+      lbl_fecha_alta.Text = DateTime.Now.ToString("dd/MM/yyyy");
       //Se debe realizar la validación del perfil de usuario
       /*if (!Acceso.Tiene_Acceso(_Usuario_Logueado, new Int32[] { 4, 5, 7 }))
       {
         Response.Redirect("~/frm_error_acceso.aspx", true);
       }*/
-
       Response.Cache.SetCacheability(HttpCacheability.NoCache);
       if (!Page.IsPostBack)
       {
-        Metodos.Cargar_Combo_Sector(cmb_sector);
-        Metodos.Cargar_Combo_Plantas(cmb_planta);
+
+
       }
     }
     catch(Exception ex)
     {
-      //throw new Exception(ex.Message);
       this.Master.Mostrar_Mensaje("Error: " + ex.Message, Master_Admin.Tipo_Mensaje.Mensaje_Error);
     }
   }
@@ -54,13 +53,10 @@ public partial class Alta_Area : System.Web.UI.Page
       {
         _errores.AppendLine(" <br/>- Debe ingresar el Nombre de área <br/>");
       }
-      if (cmb_sector.SelectedIndex == 0)
+
+      if (txt_abreviatura.Text.Trim().Length == 0)
       {
-        _errores.AppendLine("- Debe seleccionar un sector <br/>");
-      }
-      if (cmb_planta.SelectedIndex == 0)
-      {
-        _errores.AppendLine("- Debe seleccionar una planta <br/>");
+        _errores.AppendLine(" <br/>- Debe ingresar la abreviatura del área <br/>");
       }
 
       if (_errores.Length > 0)
@@ -70,7 +66,7 @@ public partial class Alta_Area : System.Web.UI.Page
 
       #endregion
 
-      _respuesta = _servicio.Alta_Area(txt_nombre_area.Text.ToUpper(), Int16.Parse(cmb_sector.SelectedValue.ToString()), Int16.Parse(cmb_planta.SelectedValue.ToString()), _Usuario_Logueado.Usuario.ID_Usuario);
+      _respuesta = _servicio.Alta_Area(txt_nombre_area.Text.ToUpper(),1, txt_abreviatura.Text, _Usuario_Logueado.Lista_Usuario[0].ID_Usuario);
 
       if (_respuesta.Resultado == Resultado_Operacion.Error)
       {
@@ -96,7 +92,6 @@ public partial class Alta_Area : System.Web.UI.Page
   public void Limpiar_Campos()
   {
     txt_nombre_area.Text = "";
-    cmb_sector.SelectedIndex = 0;
-    cmb_planta.SelectedIndex = 0;
+    txt_abreviatura.Text = "";
   }
 }

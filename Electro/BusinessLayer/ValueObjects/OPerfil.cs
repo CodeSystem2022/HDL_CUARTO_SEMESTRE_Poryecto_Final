@@ -14,8 +14,9 @@ namespace Electro.BusinessLayer.ValueObjects
     public class OPerfil
     {
         private Int16 id_perfil;
-        private String descripcion;
+        private String perfil_descripcion;
         private Int16 fk_id_estado;
+        private String estado_descripcion;
         private String fecha_creacion;
 
         #region Get y Set
@@ -26,10 +27,10 @@ namespace Electro.BusinessLayer.ValueObjects
             set { id_perfil = value; }
         }
 
-        public String Descripcion
+        public String Perfil_Descripcion
         {
-            get { return descripcion;}
-            set { descripcion = value; }
+            get { return perfil_descripcion;}
+            set { perfil_descripcion = value; }
         }
         public Int16 FK_ID_Estado
         {
@@ -41,14 +42,20 @@ namespace Electro.BusinessLayer.ValueObjects
             get { return fecha_creacion; }
             set { fecha_creacion = value; }
         }
+        public String Estado_Descripcion
+        {
+            get { return estado_descripcion; }
+            set { estado_descripcion = value; }
+        }
 
         #endregion
 
         public OPerfil() 
         {
             id_perfil = 0;
-            descripcion = "";
+            perfil_descripcion = "";
             fk_id_estado = 0;
+            estado_descripcion = "";
             fecha_creacion = "";
         }
     }

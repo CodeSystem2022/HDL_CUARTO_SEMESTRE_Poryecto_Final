@@ -14,11 +14,11 @@ namespace Electro.BusinessLayer.ValueObjects
     public class OSector
     {
         private Int16 id_sector;
-        private String descripcion;
+        private String descripcion_sector;
         private Int16 fk_id_planta;
-        private String planta_descripcion;
+        private String descripcion_planta;
         private Int16 fk_id_estado;
-        private String estado_descripcion;
+        private String descripcion_estado;
         private String motivo_baja;
         private String fecha_creacion;
 
@@ -30,10 +30,10 @@ namespace Electro.BusinessLayer.ValueObjects
             set { id_sector = value; }
         }
 
-        public String Descripcion
+        public String Descripcion_Sector
         {
-            get { return descripcion;}
-            set { descripcion = value; }
+            get { return descripcion_sector;}
+            set { descripcion_sector = value; }
         }
 
         public Int16 FK_ID_Planta
@@ -42,10 +42,10 @@ namespace Electro.BusinessLayer.ValueObjects
             set { fk_id_planta = value; }
         }
 
-        public String Planta_Descripcion
+        public String Descripcion_Planta
         {
-            get { return planta_descripcion; }
-            set { planta_descripcion = value; }
+            get { return descripcion_planta; }
+            set { descripcion_planta = value; }
         }
 
         public Int16 FK_ID_Estado
@@ -54,10 +54,10 @@ namespace Electro.BusinessLayer.ValueObjects
             set { fk_id_estado = value; }
         }
 
-        public String Estado_Descripcion
+        public String Descripcion_Estado
         {
-            get { return estado_descripcion; }
-            set { estado_descripcion = value; }
+            get { return descripcion_estado; }
+            set { descripcion_estado = value; }
         }
 
         public String Motivo_Baja
@@ -76,11 +76,11 @@ namespace Electro.BusinessLayer.ValueObjects
         public OSector() 
         {
             id_sector = 0;
-            descripcion = "";
+            descripcion_sector = "";
             fk_id_planta = 0;
-            planta_descripcion = "";
+            descripcion_planta = "";
             fk_id_estado = 0;
-            estado_descripcion = "";
+            descripcion_estado = "";
             motivo_baja = "";
             fecha_creacion = "";
         }

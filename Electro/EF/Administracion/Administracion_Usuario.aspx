@@ -1,85 +1,66 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/PaginaMaestra/Master_Admin.master" AutoEventWireup="true" CodeFile="Administracion_Usuario.aspx.cs" Inherits="Administracion_Usuario" %>
+<%@ MasterType VirtualPath="~/PaginaMaestra/Master_Admin.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-  <h1>Administracion de materiales</h1>
+  <h1>Administracion de Usuarios</h1>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   <!-- GridView  -->
-  <div class="card card-body">
+  <div class="card card-body" runat="server" id="panel_grid_admin_usuarios" visible="true">
     <div class="card-header">
-            <h3 class="card-title">Cantidad de materiales:  <label runat="server" id="lbl_cantidad_materiales">XXXX</label> </h3>
+            <h3 class="card-title">Cantidad de usuarios:  <asp:Label CssClass="badge badge-info" runat="server" id="lbl_cantidad_usuarios"></asp:Label> </h3>
           </div>
     <div class="card-body">
-      <h3 class="card-title">Pedido de material aprobado</h3>
-    <!-- Grilla para visualizar los pedidos de materiales aprobados por jefatura -->
-      <asp:GridView ID="GV_Admin_Material" runat="server" GridLines="Horizontal" EmptyDataText="No se encontraron materiales"
-          AutoGenerateColumns="false" CssClass="table table-dark thead-light table-hover">
-          <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+      <h3 class="card-title">Administrar usuarios</h3>
+    <!-- Grilla para visualizar los usuarios activos -->
+      <asp:GridView ID="GV_Admin_Usuarios" runat="server" GridLines="Horizontal" EmptyDataText="No se encontraron usuarios"
+          OnRowCommand="GV_Admin_Usuarios_RowCommand" AutoGenerateColumns="false" CssClass="table table-dark thead-light table-hover text-center">
+        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
           <Columns>
-              <asp:TemplateField HeaderText="Fecha_Solicitud" Visible="false">
+              <asp:TemplateField HeaderText="ID_Usuario">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_fecha_solicitud" runat="server" Text='<%# Eval("Fecha_Solicitud") %>'></asp:Label>
+                      <asp:Label ID="lbl_id_usuario_admin" runat="server" Text='<%# Eval("ID_Usuario") %>'></asp:Label>
                   </ItemTemplate>
               </asp:TemplateField>
-              <asp:TemplateField HeaderText="FK_ID_Prioridad" Visible="false">
+              <asp:TemplateField HeaderText="Apellido">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_fk_id_prioridad" runat="server" Text='<%# Eval("FK_ID_Prioridad") %>'></asp:Label>
+                      <asp:Label ID="lbl_apellido" runat="server" Text='<%# Eval("Apellido") %>'></asp:Label>
                   </ItemTemplate>
               </asp:TemplateField>
-              <asp:TemplateField HeaderText="Prioridad">
+              <asp:TemplateField HeaderText="Nombre">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_prioridad" runat="server" Text='<%# Eval("Prioridad") %>'></asp:Label>
+                      <asp:Label ID="lbl_nombre" runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
                   </ItemTemplate>
               </asp:TemplateField>
-            <asp:TemplateField HeaderText="FK_ID_Sector" Visible="false">
+            <asp:TemplateField HeaderText="Legajo">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_fk_id_sector" runat="server" Text='<%# Eval("FK_ID_Sector") %>'></asp:Label>
+                      <asp:Label ID="lbl_legajo" runat="server" Text='<%# Eval("Legajo") %>'></asp:Label>
+                  </ItemTemplate>
+              </asp:TemplateField>
+            <asp:TemplateField HeaderText="Perfil">
+                  <ItemTemplate>
+                      <asp:Label ID="lbl_Perfil_Usuario_Descripcion" runat="server" Text='<%# Eval("Perfil_Usuario_Descripcion") %>'></asp:Label>
+                  </ItemTemplate>
+              </asp:TemplateField>
+            <asp:TemplateField HeaderText="Area">
+                  <ItemTemplate>
+                      <asp:Label ID="lbl_Area_Descripcion" runat="server" Text='<%# Eval("Area_Descripcion") %>'></asp:Label>
                   </ItemTemplate>
               </asp:TemplateField>
               <asp:TemplateField HeaderText="Sector">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_nombre_sector" runat="server" Text='<%# Eval("Nombre_Sector") %>'></asp:Label>
+                      <asp:Label ID="lbl_Sector_Descripcion" runat="server" Text='<%# Eval("Sector_Descripcion") %>'></asp:Label>
                   </ItemTemplate>
               </asp:TemplateField>
-              <asp:TemplateField HeaderText="FK_ID_Pedido" Visible="false">
+              <asp:TemplateField HeaderText="Planta">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_fk_id_pedido" runat="server" Text='<%# Eval("FK_ID_Pedido") %>'></asp:Label>
+                      <asp:Label ID="lbl_Planta_Descripcion" runat="server" Text='<%# Eval("Planta_Descripcion") %>'></asp:Label>
                   </ItemTemplate>
               </asp:TemplateField>
-              <asp:TemplateField HeaderText="Codigo_Material" Visible="false">
+              <asp:TemplateField HeaderText="Editar" ShowHeader="false">
                   <ItemTemplate>
-                      <asp:Label ID="lbl_codigo_material" runat="server" Text='<%# Eval("Codigo_Material") %>'></asp:Label>
+                      <asp:Button ID="btnedit" runat="server" CommandName="Editar_Usuario" CommandArgument='<%# Eval("ID_Usuario") %>' Text="Editar" CssClass="btn btn-default" />
                   </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Descripcion_Material">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_descripcion_material" runat="server" Text='<%# Eval("Descripcion_Material") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Cantidad">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_cantidad_a_solicitar" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Recambio">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_recambio" runat="server" Text='<%# Eval("Recambio") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Observaciones">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_observaciones" runat="server" Text='<%# Eval("Observaciones") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Aprobacion" ShowHeader="false">
-                  <ItemTemplate>
-                      <asp:Button ID="btnedit" runat="server" CommandName="Edit" Text="Editar" CssClass="btn btn-default" />
-                  </ItemTemplate>
-                  <EditItemTemplate>
-                      <asp:Button ID="btnupdate_si" runat="server" CommandName="Update_Si" Text="SI" CssClass="btn btn-success" />
-                      <asp:Button ID="btnupdate_no" runat="server" CommandName="Update_No" Text="NO" CssClass="btn btn-danger" />
-                      <asp:Button ID="btncancel" runat="server" CommandName="Cancel" Text="Cancelar" CssClass="btn btn-danger" />
-                  </EditItemTemplate>
               </asp:TemplateField>
           </Columns>
           <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
@@ -87,151 +68,66 @@
           <AlternatingRowStyle CssClass="bg-secondary" />
       </asp:GridView>
 </div>
-    <div class="card-body">
-      <h3 class="card-title">Pedido de material pendiente de aprobacion</h3>
-    <!-- Grilla para visualizar los pedidos de materiales pendientes de aprobar por jefatura -->
-    <asp:GridView ID="GV_Material_Pendiente_Aprobacion" runat="server" GridLines="Horizontal" EmptyDataText="No se encontraron materiales"
-          AutoGenerateColumns="false" CssClass="table table-dark thead-light table-hover">
-          <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-          <Columns>
-              <asp:TemplateField HeaderText="Fecha_Solicitud" Visible="false">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_fecha_solicitud" runat="server" Text='<%# Eval("Fecha_Solicitud") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="FK_ID_Prioridad" Visible="false">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_fk_id_prioridad" runat="server" Text='<%# Eval("FK_ID_Prioridad") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Prioridad">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_prioridad" runat="server" Text='<%# Eval("Prioridad") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-            <asp:TemplateField HeaderText="FK_ID_Sector" Visible="false">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_fk_id_sector" runat="server" Text='<%# Eval("FK_ID_Sector") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Sector">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_nombre_sector" runat="server" Text='<%# Eval("Nombre_Sector") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="FK_ID_Pedido" Visible="false">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_fk_id_pedido" runat="server" Text='<%# Eval("FK_ID_Pedido") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Codigo_Material" Visible="false">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_codigo_material" runat="server" Text='<%# Eval("Codigo_Material") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Descripcion_Material">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_descripcion_material" runat="server" Text='<%# Eval("Descripcion_Material") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Cantidad">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_cantidad_a_solicitar" runat="server" Text='<%# Eval("Cantidad") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Recambio">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_recambio" runat="server" Text='<%# Eval("Recambio") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Observaciones">
-                  <ItemTemplate>
-                      <asp:Label ID="lbl_observaciones" runat="server" Text='<%# Eval("Observaciones") %>'></asp:Label>
-                  </ItemTemplate>
-              </asp:TemplateField>
-              <asp:TemplateField HeaderText="Aprobacion" ShowHeader="false">
-                  <ItemTemplate>
-                      <asp:Button ID="btnedit" runat="server" CommandName="Edit" Text="Editar" CssClass="btn btn-default" />
-                  </ItemTemplate>
-                  <EditItemTemplate>
-                      <asp:Button ID="btnupdate_si" runat="server" CommandName="Update_Si" Text="SI" CssClass="btn btn-success" />
-                      <asp:Button ID="btnupdate_no" runat="server" CommandName="Update_No" Text="NO" CssClass="btn btn-danger" />
-                      <asp:Button ID="btncancel" runat="server" CommandName="Cancel" Text="Cancelar" CssClass="btn btn-danger" />
-                  </EditItemTemplate>
-              </asp:TemplateField>
-          </Columns>
-          <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-          <EditRowStyle BackColor="#CCCCCC" />
-          <AlternatingRowStyle CssClass="bg-secondary" />
-      </asp:GridView>
-  </div>
     </div>
 
   <!-- SELECT2 EXAMPLE -->
-        <div class="card card-default">
-          <div class="card-header">
-            <h3 class="card-title">Fecha de solicitud:  <label runat="server" id="lbl_fecha_solicitud">17/02/2024</label> </h3>
-            <h3 class="card-title float-lg-right">Pedido:  <label runat="server" id="Nro_Pedido">0000001</label> </h3>
-          </div>
+        <div class="card card-default" runat="server" id="panel_editar_usuario" visible="false">
           <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
                 <!-- columna izquierda -->
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Prioridad:</label>
-                  <asp:DropDownList ID="cmb_prioridad" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
-                        <asp:ListItem Value="Seleccione..."></asp:ListItem>
-                    </asp:DropDownList>
+                  <label>Apellido:</label>
+                    <asp:TextBox ID="txt_apellido" runat="server" CssClass="form-control" placeholder="Apellido"></asp:TextBox>
                 </div>
                   <div class="form-group">
-                  <label>Tipo de material:</label>
-                  <asp:DropDownList ID="cmb_tipo_material" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                  <label>Legajo:</label>
+                    <asp:TextBox ID="txt_legajo" runat="server" CssClass="form-control" placeholder="Nro de legajo"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label>Contrasena:</label>
+                    <asp:TextBox ID="txt_contrasena" runat="server" CssClass="form-control" TextMode="Password" placeholder="Contrasena"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label>Area:</label>
+                  <asp:DropDownList ID="cmb_area" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
                         <asp:ListItem Value="Seleccione..."></asp:ListItem>
                     </asp:DropDownList>
                 </div>
-
-                <div class="form-group">
-                    <label>Descripcion de material:</label>
-                    <asp:TextBox ID="descripcion_material" runat="server" CssClass="form-control" placeholder="Descripcion de material"></asp:TextBox>
-                </div>
-                <div class="form-group">
-                    <label>Observaciones:</label>
-                    <asp:TextBox ID="observaciones_material" runat="server" CssClass="form-control" placeholder="Observaciones"></asp:TextBox>
-                </div>
               </div>
-
                 <!-- columna derecha -->
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Sector:</label>
+                  <label>Nombre:</label>
+                    <asp:TextBox ID="txt_nombre" runat="server" CssClass="form-control" placeholder="Nombre"></asp:TextBox>
+                </div>
+                <div class="form-group">
+                    <label>Perfil de usuario:</label>
+                  <asp:DropDownList ID="cmb_perfil_usuario" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                        <asp:ListItem Value="Seleccione..."></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="form-group">
+                    <label>Sector:</label>
                   <asp:DropDownList ID="cmb_sector" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
                         <asp:ListItem Value="Seleccione..."></asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 <div class="form-group">
-                  <label>Codigo de material:</label>
-                  <asp:DropDownList ID="cmb_codigo_material" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
+                    <label>Planta:</label>
+                  <asp:DropDownList ID="cmb_planta" CssClass="form-control select2bs4" style="width: 100%;" AutoPostBack="true" runat="server">
                         <asp:ListItem Value="Seleccione..."></asp:ListItem>
                     </asp:DropDownList>
-                </div>
-                <div class="form-group">
-                    <label>Cantidad:</label>
-                    <asp:TextBox ID="cantidad_a_solicitar" runat="server" CssClass="form-control" placeholder="Cantidad"></asp:TextBox>
-                </div>
-                <div class="form-group">
-                    <label>Recambio:</label>
-                    <input type="checkbox" name="recambio_si" class="custom-checkbox" runat="server" id="rb_recambio_si" value="SI" />
-                    <span class="btn btn-check"></span>
                 </div>
                 <!-- /.form-group -->
               </div>
               <!-- /.col -->
             </div>
        <div class="card-footer">
-           <asp:Button ID="btn_enviar_pedido" CssClass="btn btn-info col-xl-5" runat="server" Text="Enviar" />
+           <asp:Button ID="btn_enviar" CssClass="btn btn-info col-xl-5" runat="server" Text="Modificar"  OnClick="btn_enviar_Click" />
 
-           <asp:Button ID="btn_cancelar_pedido" CssClass="btn btn-danger float-right col-xl-5" runat="server" Text="Cancelar" />
+           <asp:Button ID="btn_cancelar" CssClass="btn btn-danger float-right col-xl-5" runat="server" Text="Cancelar" OnClick="btn_cancelar_Click"  />
        </div>
             <!-- /.row -->
           </div>

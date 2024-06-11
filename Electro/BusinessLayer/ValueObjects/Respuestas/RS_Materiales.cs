@@ -12,7 +12,7 @@ namespace Electro.BusinessLayer.ValueObjects
     public class RS_Materiales : Respuesta
     {
         public OMaterial[] Lista_Materiales;
-        public OPedido_Material[] Lista_Pedido_Material;
+        public OPedido_Material[] Lista_Material;
         public OArea[] Lista_Area;
         public OPrioridad[] Lista_Prioridad;
         public OCondicion[] Lista_Condicion;
@@ -24,6 +24,7 @@ namespace Electro.BusinessLayer.ValueObjects
 
         // Usuario
         public OPerfil[] Lista_Perfil;
+        public OPerfil Perfil;
         public OUsuarios[] Lista_Usuario;
         public OUsuarios Usuario;
         public OAccion_Notificacion[] Acciones;
